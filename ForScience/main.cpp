@@ -22,9 +22,6 @@
  and may not be redistributed without written permission.*/
 
 
-
-
-
 //The surfaces
 SDL_Surface *dot = NULL;
 SDL_Surface *screen = NULL;
@@ -104,65 +101,26 @@ void clean_up( Tile *tiles[] )
 
 void clip_tiles(){
     //Clip the sprite sheet
-    clips[ TILE_RED ].x = 0;
-    clips[ TILE_RED ].y = 0;
-    clips[ TILE_RED ].w = TILE_WIDTH;
-    clips[ TILE_RED ].h = TILE_HEIGHT;
+    clips[ TILE_EMPTY ].x = 160;
+    clips[ TILE_EMPTY  ].y = 80;
+    clips[ TILE_EMPTY  ].w = TILE_WIDTH;
+    clips[ TILE_EMPTY  ].h = TILE_HEIGHT;
     
-    clips[ TILE_GREEN ].x = 0;
-    clips[ TILE_GREEN ].y = 80;
-    clips[ TILE_GREEN ].w = TILE_WIDTH;
-    clips[ TILE_GREEN ].h = TILE_HEIGHT;
+    clips[ TILE_LADDER ].x = 0;
+    clips[ TILE_LADDER ].y = 0;
+    clips[ TILE_LADDER ].w = TILE_WIDTH;
+    clips[ TILE_LADDER ].h = TILE_HEIGHT;
     
-    clips[ TILE_BLUE ].x = 0;
-    clips[ TILE_BLUE ].y = 160;
-    clips[ TILE_BLUE ].w = TILE_WIDTH;
-    clips[ TILE_BLUE ].h = TILE_HEIGHT;
+    clips[ TILE_FLOOR ].x = 0;
+    clips[ TILE_FLOOR ].y = 80;
+    clips[ TILE_FLOOR ].w = TILE_WIDTH;
+    clips[ TILE_FLOOR ].h = TILE_HEIGHT;
     
-    clips[ TILE_TOPLEFT ].x = 80;
-    clips[ TILE_TOPLEFT ].y = 0;
-    clips[ TILE_TOPLEFT ].w = TILE_WIDTH;
-    clips[ TILE_TOPLEFT ].h = TILE_HEIGHT;
+    clips[ TILE_BACKWALL ].x = 0;
+    clips[ TILE_BACKWALL ].y = 160;
+    clips[ TILE_BACKWALL ].w = TILE_WIDTH;
+    clips[ TILE_BACKWALL ].h = TILE_HEIGHT;
     
-    clips[ TILE_LEFT ].x = 80;
-    clips[ TILE_LEFT ].y = 80;
-    clips[ TILE_LEFT ].w = TILE_WIDTH;
-    clips[ TILE_LEFT ].h = TILE_HEIGHT;
-    
-    clips[ TILE_BOTTOMLEFT ].x = 80;
-    clips[ TILE_BOTTOMLEFT ].y = 160;
-    clips[ TILE_BOTTOMLEFT ].w = TILE_WIDTH;
-    clips[ TILE_BOTTOMLEFT ].h = TILE_HEIGHT;
-    
-    clips[ TILE_TOP ].x = 160;
-    clips[ TILE_TOP ].y = 0;
-    clips[ TILE_TOP ].w = TILE_WIDTH;
-    clips[ TILE_TOP ].h = TILE_HEIGHT;
-    
-    clips[ TILE_CENTER ].x = 160;
-    clips[ TILE_CENTER ].y = 80;
-    clips[ TILE_CENTER ].w = TILE_WIDTH;
-    clips[ TILE_CENTER ].h = TILE_HEIGHT;
-    
-    clips[ TILE_BOTTOM ].x = 160;
-    clips[ TILE_BOTTOM ].y = 160;
-    clips[ TILE_BOTTOM ].w = TILE_WIDTH;
-    clips[ TILE_BOTTOM ].h = TILE_HEIGHT;
-    
-    clips[ TILE_TOPRIGHT ].x = 240;
-    clips[ TILE_TOPRIGHT ].y = 0;
-    clips[ TILE_TOPRIGHT ].w = TILE_WIDTH;
-    clips[ TILE_TOPRIGHT ].h = TILE_HEIGHT;
-    
-    clips[ TILE_RIGHT ].x = 240;
-    clips[ TILE_RIGHT ].y = 80;
-    clips[ TILE_RIGHT ].w = TILE_WIDTH;
-    clips[ TILE_RIGHT ].h = TILE_HEIGHT;
-    
-    clips[ TILE_BOTTOMRIGHT ].x = 240;
-    clips[ TILE_BOTTOMRIGHT ].y = 160;
-    clips[ TILE_BOTTOMRIGHT ].w = TILE_WIDTH;
-    clips[ TILE_BOTTOMRIGHT ].h = TILE_HEIGHT;
 }
 
 bool set_tiles( Tile *tiles[] ){
@@ -221,19 +179,19 @@ bool set_tiles( Tile *tiles[] ){
 }
 
 bool touches_wall( SDL_Rect box, Tile *tiles[] ){
-    //Go through the tiles
-    for( int t = 0; t < TOTAL_TILES; t++ )
-    {
-        //If the tile is a wall type tile
-        if( ( tiles[ t ]->get_type() >= TILE_CENTER ) && ( tiles[ t ]->get_type() <= TILE_TOPLEFT ) )
-        {
-            //If the collision box touches the wall tile
-            if( check_collision( box, tiles[ t ]->get_box() ) == true )
-            {
-                return true;
-            }
-        }
-    }
+//    //Go through the tiles
+//    for( int t = 0; t < TOTAL_TILES; t++ )
+//    {
+//        //If the tile is a wall type tile
+//        if( ( tiles[ t ]->get_type() >= TILE_CENTER ) && ( tiles[ t ]->get_type() <= TILE_TOPLEFT ) )
+//        {
+//            //If the collision box touches the wall tile
+//            if( check_collision( box, tiles[ t ]->get_box() ) == true )
+//            {
+//                return true;
+//            }
+//        }
+//    }
     
     //If no wall tiles were touched
     return false;

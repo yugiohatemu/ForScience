@@ -10,10 +10,11 @@
 #include "utility.h"
 #include "constant.h"
 
+
 Sprite::Sprite(){
     //Initialize the offsets
     box.x = 0;
-    box.y = 0;
+    box.y = SCREEN_HEIGHT - TILE_HEIGHT - DOT_HEIGHT;
     box.w = DOT_WIDTH ;
     box.h = DOT_HEIGHT;
     
@@ -29,13 +30,13 @@ void Sprite::handle_input(SDL_Event event){
         switch( event.key.keysym.sym ){
             case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
             case SDLK_DOWN: yVel += DOT_HEIGHT  / 2; break;
-            case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break;
-            case SDLK_RIGHT: xVel += DOT_WIDTH  / 2; break;
+            case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break; //ladder
+            case SDLK_RIGHT: xVel += DOT_WIDTH  / 2; break; //ladder
+            case SDLK_SPACE: break; //jump
+            case SDLK_RETURN: break; //interact with interactable
             default: break;
         }
-    }
-    //If a key was released
-    else if( event.type == SDL_KEYUP ){
+    }else if( event.type == SDL_KEYUP ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
@@ -47,30 +48,14 @@ void Sprite::handle_input(SDL_Event event){
     }
 }
 
-void Sprite::move(){
+void Sprite::move(  ){
+    
+    //boundary check first
+    
+    //check if next wall is movable
+    //else, dont move
+    
 }
-
-/*void Sprite::move( Tile *tiles[] ){
-    //Move the Sprite left or right
-    box.x += xVel;
-    
-    //If the Sprite went too far to the left or right or touched a wall
-    if( ( box.x < 0 ) || ( box.x + Sprite_WIDTH > LEVEL_WIDTH ) || touches_wall( box, tiles ) )
-    {
-        //move back
-        box.x -= xVel;
-    }
-    
-    //Move the Sprite up or down
-    box.y += yVel;
-    
-    //If the Sprite went too far up or down or touched a wall
-    if( ( box.y < 0 ) || ( box.y + Sprite_HEIGHT > LEVEL_HEIGHT ) || touches_wall( box, tiles ) )
-    {
-        //move back
-        box.y -= yVel;
-    }
-}*/
 
 void Sprite::show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen){
     //Show the Sprite

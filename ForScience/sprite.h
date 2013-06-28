@@ -10,6 +10,7 @@
 #define ForScience_sprite_h
 
 #include "SDL/SDL.h"
+//#include "tile.h"
 
 class Sprite{
     private:
@@ -19,7 +20,7 @@ class Sprite{
     public:
         Sprite();
         void handle_input(SDL_Event event);
-        void move();
+        void move( );
         void show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen);
 };
 
