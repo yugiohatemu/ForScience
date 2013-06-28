@@ -1,0 +1,281 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B62443C8177DCE34000041FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443C7177DCE34000041FE /* main.cpp */; };
+		B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B62443C9177DCE34000041FE /* ForScience.1 */; };
+		B62443D2177DCE54000041FE /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B62443D1177DCE54000041FE /* SDLMain.m */; };
+		B62443D4177DCF1D000041FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62443D3177DCF1D000041FE /* Cocoa.framework */; };
+		B62443D6177DCF6A000041FE /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62443D5177DCF6A000041FE /* SDL.framework */; };
+		B62443DB177DDFCF000041FE /* SDL_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62443DA177DDFCF000041FE /* SDL_image.framework */; };
+		B62443DF177DEE51000041FE /* SDL_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62443DE177DEE51000041FE /* SDL_ttf.framework */; };
+		B62443E5177DF69F000041FE /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443E4177DF69F000041FE /* timer.cpp */; };
+		B62443EA177DFDB0000041FE /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443E9177DFDAF000041FE /* tile.cpp */; };
+		B62443ED177DFF81000041FE /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443EB177DFF81000041FE /* utility.cpp */; };
+		B62443F0177E06E6000041FE /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443EF177E06E5000041FE /* sprite.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B62443C1177DCE33000041FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
+		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
+		B62443D0177DCE54000041FE /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
+		B62443D1177DCE54000041FE /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
+		B62443D3177DCF1D000041FE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B62443D5177DCF6A000041FE /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = ../../../../Library/Frameworks/SDL.framework; sourceTree = "<group>"; };
+		B62443DA177DDFCF000041FE /* SDL_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_image.framework; path = ../../../../Library/Frameworks/SDL_image.framework; sourceTree = "<group>"; };
+		B62443DE177DEE51000041FE /* SDL_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_ttf.framework; path = ../../../../Library/Frameworks/SDL_ttf.framework; sourceTree = "<group>"; };
+		B62443E0177DEE80000041FE /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
+		B62443E1177DF34F000041FE /* dot.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = dot.bmp; sourceTree = "<group>"; };
+		B62443E2177DF5AF000041FE /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
+		B62443E3177DF655000041FE /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
+		B62443E4177DF69F000041FE /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
+		B62443E6177DFD07000041FE /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
+		B62443E7177DFD07000041FE /* lazy.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lazy.map; sourceTree = "<group>"; };
+		B62443E8177DFD81000041FE /* tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tile.h; sourceTree = "<group>"; };
+		B62443E9177DFDAF000041FE /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
+		B62443EB177DFF81000041FE /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
+		B62443EC177DFF81000041FE /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		B62443EF177E06E5000041FE /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
+		B62443F1177E0CF0000041FE /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B62443C0177DCE33000041FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B62443DF177DEE51000041FE /* SDL_ttf.framework in Frameworks */,
+				B62443DB177DDFCF000041FE /* SDL_image.framework in Frameworks */,
+				B62443D6177DCF6A000041FE /* SDL.framework in Frameworks */,
+				B62443D4177DCF1D000041FE /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B62443B8177DCE33000041FE = {
+			isa = PBXGroup;
+			children = (
+				B62443DE177DEE51000041FE /* SDL_ttf.framework */,
+				B62443DA177DDFCF000041FE /* SDL_image.framework */,
+				B62443D5177DCF6A000041FE /* SDL.framework */,
+				B62443D3177DCF1D000041FE /* Cocoa.framework */,
+				B62443C6177DCE33000041FE /* ForScience */,
+				B62443C4177DCE33000041FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B62443C4177DCE33000041FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B62443C3177DCE33000041FE /* ForScience */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B62443C6177DCE33000041FE /* ForScience */ = {
+			isa = PBXGroup;
+			children = (
+				B62443E1177DF34F000041FE /* dot.bmp */,
+				B62443C7177DCE34000041FE /* main.cpp */,
+				B62443EF177E06E5000041FE /* sprite.cpp */,
+				B62443E9177DFDAF000041FE /* tile.cpp */,
+				B62443E4177DF69F000041FE /* timer.cpp */,
+				B62443EB177DFF81000041FE /* utility.cpp */,
+				B62443F1177E0CF0000041FE /* constant.h */,
+				B62443E2177DF5AF000041FE /* sprite.h */,
+				B62443E8177DFD81000041FE /* tile.h */,
+				B62443E3177DF655000041FE /* timer.h */,
+				B62443EC177DFF81000041FE /* utility.h */,
+				B62443E7177DFD07000041FE /* lazy.map */,
+				B62443E6177DFD07000041FE /* tiles.png */,
+				B62443EE177E02ED000041FE /* miscellaneous */,
+			);
+			path = ForScience;
+			sourceTree = "<group>";
+		};
+		B62443EE177E02ED000041FE /* miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				B62443D0177DCE54000041FE /* SDLMain.h */,
+				B62443D1177DCE54000041FE /* SDLMain.m */,
+				B62443E0177DEE80000041FE /* font.ttf */,
+				B62443C9177DCE34000041FE /* ForScience.1 */,
+			);
+			name = miscellaneous;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B62443C2177DCE33000041FE /* ForScience */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B62443CD177DCE34000041FE /* Build configuration list for PBXNativeTarget "ForScience" */;
+			buildPhases = (
+				B62443BF177DCE33000041FE /* Sources */,
+				B62443C0177DCE33000041FE /* Frameworks */,
+				B62443C1177DCE33000041FE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ForScience;
+			productName = ForScience;
+			productReference = B62443C3177DCE33000041FE /* ForScience */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B62443BA177DCE33000041FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Yue;
+			};
+			buildConfigurationList = B62443BD177DCE33000041FE /* Build configuration list for PBXProject "ForScience" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B62443B8177DCE33000041FE;
+			productRefGroup = B62443C4177DCE33000041FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B62443C2177DCE33000041FE /* ForScience */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B62443BF177DCE33000041FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B62443C8177DCE34000041FE /* main.cpp in Sources */,
+				B62443D2177DCE54000041FE /* SDLMain.m in Sources */,
+				B62443E5177DF69F000041FE /* timer.cpp in Sources */,
+				B62443EA177DFDB0000041FE /* tile.cpp in Sources */,
+				B62443ED177DFF81000041FE /* utility.cpp in Sources */,
+				B62443F0177E06E6000041FE /* sprite.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B62443CB177DCE34000041FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B62443CC177DCE34000041FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B62443CE177DCE34000041FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B62443CF177DCE34000041FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B62443BD177DCE33000041FE /* Build configuration list for PBXProject "ForScience" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B62443CB177DCE34000041FE /* Debug */,
+				B62443CC177DCE34000041FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B62443CD177DCE34000041FE /* Build configuration list for PBXNativeTarget "ForScience" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B62443CE177DCE34000041FE /* Debug */,
+				B62443CF177DCE34000041FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B62443BA177DCE33000041FE /* Project object */;
+}
