@@ -8,7 +8,7 @@
 
 #include "tile.h"
 #include "utility.h"
-
+#include "constant.h"
 
 Tile::Tile( int x, int y, int tileType )
 {
@@ -17,11 +17,13 @@ Tile::Tile( int x, int y, int tileType )
     box.y = y;
     
     //Set the collision box
-    box.w = 80;
-    box.h = 80;
+    box.w = TILE_WIDTH;
+    box.h = TILE_HEIGHT;
     
     //Get the tile type
     type = tileType;
+    //pos
+    
 }
 
 void Tile::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen, SDL_Rect clips[]){

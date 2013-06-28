@@ -19,7 +19,7 @@ private:
     
     //The tile type
     int type;
-    
+    int pos;
 public:
     //Initializes the variables
     Tile( int x, int y, int tileType );

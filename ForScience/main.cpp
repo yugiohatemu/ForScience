@@ -54,7 +54,7 @@ bool init(){
     }
     
     //Set the window caption
-    SDL_WM_SetCaption( "Move the Dot", NULL );
+    SDL_WM_SetCaption( "For Science - 0.1", NULL );
     
     //If everything initialized fine
     return true;
@@ -63,7 +63,7 @@ bool init(){
 bool load_files()
 {
     //Load the dot image
-    dot = load_image( "/Users/wei/Desktop/ForScience/ForScience/dot.bmp" );
+    dot = load_image( "/Users/wei/Desktop/ForScience/ForScience/dot.png" );
     
     //If there was a problem in loading the dot
     if( dot == NULL )
@@ -124,11 +124,12 @@ void clip_tiles(){
 }
 
 bool set_tiles( Tile *tiles[] ){
-    //The tile offsets
+    //The tile offsets, use this later
     int x = 0, y = 0;
     
     //Open the map
     std::ifstream map( "/Users/wei/Desktop/ForScience/ForScience/lazy.map" );
+    
     
     //Initialize the tiles
     for( int t = 0; t < TOTAL_TILES; t++ )
@@ -146,13 +147,9 @@ bool set_tiles( Tile *tiles[] ){
         }
         
         //If the number is a valid tile number
-        if( ( tileType >= 0 ) && ( tileType < TILE_SPRITES ) )
-        {
+        if( ( tileType >= 0 ) && ( tileType < TILE_SPRITES ) ){
             tiles[ t ] = new Tile( x, y, tileType );
-        }
-        //If we don't recognize the tile type
-        else{
-            //Stop loading map
+        }else{ //If we don't recognize the tile type Stop loading map
             map.close();
             return false;
         }
@@ -243,6 +240,7 @@ int main( int argc, char* args[] )
                 //Quit the program
                 quit = true;
             }
+            myDot.handle_input(event, tiles);
         }
         
         //Move the dot //myDot.move( tiles );

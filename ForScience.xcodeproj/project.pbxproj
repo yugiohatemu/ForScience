@@ -44,7 +44,6 @@
 		B62443DA177DDFCF000041FE /* SDL_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_image.framework; path = ../../../../Library/Frameworks/SDL_image.framework; sourceTree = "<group>"; };
 		B62443DE177DEE51000041FE /* SDL_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_ttf.framework; path = ../../../../Library/Frameworks/SDL_ttf.framework; sourceTree = "<group>"; };
 		B62443E0177DEE80000041FE /* font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.ttf; sourceTree = "<group>"; };
-		B62443E1177DF34F000041FE /* dot.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = dot.bmp; sourceTree = "<group>"; };
 		B62443E2177DF5AF000041FE /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		B62443E3177DF655000041FE /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		B62443E4177DF69F000041FE /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		B62443EC177DFF81000041FE /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		B62443EF177E06E5000041FE /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
 		B62443F1177E0CF0000041FE /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
+		B62443F2177E1B2D000041FE /* dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 		B62443C6177DCE33000041FE /* ForScience */ = {
 			isa = PBXGroup;
 			children = (
-				B62443E1177DF34F000041FE /* dot.bmp */,
+				B62443F2177E1B2D000041FE /* dot.png */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B62443EF177E06E5000041FE /* sprite.cpp */,
 				B62443E9177DFDAF000041FE /* tile.cpp */,

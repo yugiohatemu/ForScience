@@ -18,8 +18,8 @@ const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 
 //The dot dimensions
-const int DOT_WIDTH = 20;
-const int DOT_HEIGHT = 20;
+const int DOT_WIDTH = 40;
+const int DOT_HEIGHT = 80;
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 640;
@@ -30,6 +30,8 @@ const int TILE_WIDTH = 40;
 const int TILE_HEIGHT = 40;
 const int TOTAL_TILES = 192;
 const int TILE_SPRITES = 4;
+const int TILE_COLUMN = 16;
+const int TILE_ROW = 12;
 
 //
 const int TILE_EMPTY = 0;
