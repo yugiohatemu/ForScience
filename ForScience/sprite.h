@@ -18,7 +18,7 @@ class Sprite{
         int xPos, yPos;
         int pos;
         int frame;
-        SDL_Rect clips[4];
+        SDL_Rect clips[7];
         SDL_Surface * tileSheet;
     enum State{
         STAND = 0,
@@ -30,7 +30,7 @@ class Sprite{
         WALKL2,
         JUMP,
     };
-        Timer fps;
+        
     public:
         Sprite();
         ~Sprite();

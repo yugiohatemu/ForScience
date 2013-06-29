@@ -206,7 +206,6 @@ int main( int argc, char* args[] )
         
         if(accumulator > 300){
             accumulator -= 300;
-            //printf("Do something: Every 3 seconds\n");
             stick->animate(); //change to bool maybe later
         }
         

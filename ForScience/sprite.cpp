@@ -13,12 +13,12 @@
 
 Sprite::Sprite(){
     //Initialize the offsets
-    box.x = 0;
+    box.x = 5*TILE_WIDTH;
     box.y = SCREEN_HEIGHT - TILE_HEIGHT - DOT_HEIGHT;
     box.w = DOT_WIDTH ;
     box.h = DOT_HEIGHT;
     
-    xPos = 0;
+    xPos = 5;
     yPos = 11;
     pos = (yPos-1) * TILE_COLUMN + xPos;
     
@@ -52,6 +52,22 @@ void Sprite::clip_tile(){
     clips[WALKR2].y = 8;
     clips[WALKR2].w = 50;
     clips[WALKR2].h = 140;
+    
+    clips[WALKL2].x = clips[WALKR2].x + DOT_WIDTH + 10;
+    clips[WALKL2].y = 8;
+    clips[WALKL2].w = 55;
+    clips[WALKL2].h = 140;
+    
+    clips[WALKL1].x = clips[WALKL2].x+ DOT_WIDTH + 20;
+    clips[WALKL1].y = 8;
+    clips[WALKL1].w = 50;
+    clips[WALKL1].h = 140;
+    
+    clips[WALKL0].x = clips[WALKL1].x + DOT_WIDTH + 20;
+    clips[WALKL0].y = 8;
+    clips[WALKL0].w = 50;
+    clips[WALKL0].h = 140;
+    
 }
 
 
@@ -60,6 +76,9 @@ void Sprite::animate(){
         if (frame >= WALKR0 && frame < WALKR2) {
             frame += 1;
             box.x += TILE_WIDTH/3;
+        }else if(frame >= WALKL0 && frame < WALKL2){
+            frame += 1;
+            box.x -= TILE_WIDTH/3;
         }else{
             frame = STAND;
         }
@@ -67,11 +86,7 @@ void Sprite::animate(){
 }
 
 void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
-//    frame += 1;
-//    if (frame > WALKR2) {
-//        frame = 1;
-//    }
-    //fps.start();
+
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
@@ -80,24 +95,34 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                     if (tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_LADDER) {
                         
                         box.x += TILE_WIDTH/3;
+                        frame += 1;
+                        if (frame > WALKR2) {
+                            frame = WALKR0;
+                            xPos += 1;
+                            pos += 1;
+                        }
                     }
                     //add a time check here, if time overlap , then change animation?
                     //do a whole frame of animation by one self?
-                    frame += 1;
-                    if (frame > WALKR2) {
-                        frame = 1;
-                        xPos += 1;
-                        pos += 1;
-                    }
+                    
                 }
                 
                 break; //ladder
             case SDLK_LEFT:
+                //std::cout<<"????"<<std::endl;
                 if (xPos > 0 && yPos - 1 >= 0 && (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
-                    xPos -= 1;
-                    pos -= 1;
-                    box.x -= TILE_WIDTH;
+                    box.x -= TILE_WIDTH/3;
+                    frame += 1;
+                    if (frame < WALKL0) { //stand or run right
+                        frame = WALKL0;
+                    }
+                    if (frame > WALKL2) {
+                        frame = WALKL0;
+                        xPos -= 1;
+                        pos -= 1;
+                    }
                 }
+                
                 break;
             case SDLK_UP:
                 if (0 <= pos && pos < TOTAL_TILES && tiles[pos]->get_type() == TILE_LADDER) {
@@ -117,19 +142,9 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
         }
         //std::cout<<pos<<" "<<box.x <<" "<< box.y<<" "<<tiles[pos]->get_type() <<std::endl;
     }else if( event.type == SDL_KEYUP ){
-       //handle the after animation here
-        switch (event.key.keysym.sym ){
-            case SDLK_RIGHT:
-                //frame = STAND;
-                
-                //TODO: and adjust position
-                break;
-                
-            default:
-                break;
-        }
+       
     }
-    //fps.pause();
+   
 }
 
 void Sprite::show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen){
