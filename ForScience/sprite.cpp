@@ -80,6 +80,13 @@ void Sprite::animate(){
             frame += 1;
             box.x -= TILE_WIDTH/3;
         }else{
+            if (frame == WALKR2) {
+                xPos += 1;
+                pos += 1;
+            }else if(frame == WALKL2){
+                xPos -= 1;
+                pos -= 1;
+            }
             frame = STAND;
         }
     }
@@ -102,9 +109,6 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                             pos += 1;
                         }
                     }
-                    //add a time check here, if time overlap , then change animation?
-                    //do a whole frame of animation by one self?
-                    
                 }
                 
                 break; //ladder
