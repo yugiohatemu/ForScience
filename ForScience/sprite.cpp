@@ -27,6 +27,7 @@ Sprite::Sprite(){
     clip_tile();
     
     frame = 0;
+    
 }
 
 
@@ -55,24 +56,23 @@ void Sprite::clip_tile(){
 }
 
 void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
-    
+    //fps.start();
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
                 if (xPos+1 < TILE_COLUMN && yPos +1 <= TILE_ROW) {
                     if (tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_LADDER) {
-                        xPos += 1;
-                        pos += 1;
-                        box.x += TILE_WIDTH;
+                        
+                        box.x += TILE_WIDTH/3;
                     }
                     
                     //do a whole frame of animation by one self?
-                    
-                    
                     frame += 1;
                     if (frame > WALKR2) {
-                        frame = 0;
+                        frame = 1;
+                        xPos += 1;
+                        pos += 1;
                     }
                 }
                 
@@ -104,7 +104,7 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
     }else if( event.type == SDL_KEYUP ){
        
     }
-
+    //fps.pause();
 }
 
 void Sprite::show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen){

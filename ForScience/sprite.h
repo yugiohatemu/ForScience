@@ -11,7 +11,7 @@
 
 #include "SDL/SDL.h"
 #include "tile.h"
-
+#include "timer.h"
 class Sprite{
     private:
         SDL_Rect box;
@@ -31,6 +31,7 @@ class Sprite{
         JUMP,
     };
         State state;
+        Timer fps;
     public:
         Sprite();
         ~Sprite();

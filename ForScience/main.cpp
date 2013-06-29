@@ -176,19 +176,28 @@ int main( int argc, char* args[] )
     if( set_tiles( tiles ) == false ){
         return 1;
     }
+    if(SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL*2)<0 ){
+        return 1;
+    }
+    
     Sprite * stick = new Sprite();
     //While the user hasn't quit
     while( quit == false ){
         //Start the frame timer
+        //if want to process continuous key eveent, need to change this loop based on time
+        
         fps.start();
         
-        //While there's events to handle
+        
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
             //handle event
             stick->handle_input(event, tiles);
+            
         }
         
+        
+        //While there's events to handle
         //Move the dot //myDot.move( tiles );
         //Set the camera//myDot.set_camera();
         
