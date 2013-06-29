@@ -55,7 +55,6 @@
 		B62443EC177DFF81000041FE /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		B62443EF177E06E5000041FE /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
 		B62443F1177E0CF0000041FE /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
-		B62443F2177E1B2D000041FE /* dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot.png; sourceTree = "<group>"; };
 		B62443F3177E3160000041FE /* stickman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stickman.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +127,6 @@
 		B62443F4177E394C000041FE /* image */ = {
 			isa = PBXGroup;
 			children = (
-				B62443F2177E1B2D000041FE /* dot.png */,
 				B62443F3177E3160000041FE /* stickman.png */,
 				B62443E6177DFD07000041FE /* tiles.png */,
 			);
@@ -284,6 +282,7 @@
 				B62443CF177DCE34000041FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

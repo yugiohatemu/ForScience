@@ -23,7 +23,6 @@ Sprite::Sprite(){
     pos = (yPos-1) * TILE_COLUMN + xPos;
     
     tileSheet = NULL;
-    state = STAND;
     clip_tile();
     
     frame = 0;
@@ -55,7 +54,23 @@ void Sprite::clip_tile(){
     clips[WALKR2].h = 140;
 }
 
+
+void Sprite::animate(){
+    if (frame != STAND) {
+        if (frame >= WALKR0 && frame < WALKR2) {
+            frame += 1;
+            box.x += TILE_WIDTH/3;
+        }else{
+            frame = STAND;
+        }
+    }
+}
+
 void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
+//    frame += 1;
+//    if (frame > WALKR2) {
+//        frame = 1;
+//    }
     //fps.start();
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
@@ -66,7 +81,7 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                         
                         box.x += TILE_WIDTH/3;
                     }
-                    
+                    //add a time check here, if time overlap , then change animation?
                     //do a whole frame of animation by one self?
                     frame += 1;
                     if (frame > WALKR2) {
@@ -102,7 +117,17 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
         }
         //std::cout<<pos<<" "<<box.x <<" "<< box.y<<" "<<tiles[pos]->get_type() <<std::endl;
     }else if( event.type == SDL_KEYUP ){
-       
+       //handle the after animation here
+        switch (event.key.keysym.sym ){
+            case SDLK_RIGHT:
+                //frame = STAND;
+                
+                //TODO: and adjust position
+                break;
+                
+            default:
+                break;
+        }
     }
     //fps.pause();
 }

@@ -176,10 +176,13 @@ int main( int argc, char* args[] )
     if( set_tiles( tiles ) == false ){
         return 1;
     }
-    if(SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL*2)<0 ){
+    if(SDL_EnableKeyRepeat(300,300)<0 ){
         return 1;
     }
-    
+    int last_time = 0;
+    int cur_time = 0;
+    int diff_time = 0;
+    int accumulator = 0;
     Sprite * stick = new Sprite();
     //While the user hasn't quit
     while( quit == false ){
@@ -187,7 +190,7 @@ int main( int argc, char* args[] )
         //if want to process continuous key eveent, need to change this loop based on time
         
         fps.start();
-        
+        //stick->handle_input(event, tiles);
         
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
@@ -195,7 +198,19 @@ int main( int argc, char* args[] )
             stick->handle_input(event, tiles);
             
         }
+        // Handle game world here
+        cur_time = SDL_GetTicks();
+        diff_time = cur_time - last_time;
         
+        accumulator += diff_time;
+        
+        if(accumulator > 300){
+            accumulator -= 300;
+            //printf("Do something: Every 3 seconds\n");
+            stick->animate(); //change to bool maybe later
+        }
+        
+        last_time = cur_time;
         
         //While there's events to handle
         //Move the dot //myDot.move( tiles );

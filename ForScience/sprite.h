@@ -30,12 +30,12 @@ class Sprite{
         WALKL2,
         JUMP,
     };
-        State state;
         Timer fps;
     public:
         Sprite();
         ~Sprite();
         void clip_tile();
+        void animate();
         void handle_input(SDL_Event event, Tile * tiles[]);
         void show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen);
         void show(SDL_Rect camera, SDL_Surface * screen);
