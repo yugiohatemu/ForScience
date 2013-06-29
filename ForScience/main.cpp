@@ -99,6 +99,11 @@ void clip_tiles(){
     clips[ TILE_BACKWALL ].w = TILE_WIDTH;
     clips[ TILE_BACKWALL ].h = TILE_HEIGHT;
     
+    clips[ TILE_BRICK ].x = 80;
+    clips[ TILE_BRICK  ].y = 80;
+    clips[ TILE_BRICK  ].w = TILE_WIDTH;
+    clips[ TILE_BRICK  ].h = TILE_HEIGHT;
+
 }
 
 

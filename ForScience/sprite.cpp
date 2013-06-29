@@ -99,7 +99,11 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
                 if (xPos+1 < TILE_COLUMN && yPos +1 <= TILE_ROW) {
-                    if (tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN+ 1]->get_type() == TILE_LADDER) {
+                    if (!(tiles[pos + 1]->get_type() == TILE_BRICK||
+                        tiles[pos - TILE_COLUMN+1]->get_type() == TILE_BRICK||
+                        tiles[pos - TILE_COLUMN*2+1]->get_type() == TILE_BRICK)&&
+                        (tiles[pos+TILE_COLUMN+1]->get_type() == TILE_FLOOR ||
+                        tiles[pos+TILE_COLUMN+1]->get_type() == TILE_LADDER)) {
                         
                         box.x += TILE_WIDTH/3;
                         frame += 1;
@@ -109,22 +113,31 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                             pos += 1;
                         }
                     }
+                    //add a time check here, if time overlap , then change animation?
+                    //do a whole frame of animation by one self?
+                    
                 }
                 
                 break; //ladder
             case SDLK_LEFT:
                 //std::cout<<"????"<<std::endl;
-                if (xPos > 0 && yPos - 1 >= 0 && (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
-                    box.x -= TILE_WIDTH/3;
-                    frame += 1;
-                    if (frame < WALKL0) { //stand or run right
-                        frame = WALKL0;
+                if (xPos > 0 && yPos - 1 >= 0 ) {
+                    if (!(tiles[pos - 1]->get_type() == TILE_BRICK||
+                          tiles[pos - TILE_COLUMN-1]->get_type() == TILE_BRICK||
+                          tiles[pos - TILE_COLUMN*2-1]->get_type() == TILE_BRICK)&&
+                        (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
+                        box.x -= TILE_WIDTH/3;
+                        frame += 1;
+                        if (frame < WALKL0) { //stand or run right
+                            frame = WALKL0;
+                        }
+                        if (frame > WALKL2) {
+                            frame = WALKL0;
+                            xPos -= 1;
+                            pos -= 1;
+                        }
                     }
-                    if (frame > WALKL2) {
-                        frame = WALKL0;
-                        xPos -= 1;
-                        pos -= 1;
-                    }
+                   
                 }
                 
                 break;

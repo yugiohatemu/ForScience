@@ -29,15 +29,16 @@ const int LEVEL_HEIGHT = 480;
 const int TILE_WIDTH = 40;
 const int TILE_HEIGHT = 40;
 const int TOTAL_TILES = 192;
-const int TILE_SPRITES = 4;
+
 const int TILE_COLUMN = 16;
 const int TILE_ROW = 12;
 
 //
+const int TILE_SPRITES = 5;
 const int TILE_EMPTY = 0;
 const int TILE_FLOOR = 1;
 const int TILE_BACKWALL = 2;
 const int TILE_LADDER = 3;
-
+const int TILE_BRICK = 4;
 
 #endif
