@@ -15,11 +15,11 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
 //The frame rate
-const int FRAMES_PER_SECOND = 20;
+const int FRAMES_PER_SECOND = 30;
 
 //The dot dimensions
-const int DOT_WIDTH = 40;
-const int DOT_HEIGHT = 80;
+const int DOT_WIDTH = 50;
+const int DOT_HEIGHT = 140;
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 640;

@@ -18,46 +18,40 @@ Sprite::Sprite(){
     box.w = DOT_WIDTH ;
     box.h = DOT_HEIGHT;
     
-    //Initialize the velocity
-    xVel = 0;
-    yVel = 0;
     xPos = 0;
     yPos = 11;
     pos = (yPos-1) * TILE_COLUMN + xPos;
-//    box.x = xPos * TILE_WIDTH;
-//    box.y = yPos * TILE_HEIGHT - DOT_HEIGHT;
-//    std::cout<<box.x <<" "<< box.y<<std::endl;
+    
+    tileSheet = NULL;
+    state = STAND;
+    clip_tile();
+    
+    frame = 0;
 }
 
-//void Sprite::handle_input(SDL_Event event){
-//    //If a key was pressed
-//    if( event.type == SDL_KEYDOWN ){
-//        //Adjust the velocity
-//        switch( event.key.keysym.sym ){
-//            case SDLK_UP: yVel -= DOT_HEIGHT / 2; break;
-//            case SDLK_DOWN: yVel += DOT_HEIGHT  / 2; break;
-//            case SDLK_LEFT: xVel -= DOT_WIDTH / 2; break; //ladder
-//            case SDLK_RIGHT: xVel += DOT_WIDTH  / 2; break; //ladder
-//            case SDLK_SPACE: break; //jump
-//            case SDLK_RETURN: break; //interact with interactable
-//            default: break;
-//        }
-//    }else if( event.type == SDL_KEYUP ){
-//        //Adjust the velocity
-//        switch( event.key.keysym.sym ){
-//            case SDLK_UP: yVel += DOT_HEIGHT / 2; break;
-//            case SDLK_DOWN: yVel -= DOT_HEIGHT / 2; break;
-//            case SDLK_LEFT: xVel += DOT_WIDTH  / 2; break;
-//            case SDLK_RIGHT: xVel -= DOT_WIDTH  / 2; break;
-//            default: break;
-//        }
-//    }
-//}
 
-void Sprite::move(Tile * tiles){
-    //check if u can move
+void Sprite::clip_tile(){
+    tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/stickman.png" );
     
+    clips[STAND].x = 8;
+    clips[STAND].y = 8;
+    clips[STAND].w = 50;
+    clips[STAND].h = 140;
     
+    clips[WALKR0].x = clips[STAND].x + DOT_WIDTH;
+    clips[WALKR0].y = 8;
+    clips[WALKR0].w = 50;
+    clips[WALKR0].h = 140;
+    
+    clips[WALKR1].x = clips[WALKR0].x + DOT_WIDTH + 20;
+    clips[WALKR1].y = 8;
+    clips[WALKR1].w = 50;
+    clips[WALKR1].h = 140;
+    
+    clips[WALKR2].x = clips[WALKR1].x + DOT_WIDTH + 20;
+    clips[WALKR2].y = 8;
+    clips[WALKR2].w = 50;
+    clips[WALKR2].h = 140;
 }
 
 void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
@@ -73,7 +67,15 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                         box.x += TILE_WIDTH;
                     }
                     
+                    //do a whole frame of animation by one self?
+                    
+                    
+                    frame += 1;
+                    if (frame > WALKR2) {
+                        frame = 0;
+                    }
                 }
+                
                 break; //ladder
             case SDLK_LEFT:
                 if (xPos > 0 && yPos - 1 >= 0 && (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
@@ -98,7 +100,7 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                 break;
             default: break;
         }
-        std::cout<<pos<<" "<<box.x <<" "<< box.y<<" "<<tiles[pos]->get_type() <<std::endl;
+        //std::cout<<pos<<" "<<box.x <<" "<< box.y<<" "<<tiles[pos]->get_type() <<std::endl;
     }else if( event.type == SDL_KEYUP ){
        
     }
@@ -108,6 +110,18 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
 void Sprite::show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen){
     //Show the Sprite
     apply_surface( box.x - camera.x, box.y - camera.y, dot, screen );
+}
+
+void Sprite::show(SDL_Rect camera, SDL_Surface * screen){
+    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
+}
+
+
+//Clear the tile sheet that is being used
+Sprite::~Sprite(){
+    if (tileSheet) {
+        SDL_FreeSurface(tileSheet);
+    }
 }
 
 //void Sprite::set_camera(SDL_Rect camera)

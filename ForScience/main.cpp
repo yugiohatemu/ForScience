@@ -23,13 +23,11 @@
 
 
 //The surfaces
-SDL_Surface *dot = NULL;
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
 
 //Sprite from the tile sheet
 SDL_Rect clips[ TILE_SPRITES ];
-
 //The event structure
 SDL_Event event;
 
@@ -39,20 +37,14 @@ SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 bool init(){
     //Initialize all SDL subsystems
-    if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 )
-    {
-        return false;
-    }
+    if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) return false;
     
     //Set up the screen
     screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );
     
     //If there was an error in setting up the screen
-    if( screen == NULL )
-    {
-        return false;
-    }
-    
+    if( screen == NULL )return false;
+
     //Set the window caption
     SDL_WM_SetCaption( "For Science - 0.1", NULL );
     
@@ -62,24 +54,11 @@ bool init(){
 
 bool load_files()
 {
-    //Load the dot image
-    dot = load_image( "/Users/wei/Desktop/ForScience/ForScience/dot.png" );
-    
-    //If there was a problem in loading the dot
-    if( dot == NULL )
-    {
-        return false;
-    }
     
     //Load the tile sheet
     tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/tiles.png" );
-    
-    //If there was a problem in loading the tiles
-    if( tileSheet == NULL )
-    {
-        return false;
-    }
-    
+    if( tileSheet == NULL ) return false;
+   
     //If everything loaded fine
     return true;
 }
@@ -87,7 +66,6 @@ bool load_files()
 void clean_up( Tile *tiles[] )
 {
     //Free the surfaces
-    SDL_FreeSurface( dot );
     SDL_FreeSurface( tileSheet );
     
     //Free the tiles
@@ -123,14 +101,14 @@ void clip_tiles(){
     
 }
 
+
 bool set_tiles( Tile *tiles[] ){
     //The tile offsets, use this later
     int x = 0, y = 0;
     
     //Open the map
     std::ifstream map( "/Users/wei/Desktop/ForScience/ForScience/lazy.map" );
-    
-    
+        
     //Initialize the tiles
     for( int t = 0; t < TOTAL_TILES; t++ )
     {
@@ -157,13 +135,9 @@ bool set_tiles( Tile *tiles[] ){
         //Move to next tile spot
         x += TILE_WIDTH;
         
-        //If we've gone too far
-        if( x >= LEVEL_WIDTH )
-        {
-            //Move back
+        //If we've gone too far,Move to the next row
+        if( x >= LEVEL_WIDTH ){
             x = 0;
-            
-            //Move to the next row
             y += TILE_HEIGHT;
         }
     }
@@ -175,34 +149,13 @@ bool set_tiles( Tile *tiles[] ){
     return true;
 }
 
-bool touches_wall( SDL_Rect box, Tile *tiles[] ){
-//    //Go through the tiles
-//    for( int t = 0; t < TOTAL_TILES; t++ )
-//    {
-//        //If the tile is a wall type tile
-//        if( ( tiles[ t ]->get_type() >= TILE_CENTER ) && ( tiles[ t ]->get_type() <= TILE_TOPLEFT ) )
-//        {
-//            //If the collision box touches the wall tile
-//            if( check_collision( box, tiles[ t ]->get_box() ) == true )
-//            {
-//                return true;
-//            }
-//        }
-//    }
-    
-    //If no wall tiles were touched
-    return false;
-}
-
-
-
-
 
 int main( int argc, char* args[] )
 {
     //Quit flag
     bool quit = false;
-    Sprite myDot;
+    
+    //Sprite myDot;
     Tile *tiles[ TOTAL_TILES ];
     Timer fps;
     
@@ -223,7 +176,7 @@ int main( int argc, char* args[] )
     if( set_tiles( tiles ) == false ){
         return 1;
     }
-    
+    Sprite * stick = new Sprite();
     //While the user hasn't quit
     while( quit == false ){
         //Start the frame timer
@@ -231,16 +184,9 @@ int main( int argc, char* args[] )
         
         //While there's events to handle
         while( SDL_PollEvent( &event )){
-            //Handle events for the dot
-            //myDot.handle_input(event);
-            
-            //If the user has Xed out the window
-            if( event.type == SDL_QUIT )
-            {
-                //Quit the program
-                quit = true;
-            }
-            myDot.handle_input(event, tiles);
+            if( event.type == SDL_QUIT )quit = true;
+            //handle event
+            stick->handle_input(event, tiles);
         }
         
         //Move the dot //myDot.move( tiles );
@@ -251,7 +197,7 @@ int main( int argc, char* args[] )
             tiles[ t ]->show(camera, tileSheet, screen, clips);
         }
         
-        myDot.show(camera, dot, screen);
+        stick->show(camera, screen);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
@@ -264,8 +210,10 @@ int main( int argc, char* args[] )
         }
     }
     
+    
     //Clean up
     clean_up( tiles );
+    delete stick;
     
     return 0;
 }

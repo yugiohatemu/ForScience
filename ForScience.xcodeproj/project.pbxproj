@@ -56,6 +56,7 @@
 		B62443EF177E06E5000041FE /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
 		B62443F1177E0CF0000041FE /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
 		B62443F2177E1B2D000041FE /* dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot.png; sourceTree = "<group>"; };
+		B62443F3177E3160000041FE /* stickman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stickman.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +97,6 @@
 		B62443C6177DCE33000041FE /* ForScience */ = {
 			isa = PBXGroup;
 			children = (
-				B62443F2177E1B2D000041FE /* dot.png */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B62443EF177E06E5000041FE /* sprite.cpp */,
 				B62443E9177DFDAF000041FE /* tile.cpp */,
@@ -108,7 +108,7 @@
 				B62443E3177DF655000041FE /* timer.h */,
 				B62443EC177DFF81000041FE /* utility.h */,
 				B62443E7177DFD07000041FE /* lazy.map */,
-				B62443E6177DFD07000041FE /* tiles.png */,
+				B62443F4177E394C000041FE /* image */,
 				B62443EE177E02ED000041FE /* miscellaneous */,
 			);
 			path = ForScience;
@@ -123,6 +123,16 @@
 				B62443C9177DCE34000041FE /* ForScience.1 */,
 			);
 			name = miscellaneous;
+			sourceTree = "<group>";
+		};
+		B62443F4177E394C000041FE /* image */ = {
+			isa = PBXGroup;
+			children = (
+				B62443F2177E1B2D000041FE /* dot.png */,
+				B62443F3177E3160000041FE /* stickman.png */,
+				B62443E6177DFD07000041FE /* tiles.png */,
+			);
+			name = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
