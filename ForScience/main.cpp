@@ -18,6 +18,7 @@
 #include "tile.h"
 #include "sprite.h"
 #include "constant.h"
+#include "robot.h"
 /*This source code copyrighted by Lazy Foo' Productions (2004-2013)
  and may not be redistributed without written permission.*/
 
@@ -25,7 +26,7 @@
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
-
+SDL_Surface *robotSheet = NULL;
 //Sprite from the tile sheet
 SDL_Rect clips[ TILE_SPRITES ];
 //The event structure
@@ -58,7 +59,9 @@ bool load_files()
     //Load the tile sheet
     tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/tiles.png" );
     if( tileSheet == NULL ) return false;
-   
+    robotSheet = load_image("/Users/wei/Desktop/ForScience/ForScience/robot.png" );
+    if (robotSheet == NULL) return false;
+    
     //If everything loaded fine
     return true;
 }
@@ -67,7 +70,7 @@ void clean_up( Tile *tiles[] )
 {
     //Free the surfaces
     SDL_FreeSurface( tileSheet );
-    
+    SDL_FreeSurface( robotSheet);
     //Free the tiles
     for( int t = 0; t < TOTAL_TILES; t++ ){
         delete tiles[ t ];
@@ -168,14 +171,15 @@ int main( int argc, char* args[] )
     int diff_time = 0;
     int accumulator = 0;
     Sprite * stick = new Sprite();
+    Robot * robot = new Robot();
+    //Robot robot;
     //While the user hasn't quit
     while( quit == false ){
         //Start the frame timer
         //if want to process continuous key eveent, need to change this loop based on time
         
         fps.start();
-        //stick->handle_input(event, tiles);
-        
+       
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
             //handle event
@@ -191,6 +195,7 @@ int main( int argc, char* args[] )
         if(accumulator > 300){
             accumulator -= 300;
             stick->animate(); //change to bool maybe later
+            robot->animate(tiles);
         }
         
         last_time = cur_time;
@@ -205,6 +210,7 @@ int main( int argc, char* args[] )
         }
         
         stick->show(camera, screen);
+        robot->show(camera, screen, robotSheet);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
@@ -221,6 +227,6 @@ int main( int argc, char* args[] )
     //Clean up
     clean_up( tiles );
     delete stick;
-    
+    delete robot;
     return 0;
 }

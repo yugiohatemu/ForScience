@@ -17,12 +17,14 @@ const int SCREEN_BPP = 32;
 //The frame rate
 const int FRAMES_PER_SECOND = 30;
 
-//The dot dimensions
-const int DOT_WIDTH = 50;
-const int DOT_HEIGHT = 140;
 
+//Stick man
 const int STICK_WIDTH = 40;
 const int STICK_HEIGHT = 120;
+
+//Robot
+const int ROBOT_WIDTH = 45;
+const int ROBOT_HEIGHT = 80; //or 40
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 640;
