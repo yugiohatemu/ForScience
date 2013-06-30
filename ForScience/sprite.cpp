@@ -14,7 +14,7 @@
 Sprite::Sprite(){
     //Initialize the offsets
     box.x = 5*TILE_WIDTH;
-    box.y = SCREEN_HEIGHT - TILE_HEIGHT - DOT_HEIGHT;
+    box.y = SCREEN_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
     box.w = DOT_WIDTH ;
     box.h = DOT_HEIGHT;
     
@@ -33,40 +33,44 @@ Sprite::Sprite(){
 void Sprite::clip_tile(){
     tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/stickman.png" );
     
-    clips[STAND].x = 8;
-    clips[STAND].y = 8;
-    clips[STAND].w = 50;
-    clips[STAND].h = 140;
+    clips[STAND].x = 0;
+    clips[STAND].y = 0;
+    clips[STAND].w = STICK_WIDTH;
+    clips[STAND].h = STICK_HEIGHT;
     
-    clips[WALKR0].x = clips[STAND].x + DOT_WIDTH;
-    clips[WALKR0].y = 8;
-    clips[WALKR0].w = 50;
-    clips[WALKR0].h = 140;
+    clips[WALKR0].x = clips[STAND].x + STICK_WIDTH;
+    clips[WALKR0].y = 0;
+    clips[WALKR0].w = STICK_WIDTH;
+    clips[WALKR0].h =STICK_HEIGHT;
     
-    clips[WALKR1].x = clips[WALKR0].x + DOT_WIDTH + 20;
-    clips[WALKR1].y = 8;
-    clips[WALKR1].w = 50;
-    clips[WALKR1].h = 140;
+    clips[WALKR1].x = clips[WALKR0].x + STICK_WIDTH ;
+    clips[WALKR1].y = 0;
+    clips[WALKR1].w =STICK_WIDTH;
+    clips[WALKR1].h =STICK_HEIGHT;
     
-    clips[WALKR2].x = clips[WALKR1].x + DOT_WIDTH + 20;
-    clips[WALKR2].y = 8;
-    clips[WALKR2].w = 50;
-    clips[WALKR2].h = 140;
+    clips[WALKR2].x = clips[WALKR1].x + STICK_WIDTH;
+    clips[WALKR2].y = 0;
+    clips[WALKR2].w = STICK_WIDTH;
+    clips[WALKR2].h = STICK_HEIGHT;
     
-    clips[WALKL2].x = clips[WALKR2].x + DOT_WIDTH + 10;
-    clips[WALKL2].y = 8;
-    clips[WALKL2].w = 55;
-    clips[WALKL2].h = 140;
+    clips[WALKL0].x = clips[WALKR2].x + STICK_WIDTH ;
+    clips[WALKL0].y = 0;
+    clips[WALKL0].w = STICK_WIDTH;
+    clips[WALKL0].h = STICK_HEIGHT;
     
-    clips[WALKL1].x = clips[WALKL2].x+ DOT_WIDTH + 20;
-    clips[WALKL1].y = 8;
-    clips[WALKL1].w = 50;
-    clips[WALKL1].h = 140;
+    clips[WALKL1].x = clips[WALKL0].x+ STICK_WIDTH ;
+    clips[WALKL1].y = 0;
+    clips[WALKL1].w = STICK_WIDTH;
+    clips[WALKL1].h = STICK_HEIGHT;
     
-    clips[WALKL0].x = clips[WALKL1].x + DOT_WIDTH + 20;
-    clips[WALKL0].y = 8;
-    clips[WALKL0].w = 50;
-    clips[WALKL0].h = 140;
+    clips[WALKL2].x = clips[WALKL1].x + STICK_WIDTH ;
+    clips[WALKL2].y = 0;
+    clips[WALKL2].w = STICK_WIDTH;
+    clips[WALKL2].h = STICK_HEIGHT;
+    
+   
+    
+   
     
 }
 

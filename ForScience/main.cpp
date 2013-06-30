@@ -79,28 +79,28 @@ void clean_up( Tile *tiles[] )
 
 void clip_tiles(){
     //Clip the sprite sheet
-    clips[ TILE_EMPTY ].x = 160;
-    clips[ TILE_EMPTY  ].y = 80;
+    clips[ TILE_EMPTY ].x = 40;
+    clips[ TILE_EMPTY  ].y = 0;
     clips[ TILE_EMPTY  ].w = TILE_WIDTH;
     clips[ TILE_EMPTY  ].h = TILE_HEIGHT;
     
-    clips[ TILE_LADDER ].x = 0;
+    clips[ TILE_LADDER ].x = 80;
     clips[ TILE_LADDER ].y = 0;
     clips[ TILE_LADDER ].w = TILE_WIDTH;
     clips[ TILE_LADDER ].h = TILE_HEIGHT;
     
-    clips[ TILE_FLOOR ].x = 0;
-    clips[ TILE_FLOOR ].y = 80;
+    clips[ TILE_FLOOR ].x = 120;
+    clips[ TILE_FLOOR ].y = 0;
     clips[ TILE_FLOOR ].w = TILE_WIDTH;
     clips[ TILE_FLOOR ].h = TILE_HEIGHT;
     
-    clips[ TILE_BACKWALL ].x = 0;
-    clips[ TILE_BACKWALL ].y = 160;
+    clips[ TILE_BACKWALL ].x = 200;
+    clips[ TILE_BACKWALL ].y = 0;
     clips[ TILE_BACKWALL ].w = TILE_WIDTH;
     clips[ TILE_BACKWALL ].h = TILE_HEIGHT;
     
-    clips[ TILE_BRICK ].x = 80;
-    clips[ TILE_BRICK  ].y = 80;
+    clips[ TILE_BRICK ].x = 160;
+    clips[ TILE_BRICK  ].y = 0;
     clips[ TILE_BRICK  ].w = TILE_WIDTH;
     clips[ TILE_BRICK  ].h = TILE_HEIGHT;
 
@@ -109,48 +109,32 @@ void clip_tiles(){
 
 bool set_tiles( Tile *tiles[] ){
     //The tile offsets, use this later
-    int x = 0, y = 0;
+    //int x = 0, y = 0;
     
     //Open the map
     std::ifstream map( "/Users/wei/Desktop/ForScience/ForScience/lazy.map" );
-        
-    //Initialize the tiles
-    for( int t = 0; t < TOTAL_TILES; t++ )
-    {
-        //Determines what kind of tile will be made
-        int tileType = -1;
-        
-        //Read tile from map file
-        map >> tileType;
-        
-        //If the was a problem in reading the map Stop loading map
-        if( map.fail() == true ){
-            map.close();
-            return false;
-        }
-        
-        //If the number is a valid tile number
-        if( ( tileType >= 0 ) && ( tileType < TILE_SPRITES ) ){
-            tiles[ t ] = new Tile( x, y, tileType );
-        }else{ //If we don't recognize the tile type Stop loading map
-            map.close();
-            return false;
-        }
-        
-        //Move to next tile spot
-        x += TILE_WIDTH;
-        
-        //If we've gone too far,Move to the next row
-        if( x >= LEVEL_WIDTH ){
-            x = 0;
-            y += TILE_HEIGHT;
+    
+    for (int i = 0; i < TILE_ROW; i++) {
+        for (int j = 0; j < TILE_COLUMN; j ++) {
+            int tileType = -1;
+            map >> tileType;
+            if( map.fail() == true ){
+                map.close();
+                return false;
+            }
+            
+            //If the number is a valid tile number, else close
+            if( ( tileType >= 0 ) && ( tileType < TILE_SPRITES ) ){
+                tiles[ i * TILE_COLUMN + j  ] = new Tile(j * TILE_HEIGHT,i * TILE_WIDTH,  tileType );
+            }else{ 
+                map.close();
+                return false;
+            }
         }
     }
     
     //Close the file
     map.close();
-    
-    //If the map was loaded fine
     return true;
 }
 
@@ -165,25 +149,20 @@ int main( int argc, char* args[] )
     Timer fps;
     
     //Initialize
-    if( init() == false ){
-        return 1;
-    }
+    if( init() == false ) return 1;
     
     //Load the files
-    if( load_files() == false ){
-        return 1;
-    }
+    if( load_files() == false )return 1;
     
     //Clip the tile sheet
     clip_tiles();
     
     //Set the tiles
-    if( set_tiles( tiles ) == false ){
-        return 1;
-    }
-    if(SDL_EnableKeyRepeat(300,300)<0 ){
-        return 1;
-    }
+    if( set_tiles( tiles ) == false ) return 1;
+    
+    //Continuous key press
+    if(SDL_EnableKeyRepeat(300,300)<0) return 1;
+    
     int last_time = 0;
     int cur_time = 0;
     int diff_time = 0;

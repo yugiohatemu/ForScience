@@ -47,7 +47,6 @@
 		B62443E2177DF5AF000041FE /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		B62443E3177DF655000041FE /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		B62443E4177DF69F000041FE /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
-		B62443E6177DFD07000041FE /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
 		B62443E7177DFD07000041FE /* lazy.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lazy.map; sourceTree = "<group>"; };
 		B62443E8177DFD81000041FE /* tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tile.h; sourceTree = "<group>"; };
 		B62443E9177DFDAF000041FE /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		B62443EF177E06E5000041FE /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
 		B62443F1177E0CF0000041FE /* constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constant.h; sourceTree = "<group>"; };
 		B62443F3177E3160000041FE /* stickman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stickman.png; sourceTree = "<group>"; };
+		B63F59C4177F7C46000B09C9 /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +127,8 @@
 		B62443F4177E394C000041FE /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B63F59C4177F7C46000B09C9 /* tiles.png */,
 				B62443F3177E3160000041FE /* stickman.png */,
-				B62443E6177DFD07000041FE /* tiles.png */,
 			);
 			name = image;
 			sourceTree = "<group>";

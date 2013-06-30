@@ -21,6 +21,9 @@ const int FRAMES_PER_SECOND = 30;
 const int DOT_WIDTH = 50;
 const int DOT_HEIGHT = 140;
 
+const int STICK_WIDTH = 40;
+const int STICK_HEIGHT = 120;
+
 //The dimensions of the level
 const int LEVEL_WIDTH = 640;
 const int LEVEL_HEIGHT = 480;
