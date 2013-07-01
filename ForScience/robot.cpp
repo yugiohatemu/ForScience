@@ -64,6 +64,12 @@ void Robot::animate(Tile * tiles[]){
 //    }else if(frame == WALK_L3){
 //        
 //    }
+    
+    //not kind of what i want
+    //i would rather ask the tile whether i can go there, given my rect position
+    //feels more reasonable
+    //tiles feel so constranied....
+    
 }
 
 

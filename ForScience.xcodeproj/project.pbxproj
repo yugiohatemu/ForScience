@@ -19,6 +19,7 @@
 		B62443ED177DFF81000041FE /* utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443EB177DFF81000041FE /* utility.cpp */; };
 		B62443F0177E06E6000041FE /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443EF177E06E5000041FE /* sprite.cpp */; };
 		B63F59C81780C06C000B09C9 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59C61780C06C000B09C9 /* robot.cpp */; };
+		B63F59CC1780DE45000B09C9 /* level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59CA1780DE44000B09C9 /* level.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,8 @@
 		B63F59C61780C06C000B09C9 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		B63F59C71780C06C000B09C9 /* robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot.h; sourceTree = "<group>"; };
 		B63F59C91780C5D2000B09C9 /* robot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot.png; sourceTree = "<group>"; };
+		B63F59CA1780DE44000B09C9 /* level.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = level.cpp; sourceTree = "<group>"; };
+		B63F59CB1780DE45000B09C9 /* level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +103,7 @@
 		B62443C6177DCE33000041FE /* ForScience */ = {
 			isa = PBXGroup;
 			children = (
+				B63F59CA1780DE44000B09C9 /* level.cpp */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B63F59C61780C06C000B09C9 /* robot.cpp */,
 				B62443EF177E06E5000041FE /* sprite.cpp */,
@@ -107,6 +111,7 @@
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B62443EB177DFF81000041FE /* utility.cpp */,
 				B62443F1177E0CF0000041FE /* constant.h */,
+				B63F59CB1780DE45000B09C9 /* level.h */,
 				B63F59C71780C06C000B09C9 /* robot.h */,
 				B62443E2177DF5AF000041FE /* sprite.h */,
 				B62443E8177DFD81000041FE /* tile.h */,
@@ -198,6 +203,7 @@
 				B62443ED177DFF81000041FE /* utility.cpp in Sources */,
 				B62443F0177E06E6000041FE /* sprite.cpp in Sources */,
 				B63F59C81780C06C000B09C9 /* robot.cpp in Sources */,
+				B63F59CC1780DE45000B09C9 /* level.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
