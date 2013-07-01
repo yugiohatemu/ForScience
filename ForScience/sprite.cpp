@@ -55,7 +55,6 @@ void Sprite::clip_tile(){
     clips[WALK_R2].h = STICK_HEIGHT;
     
     clips[WALK_R3] = clips[WALK_R1]; //R3 = R1
-    clips[WALK_R4] = clips[WALK_R0]; //R4 = R0
     
     //Left
     clips[WALK_L0].x = clips[WALK_R2].x + STICK_WIDTH ;
@@ -74,33 +73,9 @@ void Sprite::clip_tile(){
     clips[WALK_L2].h = STICK_HEIGHT;
     
     clips[WALK_L3] = clips[WALK_L1];
-    clips[WALK_L4] = clips[WALK_L0];
-   
+    
     
 }
-
-
-void Sprite::animate(){
-//    if (frame != STAND) {
-//        if (frame >= WALK_R0 && frame < WALK_R2) {
-//            frame += 1;
-//            box.x += TILE_WIDTH/3;
-//        }else if(frame >= WALK_L0 && frame < WALK_L2){
-//            frame += 1;
-//            box.x -= TILE_WIDTH/3;
-//        }else{
-//            if (frame == WALK_R2) {
-//                xPos += 1;
-//                pos += 1;
-//            }else if(frame == WALK_L2){
-//                xPos -= 1;
-//                pos -= 1;
-//            }
-//            frame = STAND;
-//        }
-//    }
-}
-
 
 void Sprite::handle_input(SDL_Event event, Level * level){
     if( event.type == SDL_KEYDOWN ){
@@ -112,7 +87,7 @@ void Sprite::handle_input(SDL_Event event, Level * level){
                 if (frame < WALK_R0) {
                     frame = WALK_R0;
                 }
-                if (frame > WALK_R4) {
+                if (frame > WALK_R3) {
                     frame = WALK_R0;
                 }
                 break;
@@ -122,7 +97,7 @@ void Sprite::handle_input(SDL_Event event, Level * level){
                 if (frame < WALK_L0) { //stand or run right
                     frame = WALK_L0;
                 }
-                if (frame > WALK_L4) {
+                if (frame > WALK_L3) {
                     frame = WALK_L0;
                 }
                 break;
@@ -136,82 +111,9 @@ void Sprite::handle_input(SDL_Event event, Level * level){
         }
     }else if(event.type == SDL_KEYUP){
         //return to stand
-        //frame = STAND;
+        frame = STAND;
     }
 }
-
-/*void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
-
-    if( event.type == SDL_KEYDOWN ){
-        //Adjust the velocity
-        switch( event.key.keysym.sym ){
-            case SDLK_RIGHT:
-                
-                if (xPos+1 < TILE_COLUMN && yPos +1 <= TILE_ROW) {
-                    if (!(tiles[pos + 1]->get_type() == TILE_BRICK||
-                        tiles[pos - TILE_COLUMN+1]->get_type() == TILE_BRICK||
-                        tiles[pos - TILE_COLUMN*2+1]->get_type() == TILE_BRICK)&&
-                        (tiles[pos+TILE_COLUMN+1]->get_type() == TILE_FLOOR ||
-                        tiles[pos+TILE_COLUMN+1]->get_type() == TILE_LADDER)) {
-                        
-                        box.x += TILE_WIDTH/3;
-                        frame += 1;
-                        if (frame > WALK_R2) {
-                            frame = WALK_R0;
-                            xPos += 1;
-                            pos += 1;
-                        }
-                    }
-                    //add a time check here, if time overlap , then change animation?
-                    //do a whole frame of animation by one self?
-                    
-                }
-                
-                break; //ladder
-            case SDLK_LEFT:
-                //std::cout<<"????"<<std::endl;
-                if (xPos > 0 && yPos - 1 >= 0 ) {
-                    if (!(tiles[pos - 1]->get_type() == TILE_BRICK||
-                          tiles[pos - TILE_COLUMN-1]->get_type() == TILE_BRICK||
-                          tiles[pos - TILE_COLUMN*2-1]->get_type() == TILE_BRICK)&&
-                        (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
-                        box.x -= TILE_WIDTH/3;
-                        frame += 1;
-                        if (frame < WALK_L0) { //stand or run right
-                            frame = WALK_L0;
-                        }
-                        if (frame > WALK_L2) {
-                            frame = WALK_L0;
-                            xPos -= 1;
-                            pos -= 1;
-                        }
-                    }
-                   
-                }
-                
-                break;
-            case SDLK_UP:
-                if (0 <= pos && pos < TOTAL_TILES && tiles[pos]->get_type() == TILE_LADDER) {
-                    yPos -= 1;
-                    pos -= TILE_COLUMN;
-                    box.y -= TILE_HEIGHT;
-                }
-                break;
-            case SDLK_DOWN:
-                if (0 <= pos && pos < TOTAL_TILES && tiles[pos+TILE_COLUMN]->get_type() == TILE_LADDER) {
-                    yPos += 1;
-                    pos += TILE_COLUMN;
-                    box.y += TILE_HEIGHT;
-                }
-                break;
-            default: break;
-        }
-        //std::cout<<pos<<" "<<box.x <<" "<< box.y<<" "<<tiles[pos]->get_type() <<std::endl;
-    }else if( event.type == SDL_KEYUP ){
-       
-    }
-   
-}*/
 
 
 void Sprite::show(SDL_Rect camera, SDL_Surface * screen){

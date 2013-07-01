@@ -26,12 +26,10 @@ class Sprite{
         WALK_R1,
         WALK_R2,
         WALK_R3,
-        WALK_R4,
         WALK_L0,
         WALK_L1,
         WALK_L2,
         WALK_L3,
-        WALK_L4,
         TOTAL_STATE,
     };
         SDL_Rect clips[TOTAL_STATE];
@@ -40,7 +38,6 @@ class Sprite{
         Sprite();
         ~Sprite();
         void clip_tile();
-        void animate();
         void handle_input(SDL_Event event, Level * level);
         void show(SDL_Rect camera, SDL_Surface * screen);
 };

@@ -111,7 +111,6 @@ int main( int argc, char* args[] )
         
         if(accumulator > 300){
             accumulator -= 300;
-            stick->animate(); //change to bool maybe later
 //            robot->animate(tiles);
         }
         
