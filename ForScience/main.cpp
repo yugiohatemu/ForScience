@@ -15,25 +15,15 @@
 #include <fstream>
 #include "timer.h"
 #include "utility.h"
-#include "tile.h"
 #include "sprite.h"
 #include "constant.h"
 #include "robot.h"
-/*This source code copyrighted by Lazy Foo' Productions (2004-2013)
- and may not be redistributed without written permission.*/
-
+#include "level.h"
 
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
 SDL_Surface *robotSheet = NULL;
-//Sprite from the tile sheet
-SDL_Rect clips[ TILE_SPRITES ];
-//The event structure
-SDL_Event event;
-
-//The camera
-SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 
 bool init(){
@@ -53,8 +43,7 @@ bool init(){
     return true;
 }
 
-bool load_files()
-{
+bool load_files(){
     
     //Load the tile sheet
     tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/tiles.png" );
@@ -66,102 +55,28 @@ bool load_files()
     return true;
 }
 
-void clean_up( Tile *tiles[] )
-{
+void clean_up( ){
     //Free the surfaces
     SDL_FreeSurface( tileSheet );
     SDL_FreeSurface( robotSheet);
-    //Free the tiles
-    for( int t = 0; t < TOTAL_TILES; t++ ){
-        delete tiles[ t ];
-    }
-    
     //Quit SDL
     SDL_Quit();
 }
 
-void clip_tiles(){
-    //Clip the sprite sheet
-    clips[ TILE_EMPTY ].x = 40;
-    clips[ TILE_EMPTY  ].y = 0;
-    clips[ TILE_EMPTY  ].w = TILE_WIDTH;
-    clips[ TILE_EMPTY  ].h = TILE_HEIGHT;
-    
-    clips[ TILE_LADDER ].x = 80;
-    clips[ TILE_LADDER ].y = 0;
-    clips[ TILE_LADDER ].w = TILE_WIDTH;
-    clips[ TILE_LADDER ].h = TILE_HEIGHT;
-    
-    clips[ TILE_FLOOR ].x = 120;
-    clips[ TILE_FLOOR ].y = 0;
-    clips[ TILE_FLOOR ].w = TILE_WIDTH;
-    clips[ TILE_FLOOR ].h = TILE_HEIGHT;
-    
-    clips[ TILE_BACKWALL ].x = 200;
-    clips[ TILE_BACKWALL ].y = 0;
-    clips[ TILE_BACKWALL ].w = TILE_WIDTH;
-    clips[ TILE_BACKWALL ].h = TILE_HEIGHT;
-    
-    clips[ TILE_BRICK ].x = 160;
-    clips[ TILE_BRICK  ].y = 0;
-    clips[ TILE_BRICK  ].w = TILE_WIDTH;
-    clips[ TILE_BRICK  ].h = TILE_HEIGHT;
-
-}
-
-
-bool set_tiles( Tile *tiles[] ){
-    //The tile offsets, use this later
-    //int x = 0, y = 0;
-    
-    //Open the map
-    std::ifstream map( "/Users/wei/Desktop/ForScience/ForScience/lazy.map" );
-    
-    for (int i = 0; i < TILE_ROW; i++) {
-        for (int j = 0; j < TILE_COLUMN; j ++) {
-            int tileType = -1;
-            map >> tileType;
-            if( map.fail() == true ){
-                map.close();
-                return false;
-            }
-            
-            //If the number is a valid tile number, else close
-            if( ( tileType >= 0 ) && ( tileType < TILE_SPRITES ) ){
-                tiles[ i * TILE_COLUMN + j  ] = new Tile(j * TILE_HEIGHT,i * TILE_WIDTH,  tileType );
-            }else{ 
-                map.close();
-                return false;
-            }
-        }
-    }
-    
-    //Close the file
-    map.close();
-    return true;
-}
 
 
 int main( int argc, char* args[] )
 {
     //Quit flag
     bool quit = false;
-    
-    //Sprite myDot;
-    Tile *tiles[ TOTAL_TILES ];
     Timer fps;
-    
+    SDL_Event event;
+    SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
     //Initialize
     if( init() == false ) return 1;
     
     //Load the files
     if( load_files() == false )return 1;
-    
-    //Clip the tile sheet
-    clip_tiles();
-    
-    //Set the tiles
-    if( set_tiles( tiles ) == false ) return 1;
     
     //Continuous key press
     if(SDL_EnableKeyRepeat(300,300)<0) return 1;
@@ -172,7 +87,8 @@ int main( int argc, char* args[] )
     int accumulator = 0;
     Sprite * stick = new Sprite();
     Robot * robot = new Robot();
-    //Robot robot;
+    Level * level = new Level();
+    
     //While the user hasn't quit
     while( quit == false ){
         //Start the frame timer
@@ -183,9 +99,10 @@ int main( int argc, char* args[] )
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
             //handle event
-            stick->handle_input(event, tiles);
-            
+//            stick->handle_input(event, tiles);
+            stick->handle_input(event, level);
         }
+        
         // Handle game world here
         cur_time = SDL_GetTicks();
         diff_time = cur_time - last_time;
@@ -195,7 +112,7 @@ int main( int argc, char* args[] )
         if(accumulator > 300){
             accumulator -= 300;
             stick->animate(); //change to bool maybe later
-            robot->animate(tiles);
+//            robot->animate(tiles);
         }
         
         last_time = cur_time;
@@ -204,13 +121,9 @@ int main( int argc, char* args[] )
         //Move the dot //myDot.move( tiles );
         //Set the camera//myDot.set_camera();
         
-        //Show 
-        for( int t = 0; t < TOTAL_TILES; t++ ){
-            tiles[ t ]->show(camera, tileSheet, screen, clips);
-        }
-        
+        level->show(camera, tileSheet, screen);
         stick->show(camera, screen);
-        robot->show(camera, screen, robotSheet);
+        //robot->show(camera, robotSheet, screen);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
@@ -225,8 +138,9 @@ int main( int argc, char* args[] )
     
     
     //Clean up
-    clean_up( tiles );
+    clean_up();
     delete stick;
     delete robot;
+    delete level;
     return 0;
 }

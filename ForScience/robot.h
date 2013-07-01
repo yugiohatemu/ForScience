@@ -11,7 +11,6 @@
 
 
 #include "SDL/SDL.h"
-#include "tile.h"
 
 class Robot{
 private:
@@ -36,8 +35,8 @@ public:
     Robot();
     ~Robot();
     void clip_tile();
-    void animate(Tile * tiles[]);
-    void show(SDL_Rect camera, SDL_Surface * screen, SDL_Surface * tileSheet);
+    //void animate(Tile * tiles[]);
+    void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
 };
 
 

@@ -37,7 +37,7 @@ void Robot::clip_tile(){
     }
 }
 
-void Robot::animate(Tile * tiles[]){
+/*void Robot::animate(Tile * tiles[]){
     //if no obstacle is encounter, then keep going, if so, then return back
     //a set of movement is from 0 to 3
     //so only need to consider that in 3
@@ -70,10 +70,10 @@ void Robot::animate(Tile * tiles[]){
     //feels more reasonable
     //tiles feel so constranied....
     
-}
+}*/
 
 
 
-void Robot::show(SDL_Rect camera, SDL_Surface *screen, SDL_Surface *tileSheet){
+void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }

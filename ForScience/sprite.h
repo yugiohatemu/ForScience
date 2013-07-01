@@ -10,34 +10,38 @@
 #define ForScience_sprite_h
 
 #include "SDL/SDL.h"
-#include "tile.h"
-#include "timer.h"
+#include "level.h"
+
 class Sprite{
     private:
         SDL_Rect box;
         int xPos, yPos;
         int pos;
         int frame;
-        SDL_Rect clips[7];
+        
         SDL_Surface * tileSheet;
     enum State{
         STAND = 0,
-        WALKR0,
-        WALKR1,
-        WALKR2,
-        WALKL0,
-        WALKL1,
-        WALKL2,
-        JUMP,
+        WALK_R0,
+        WALK_R1,
+        WALK_R2,
+        WALK_R3,
+        WALK_R4,
+        WALK_L0,
+        WALK_L1,
+        WALK_L2,
+        WALK_L3,
+        WALK_L4,
+        TOTAL_STATE,
     };
+        SDL_Rect clips[TOTAL_STATE];
         
     public:
         Sprite();
         ~Sprite();
         void clip_tile();
         void animate();
-        void handle_input(SDL_Event event, Tile * tiles[]);
-        void show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen);
+        void handle_input(SDL_Event event, Level * level);
         void show(SDL_Rect camera, SDL_Surface * screen);
 };
 

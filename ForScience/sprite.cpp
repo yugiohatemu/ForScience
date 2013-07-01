@@ -13,7 +13,7 @@
 
 Sprite::Sprite(){
     //Initialize the offsets
-    box.x = 5*TILE_WIDTH;
+    box.x = 4*TILE_WIDTH;
     box.y = SCREEN_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
     box.w = STICK_WIDTH ;
     box.h = STICK_HEIGHT;
@@ -38,70 +38,115 @@ void Sprite::clip_tile(){
     clips[STAND].w = STICK_WIDTH;
     clips[STAND].h = STICK_HEIGHT;
     
-    clips[WALKR0].x = clips[STAND].x + STICK_WIDTH;
-    clips[WALKR0].y = 0;
-    clips[WALKR0].w = STICK_WIDTH;
-    clips[WALKR0].h =STICK_HEIGHT;
+    //Right
+    clips[WALK_R0].x = clips[STAND].x + STICK_WIDTH;
+    clips[WALK_R0].y = 0;
+    clips[WALK_R0].w = STICK_WIDTH;
+    clips[WALK_R0].h =STICK_HEIGHT;
     
-    clips[WALKR1].x = clips[WALKR0].x + STICK_WIDTH ;
-    clips[WALKR1].y = 0;
-    clips[WALKR1].w =STICK_WIDTH;
-    clips[WALKR1].h =STICK_HEIGHT;
+    clips[WALK_R1].x = clips[WALK_R0].x + STICK_WIDTH ;
+    clips[WALK_R1].y = 0;
+    clips[WALK_R1].w =STICK_WIDTH;
+    clips[WALK_R1].h =STICK_HEIGHT;
     
-    clips[WALKR2].x = clips[WALKR1].x + STICK_WIDTH;
-    clips[WALKR2].y = 0;
-    clips[WALKR2].w = STICK_WIDTH;
-    clips[WALKR2].h = STICK_HEIGHT;
+    clips[WALK_R2].x = clips[WALK_R1].x + STICK_WIDTH;
+    clips[WALK_R2].y = 0;
+    clips[WALK_R2].w = STICK_WIDTH;
+    clips[WALK_R2].h = STICK_HEIGHT;
     
-    clips[WALKL0].x = clips[WALKR2].x + STICK_WIDTH ;
-    clips[WALKL0].y = 0;
-    clips[WALKL0].w = STICK_WIDTH;
-    clips[WALKL0].h = STICK_HEIGHT;
+    clips[WALK_R3] = clips[WALK_R1]; //R3 = R1
+    clips[WALK_R4] = clips[WALK_R0]; //R4 = R0
     
-    clips[WALKL1].x = clips[WALKL0].x+ STICK_WIDTH ;
-    clips[WALKL1].y = 0;
-    clips[WALKL1].w = STICK_WIDTH;
-    clips[WALKL1].h = STICK_HEIGHT;
+    //Left
+    clips[WALK_L0].x = clips[WALK_R2].x + STICK_WIDTH ;
+    clips[WALK_L0].y = 0;
+    clips[WALK_L0].w = STICK_WIDTH;
+    clips[WALK_L0].h = STICK_HEIGHT;
     
-    clips[WALKL2].x = clips[WALKL1].x + STICK_WIDTH ;
-    clips[WALKL2].y = 0;
-    clips[WALKL2].w = STICK_WIDTH;
-    clips[WALKL2].h = STICK_HEIGHT;
+    clips[WALK_L1].x = clips[WALK_L0].x+ STICK_WIDTH ;
+    clips[WALK_L1].y = 0;
+    clips[WALK_L1].w = STICK_WIDTH;
+    clips[WALK_L1].h = STICK_HEIGHT;
     
-   
+    clips[WALK_L2].x = clips[WALK_L1].x + STICK_WIDTH ;
+    clips[WALK_L2].y = 0;
+    clips[WALK_L2].w = STICK_WIDTH;
+    clips[WALK_L2].h = STICK_HEIGHT;
     
+    clips[WALK_L3] = clips[WALK_L1];
+    clips[WALK_L4] = clips[WALK_L0];
    
     
 }
 
 
 void Sprite::animate(){
-    if (frame != STAND) {
-        if (frame >= WALKR0 && frame < WALKR2) {
-            frame += 1;
-            box.x += TILE_WIDTH/3;
-        }else if(frame >= WALKL0 && frame < WALKL2){
-            frame += 1;
-            box.x -= TILE_WIDTH/3;
-        }else{
-            if (frame == WALKR2) {
-                xPos += 1;
-                pos += 1;
-            }else if(frame == WALKL2){
-                xPos -= 1;
-                pos -= 1;
-            }
-            frame = STAND;
+//    if (frame != STAND) {
+//        if (frame >= WALK_R0 && frame < WALK_R2) {
+//            frame += 1;
+//            box.x += TILE_WIDTH/3;
+//        }else if(frame >= WALK_L0 && frame < WALK_L2){
+//            frame += 1;
+//            box.x -= TILE_WIDTH/3;
+//        }else{
+//            if (frame == WALK_R2) {
+//                xPos += 1;
+//                pos += 1;
+//            }else if(frame == WALK_L2){
+//                xPos -= 1;
+//                pos -= 1;
+//            }
+//            frame = STAND;
+//        }
+//    }
+}
+
+
+void Sprite::handle_input(SDL_Event event, Level * level){
+    if( event.type == SDL_KEYDOWN ){
+        //Adjust the velocity
+        switch( event.key.keysym.sym ){
+            case SDLK_RIGHT:
+                level->move_on_level(box, SDLK_RIGHT, 20);
+                frame += 1;
+                if (frame < WALK_R0) {
+                    frame = WALK_R0;
+                }
+                if (frame > WALK_R4) {
+                    frame = WALK_R0;
+                }
+                break;
+            case SDLK_LEFT:
+                level->move_on_level(box, SDLK_LEFT, 20);
+                frame += 1;
+                if (frame < WALK_L0) { //stand or run right
+                    frame = WALK_L0;
+                }
+                if (frame > WALK_L4) {
+                    frame = WALK_L0;
+                }
+                break;
+            case SDLK_UP:
+                level->move_on_level(box, SDLK_UP, 20);
+                break;
+            case SDLK_DOWN:
+                level->move_on_level(box, SDLK_DOWN, 20);
+                break;
+            default: break;
         }
+    }else if(event.type == SDL_KEYUP){
+        //return to stand
+        //frame = STAND;
     }
 }
 
-void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
+/*void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
 
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
+                
                 if (xPos+1 < TILE_COLUMN && yPos +1 <= TILE_ROW) {
                     if (!(tiles[pos + 1]->get_type() == TILE_BRICK||
                         tiles[pos - TILE_COLUMN+1]->get_type() == TILE_BRICK||
@@ -111,8 +156,8 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                         
                         box.x += TILE_WIDTH/3;
                         frame += 1;
-                        if (frame > WALKR2) {
-                            frame = WALKR0;
+                        if (frame > WALK_R2) {
+                            frame = WALK_R0;
                             xPos += 1;
                             pos += 1;
                         }
@@ -132,11 +177,11 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
                         (tiles[pos+TILE_COLUMN-1]->get_type() == TILE_FLOOR || tiles[pos+TILE_COLUMN-1]->get_type() == TILE_LADDER)) {
                         box.x -= TILE_WIDTH/3;
                         frame += 1;
-                        if (frame < WALKL0) { //stand or run right
-                            frame = WALKL0;
+                        if (frame < WALK_L0) { //stand or run right
+                            frame = WALK_L0;
                         }
-                        if (frame > WALKL2) {
-                            frame = WALKL0;
+                        if (frame > WALK_L2) {
+                            frame = WALK_L0;
                             xPos -= 1;
                             pos -= 1;
                         }
@@ -166,12 +211,8 @@ void Sprite::handle_input(SDL_Event event,Tile * tiles[]){
        
     }
    
-}
+}*/
 
-void Sprite::show(SDL_Rect camera,SDL_Surface * dot, SDL_Surface * screen){
-    //Show the Sprite
-    apply_surface( box.x - camera.x, box.y - camera.y, dot, screen );
-}
 
 void Sprite::show(SDL_Rect camera, SDL_Surface * screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
