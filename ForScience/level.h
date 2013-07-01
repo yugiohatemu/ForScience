@@ -23,6 +23,7 @@ class Level{
     SDL_Rect * clips;
     void set_clip();
     void set_tile();
+    int get_tile_pos(int x, int y);
 public:
     Level();
     ~Level();

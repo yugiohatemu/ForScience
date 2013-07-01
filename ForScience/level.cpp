@@ -72,28 +72,79 @@ void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     }
 }
 
+//get which pos on given x and y
+//if not valid , return -1?
+int Level::get_tile_pos(int x, int y){
+    int m = x/TILE_WIDTH;
+    int n = y/TILE_HEIGHT;
+    return m * TILE_COLUMN + n;
+}
+
 void Level::move_on_level(SDL_Rect &box, int dir, int speed){
     //1st based on the box x, y w h, calculate which area it is on
-    int corner[4][2];
-    corner[0][0] = box.x;
-    corner[0][1] = box.y; //LT
-    corner[1][0] = box.x + box.w;
-    corner[1][1] = box.y; //RT
-    corner[2][0] = box.x;
-    corner[2][1] = box.y + box.h;//LB
-    corner[3][0] = box.x + box.w;
-    corner[3][1] = box.y + box.h;//RB
-    //no ...
-    
+    int bot_right, top_right, bot_left, top_left = 0;
+    int bot_center, top_center, center = 0;
+    bool is_stuck = false;
+    //it depends on whether it is in between or else where?
     switch (dir) {
         case SDLK_RIGHT:
-            //the under foot is floor or ladder
-            //2nd, no obstacle for body
-            if (box.y+box.h ) {
-                
+            //check for further posistion directly
+            bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
+            top_right = get_tile_pos(box.x + box.w + speed, box.y);
+            if (tiles[bot_right + TILE_COLUMN].type == TILE_FLOOR  || tiles[bot_right + TILE_COLUMN].type == TILE_LADDER) { 
+                //2nd, no obstacle for body
+                for (int i = top_right; i <= bot_right; i += TILE_COLUMN) {
+                    if (tiles[i].type == TILE_BRICK) {
+                        is_stuck = true;
+                        break;
+                    }
+                }
+                if (is_stuck) {
+                    box.x = (int)(box.x % TILE_COLUMN) * TILE_WIDTH;
+                }else{
+                    box.x += speed;
+                }
             }
             break;
         case SDLK_LEFT:
+            top_left = get_tile_pos(box.x - speed, box.y);
+            bot_left = get_tile_pos(box.x- speed, box.y + box.h);
+            if (tiles[bot_left + TILE_COLUMN].type == TILE_FLOOR  || tiles[bot_left + TILE_COLUMN].type == TILE_LADDER) {
+                for (int i = top_left; i <= bot_left; i += TILE_COLUMN) {
+                    if (tiles[i].type == TILE_BRICK) {
+                        is_stuck = true;
+                        break;
+                    }
+                }
+                if (is_stuck) {
+                    box.x = (int)((box.x % TILE_COLUMN) + 1) * TILE_WIDTH;
+                }else{
+                    box.x -= speed;
+                }
+            }
+            break;
+        case SDLK_UP:
+            //the center has to in the stair
+            bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
+            if (tiles[bot_center].type == TILE_LADDER) {
+                box.x = (int)(box.x / TILE_COLUMN) * TILE_WIDTH; 
+                if ( tiles[bot_center - TILE_COLUMN].type == TILE_LADDER) {
+                    box.y += speed;
+                }else if(tiles[bot_center - TILE_COLUMN].type == TILE_BACKWALL){
+                    box.y = (int) (bot_center / TILE_COLUMN) * TILE_HEIGHT;
+                }
+            }
+            break;
+        case SDLK_DOWN:
+            top_center = get_tile_pos(box.x + box.w/2, box.y);
+            if (tiles[top_center].type == TILE_LADDER) {
+                box.x = (int)(box.x / TILE_COLUMN) * TILE_WIDTH;
+                if ( tiles[top_center + TILE_COLUMN].type == TILE_LADDER) {
+                    box.y += speed;
+                }else if(tiles[top_center + TILE_COLUMN].type == TILE_BACKWALL){
+                    box.y = (int) ((top_center / TILE_COLUMN) +1) * TILE_HEIGHT;
+                }
+            }
             break;
         default:
             break;
