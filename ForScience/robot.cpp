@@ -11,16 +11,13 @@
 #include "utility.h"
 
 Robot::Robot(){
-    box.x = 5*TILE_WIDTH;
+    box.x = 8*TILE_WIDTH;
     box.y = SCREEN_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
     box.w = ROBOT_WIDTH ;
     box.h = ROBOT_HEIGHT;
     
-    xPos = 3;
-    yPos = 11;
-    pos = (yPos-1) * TILE_COLUMN + xPos;
     frame = WALK_R0;
-    
+    dir = SDLK_RIGHT;
     clip_tile();
 }
 
@@ -37,41 +34,28 @@ void Robot::clip_tile(){
     }
 }
 
-/*void Robot::animate(Tile * tiles[]){
-    //if no obstacle is encounter, then keep going, if so, then return back
-    //a set of movement is from 0 to 3
-    //so only need to consider that in 3
-    frame +=1;
-    if (frame >= WALK_R0 && frame <= WALK_R3) {
-        //       frame += 1;
-
-        box.x += TILE_WIDTH/2;
-    }else if(frame >= WALK_L0 && frame < WALK_L3){
-//        frame += 1;
-        box.x -= TILE_WIDTH/2;
-        
-    }else if(frame == WALK_L3){
+void Robot::animate(Level * level){
+    int oldx = box.x;
+    level->move_on_level(box, dir, 15);
+    
+    if ((frame >= WALK_R0 && frame < WALK_R3) || (frame >= WALK_L0 && frame < WALK_L3)) {
+        frame += 1;
+    }else if(frame == WALK_R3){
         frame = WALK_R0;
+    }else if(frame == WALK_L3){
+        frame = WALK_L0;
     }
-//else if(frame == WALK_R3){
-//        if (!(tiles[pos + 1]->get_type() == TILE_BRICK|| tiles[pos - TILE_COLUMN+1]->get_type() == TILE_BRICK)&&
-//            (tiles[pos+TILE_COLUMN+1]->get_type() == TILE_FLOOR ||tiles[pos+TILE_COLUMN+1]->get_type() == TILE_LADDER)){
-//            box.x += TILE_WIDTH/4;
-//        }else{
-//            
-//        }
-//        
-//    }else if(frame == WALK_L3){
-//        
-//    }
-    
-    //not kind of what i want
-    //i would rather ask the tile whether i can go there, given my rect position
-    //feels more reasonable
-    //tiles feel so constranied....
-    
-}*/
-
+    ////we r not progressing, so need to change direction
+    if (oldx == box.x) { 
+        if (dir == SDLK_RIGHT) {
+            dir = SDLK_LEFT;
+            frame = WALK_L0;
+        }else{
+            dir = SDLK_RIGHT;
+            frame = WALK_R0;
+        }
+    }
+}
 
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){

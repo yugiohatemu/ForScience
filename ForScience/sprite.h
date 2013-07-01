@@ -15,11 +15,7 @@
 class Sprite{
     private:
         SDL_Rect box;
-        int xPos, yPos;
-        int pos;
         int frame;
-        
-        SDL_Surface * tileSheet;
     enum State{
         STAND = 0,
         WALK_R0,
@@ -39,7 +35,7 @@ class Sprite{
         ~Sprite();
         void clip_tile();
         void handle_input(SDL_Event event, Level * level);
-        void show(SDL_Rect camera, SDL_Surface * screen);
+        void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
 };
 
 

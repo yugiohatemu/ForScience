@@ -24,7 +24,7 @@
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
 SDL_Surface *robotSheet = NULL;
-
+SDL_Surface *stickSheet = NULL;
 
 bool init(){
     //Initialize all SDL subsystems
@@ -48,6 +48,10 @@ bool load_files(){
     //Load the tile sheet
     tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/tiles.png" );
     if( tileSheet == NULL ) return false;
+    
+    stickSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/stickman.png" );
+    if (stickSheet == NULL) return false;
+    
     robotSheet = load_image("/Users/wei/Desktop/ForScience/ForScience/robot.png" );
     if (robotSheet == NULL) return false;
     
@@ -59,6 +63,7 @@ void clean_up( ){
     //Free the surfaces
     SDL_FreeSurface( tileSheet );
     SDL_FreeSurface( robotSheet);
+    SDL_FreeSurface( stickSheet);
     //Quit SDL
     SDL_Quit();
 }
@@ -91,15 +96,11 @@ int main( int argc, char* args[] )
     
     //While the user hasn't quit
     while( quit == false ){
-        //Start the frame timer
-        //if want to process continuous key eveent, need to change this loop based on time
-        
         fps.start();
        
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
-            //handle event
-//            stick->handle_input(event, tiles);
+
             stick->handle_input(event, level);
         }
         
@@ -111,7 +112,7 @@ int main( int argc, char* args[] )
         
         if(accumulator > 300){
             accumulator -= 300;
-//            robot->animate(tiles);
+            robot->animate(level);
         }
         
         last_time = cur_time;
@@ -121,8 +122,8 @@ int main( int argc, char* args[] )
         //Set the camera//myDot.set_camera();
         
         level->show(camera, tileSheet, screen);
-        stick->show(camera, screen);
-        //robot->show(camera, robotSheet, screen);
+        stick->show(camera, stickSheet,screen);
+        robot->show(camera, robotSheet, screen);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){

@@ -18,11 +18,6 @@ Sprite::Sprite(){
     box.w = STICK_WIDTH ;
     box.h = STICK_HEIGHT;
     
-    xPos = 5;
-    yPos = 11;
-    pos = (yPos-1) * TILE_COLUMN + xPos;
-    
-    tileSheet = NULL;
     clip_tile();
     
     frame = 0;
@@ -31,7 +26,7 @@ Sprite::Sprite(){
 
 
 void Sprite::clip_tile(){
-    tileSheet = load_image( "/Users/wei/Desktop/ForScience/ForScience/stickman.png" );
+    
     
     clips[STAND].x = 0;
     clips[STAND].y = 0;
@@ -116,16 +111,14 @@ void Sprite::handle_input(SDL_Event event, Level * level){
 }
 
 
-void Sprite::show(SDL_Rect camera, SDL_Surface * screen){
+void Sprite::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }
 
 
 //Clear the tile sheet that is being used
 Sprite::~Sprite(){
-    if (tileSheet) {
-        SDL_FreeSurface(tileSheet);
-    }
+   
 }
 
 //void Sprite::set_camera(SDL_Rect camera)

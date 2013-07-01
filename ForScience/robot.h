@@ -11,13 +11,14 @@
 
 
 #include "SDL/SDL.h"
+#include "level.h"
 
 class Robot{
 private:
     SDL_Rect box;
-    int xPos, yPos;
-    int pos;
+
     int frame;
+    int dir;
     enum State{
         WALK_R0 = 0,
         WALK_R1,
@@ -35,6 +36,7 @@ public:
     Robot();
     ~Robot();
     void clip_tile();
+    void animate(Level * level);
     //void animate(Tile * tiles[]);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
 };
