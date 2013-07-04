@@ -12,7 +12,7 @@
 
 Robot::Robot(){
     box.x = 8*TILE_WIDTH;
-    box.y = SCREEN_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
+    box.y = LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
     box.w = ROBOT_WIDTH ;
     box.h = ROBOT_HEIGHT;
     

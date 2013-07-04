@@ -14,7 +14,7 @@
 Sprite::Sprite(){
     //Initialize the offsets
     box.x = 4*TILE_WIDTH;
-    box.y = SCREEN_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
+    box.y = LEVEL_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
     box.w = STICK_WIDTH ;
     box.h = STICK_HEIGHT;
     

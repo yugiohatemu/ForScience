@@ -108,19 +108,19 @@
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B63F59C61780C06C000B09C9 /* robot.cpp */,
 				B62443EF177E06E5000041FE /* sprite.cpp */,
+				B63F59CE17820E19000B09C9 /* switch.cpp */,
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B62443EB177DFF81000041FE /* utility.cpp */,
 				B62443F1177E0CF0000041FE /* constant.h */,
 				B63F59CB1780DE45000B09C9 /* level.h */,
 				B63F59C71780C06C000B09C9 /* robot.h */,
 				B62443E2177DF5AF000041FE /* sprite.h */,
+				B63F59CF17820E19000B09C9 /* switch.h */,
 				B62443E3177DF655000041FE /* timer.h */,
 				B62443EC177DFF81000041FE /* utility.h */,
 				B62443E7177DFD07000041FE /* lazy.map */,
 				B62443F4177E394C000041FE /* image */,
 				B62443EE177E02ED000041FE /* miscellaneous */,
-				B63F59CE17820E19000B09C9 /* switch.cpp */,
-				B63F59CF17820E19000B09C9 /* switch.h */,
 			);
 			path = ForScience;
 			sourceTree = "<group>";

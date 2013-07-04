@@ -10,6 +10,7 @@
 
 #include "SDL/SDL.h"
 #include "SDL_image/SDL_image.h"
+#include "SDL_ttf/SDL_ttf.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -26,6 +27,12 @@ SDL_Surface *tileSheet = NULL;
 SDL_Surface *robotSheet = NULL;
 SDL_Surface *stickSheet = NULL;
 
+//The font and font color that's going to be used
+TTF_Font *font = NULL;
+SDL_Color textColor = { 255, 255, 255 };
+SDL_Surface * text = NULL;
+
+
 bool init(){
     //Initialize all SDL subsystems
     if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) return false;
@@ -38,6 +45,9 @@ bool init(){
 
     //Set the window caption
     SDL_WM_SetCaption( "For Science - 0.1", NULL );
+    
+    if( TTF_Init() == -1 ) return false;
+    
     
     //If everything initialized fine
     return true;
@@ -55,6 +65,10 @@ bool load_files(){
     robotSheet = load_image("/Users/wei/Desktop/ForScience/ForScience/robot.png" );
     if (robotSheet == NULL) return false;
     
+    font = TTF_OpenFont( "/Users/wei/Desktop/ForScience/ForScience/font.ttf", 28 );
+    if (font == NULL) return false;
+    
+    
     //If everything loaded fine
     return true;
 }
@@ -64,6 +78,12 @@ void clean_up( ){
     SDL_FreeSurface( tileSheet );
     SDL_FreeSurface( robotSheet);
     SDL_FreeSurface( stickSheet);
+    
+    //Free font
+    SDL_FreeSurface( text );
+    TTF_CloseFont(font);
+    TTF_Quit();
+   
     //Quit SDL
     SDL_Quit();
 }
@@ -78,10 +98,16 @@ int main( int argc, char* args[] )
     SDL_Event event;
     SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
     //Initialize
-    if( init() == false ) return 1;
+    if( init() == false ) {
+        std::cerr<<"Init fail"<<std::endl;
+        return 1;
+    }
     
     //Load the files
-    if( load_files() == false )return 1;
+    if( load_files() == false ){
+        std::cerr<<"Load file fail"<<std::endl;
+        return 1;
+    }
     
     //Continuous key press
     if(SDL_EnableKeyRepeat(300,300)<0) return 1;
@@ -93,6 +119,10 @@ int main( int argc, char* args[] )
     Sprite * stick = new Sprite();
     Robot * robot = new Robot();
     Level * level = new Level();
+    //
+    
+    text = TTF_RenderText_Solid( font, "For Sci ence", textColor );
+    if (text == NULL) return 1;
     
     //While the user hasn't quit
     while( quit == false ){
@@ -124,6 +154,9 @@ int main( int argc, char* args[] )
         level->show(camera, tileSheet, screen);
         stick->show(camera, stickSheet,screen);
         robot->show(camera, robotSheet, screen);
+        
+        //text
+        apply_surface(0, 480, text, screen);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
