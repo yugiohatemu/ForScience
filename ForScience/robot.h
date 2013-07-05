@@ -9,10 +9,11 @@
 #ifndef __ForScience__robot__
 #define __ForScience__robot__
 
-
 #include "SDL/SDL.h"
 #include "level.h"
 #include "sprite.h"
+#include "text.h"
+
 class Robot{
 private:
     SDL_Rect box;
@@ -35,6 +36,7 @@ private:
     };
     int state;
     
+    Text * sub_title;
 public:
     Robot();
     ~Robot();
@@ -43,7 +45,7 @@ public:
     void react_to(Sprite * stick);
     //void animate(Tile * tiles[]);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-    
+    void link_text(Text * text);
 };
 
 

@@ -118,7 +118,7 @@ int main( int argc, char* args[] )
     Robot * robot = new Robot();
     Level * level = new Level();
     Text * text = new Text(0, 480, "For Science", font);
-    
+    robot->link_text(text);
     //While the user hasn't quit
     while( quit == false ){
         fps.start();

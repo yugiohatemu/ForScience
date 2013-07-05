@@ -26,11 +26,12 @@ Robot::Robot(){
     dir = SDLK_RIGHT;
     state = WALK;
     clip_tile();
-   
+    
+    sub_title = NULL;
 }
 
 Robot::~Robot(){
-    
+    sub_title = NULL;
 }
 
 void Robot::clip_tile(){
@@ -85,15 +86,15 @@ void Robot::react_to(Sprite * stick){
     if (!check_collision(box, rect) && !check_collision(fan, rect)) {
         //set the state to walk
         state = WALK;
+        sub_title->set_text("For Science");
         return ;
     }
     //set state to stand
     state = STAND;
     //show that in the message bar
-    
+    sub_title->set_text("JUMP!");
     //ask the stick to do something
     //send the stick a request, ....., and the stick ifself check whether it is done?
-    
     
     
     //if the stick did that
@@ -101,6 +102,11 @@ void Robot::react_to(Sprite * stick){
     //the robot will let go unless interact again
     
 }
+
+void Robot::link_text(Text * text){
+    sub_title = text;
+}
+
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
