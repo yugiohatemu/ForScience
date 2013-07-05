@@ -11,14 +11,19 @@
 
 #include "SDL/SDL.h"
 #include <string>
+#include "SDL_ttf/SDL_ttf.h"
 
 class Text{
     std::string text;
     int x, y;
+    SDL_Color color;
+    TTF_Font * font;
+    SDL_Surface * font_surface;
 public:
-    Text();
+    Text(int x, int y, std::string text, TTF_Font * font);
     void set_text(std::string t);
     void show(SDL_Surface * screen);
+    ~Text();
 };
 
 #endif /* defined(__ForScience__text__) */

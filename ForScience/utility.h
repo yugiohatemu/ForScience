@@ -17,6 +17,7 @@
 SDL_Surface *load_image( std::string filename );
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip = NULL );
 bool check_collision( SDL_Rect A, SDL_Rect B );
-
+SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B);
+void debug(std::string s);
 
 #endif /* defined(__ForScience__utility__) */

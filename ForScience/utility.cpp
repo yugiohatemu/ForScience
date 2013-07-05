@@ -7,6 +7,8 @@
 //
 
 #include "utility.h"
+#include <algorithm>
+#include <iostream>
 
 SDL_Surface *load_image( std::string filename )
 {
@@ -52,8 +54,7 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination,
     SDL_BlitSurface( source, clip, destination, &offset );
 }
 
-bool check_collision( SDL_Rect A, SDL_Rect B )
-{
+bool check_collision( SDL_Rect A, SDL_Rect B ){
     //The sides of the rectangles
     int leftA, leftB;
     int rightA, rightB;
@@ -73,22 +74,24 @@ bool check_collision( SDL_Rect A, SDL_Rect B )
     bottomB = B.y + B.h;
     
     //If any of the sides from A are outside of B
-    if( bottomA <= topB ){
+    if( bottomA <= topB || topA >= bottomB || rightA <= leftB || leftA >= rightB)
         return false;
-    }
-    
-    if( topA >= bottomB ){
-        return false;
-    }
-    
-    if( rightA <= leftB ){
-        return false;
-    }
-    
-    if( leftA >= rightB ){
-        return false;
-    }
     
     //If none of the sides from A are outside B
     return true;
 }
+
+//merge to rect together
+SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B){
+    SDL_Rect rect;
+    rect.x = std::min(A.x,B.x);
+    rect.y = std::min(A.y,B.y);
+    rect.w = std::max(A.x + A.w - B.x, B.x + B.w - A.x);
+    rect.h = std::max(A.y + A.h - B.y, B.y + B.h - A.y);
+    return rect;
+}
+
+void debug(std::string s){
+    std::cout<<s<<std::endl;
+}
+

@@ -20,6 +20,7 @@
 #include "constant.h"
 #include "robot.h"
 #include "level.h"
+#include "text.h"
 
 //The surfaces
 SDL_Surface *screen = NULL;
@@ -29,8 +30,6 @@ SDL_Surface *stickSheet = NULL;
 
 //The font and font color that's going to be used
 TTF_Font *font = NULL;
-SDL_Color textColor = { 255, 255, 255 };
-SDL_Surface * text = NULL;
 
 
 bool init(){
@@ -80,7 +79,6 @@ void clean_up( ){
     SDL_FreeSurface( stickSheet);
     
     //Free font
-    SDL_FreeSurface( text );
     TTF_CloseFont(font);
     TTF_Quit();
    
@@ -119,10 +117,7 @@ int main( int argc, char* args[] )
     Sprite * stick = new Sprite();
     Robot * robot = new Robot();
     Level * level = new Level();
-    //
-    
-    text = TTF_RenderText_Solid( font, "For Sci ence", textColor );
-    if (text == NULL) return 1;
+    Text * text = new Text(0, 480, "For Science", font);
     
     //While the user hasn't quit
     while( quit == false ){
@@ -143,6 +138,7 @@ int main( int argc, char* args[] )
         if(accumulator > 300){
             accumulator -= 300;
             robot->animate(level);
+            robot->react_to(stick);
         }
         
         last_time = cur_time;
@@ -156,7 +152,7 @@ int main( int argc, char* args[] )
         robot->show(camera, robotSheet, screen);
         
         //text
-        apply_surface(0, 480, text, screen);
+        text->show(screen);
         
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
@@ -175,5 +171,6 @@ int main( int argc, char* args[] )
     delete stick;
     delete robot;
     delete level;
+    delete text;
     return 0;
 }

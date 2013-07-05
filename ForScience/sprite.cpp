@@ -121,6 +121,10 @@ Sprite::~Sprite(){
    
 }
 
+SDL_Rect Sprite::get_rect(){
+    return box;
+}
+
 //void Sprite::set_camera(SDL_Rect camera)
 //{
 //    //Center the camera over the Sprite

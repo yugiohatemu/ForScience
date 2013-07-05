@@ -36,6 +36,7 @@ class Sprite{
         void clip_tile();
         void handle_input(SDL_Event event, Level * level);
         void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
+        SDL_Rect get_rect();
 };
 
 
