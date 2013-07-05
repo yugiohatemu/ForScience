@@ -32,47 +32,39 @@ Sprite::~Sprite(){
 void Sprite::clip_tile(){
     
     clips[STAND].x = 0;
-    clips[STAND].y = 0;
     clips[STAND].w = STICK_WIDTH;
-    clips[STAND].h = STICK_HEIGHT;
-    
+   
     //Right
     clips[WALK_R0].x = clips[STAND].x + STICK_WIDTH;
-    clips[WALK_R0].y = 0;
     clips[WALK_R0].w = STICK_WIDTH;
-    clips[WALK_R0].h =STICK_HEIGHT;
     
     clips[WALK_R1].x = clips[WALK_R0].x + STICK_WIDTH ;
-    clips[WALK_R1].y = 0;
     clips[WALK_R1].w =STICK_WIDTH;
-    clips[WALK_R1].h =STICK_HEIGHT;
     
     clips[WALK_R2].x = clips[WALK_R1].x + STICK_WIDTH;
-    clips[WALK_R2].y = 0;
     clips[WALK_R2].w = STICK_WIDTH;
-    clips[WALK_R2].h = STICK_HEIGHT;
     
     clips[WALK_R3] = clips[WALK_R1]; //R3 = R1
     
     //Left
     clips[WALK_L0].x = clips[WALK_R2].x + STICK_WIDTH ;
-    clips[WALK_L0].y = 0;
     clips[WALK_L0].w = STICK_WIDTH;
-    clips[WALK_L0].h = STICK_HEIGHT;
     
     clips[WALK_L1].x = clips[WALK_L0].x+ STICK_WIDTH ;
-    clips[WALK_L1].y = 0;
     clips[WALK_L1].w = STICK_WIDTH;
-    clips[WALK_L1].h = STICK_HEIGHT;
-    
+   
     clips[WALK_L2].x = clips[WALK_L1].x + STICK_WIDTH ;
-    clips[WALK_L2].y = 0;
     clips[WALK_L2].w = STICK_WIDTH;
-    clips[WALK_L2].h = STICK_HEIGHT;
-    
+       
     clips[WALK_L3] = clips[WALK_L1];
+    //Jump
+    clips[JUMP].x = 7 * STICK_WIDTH;
+    clips[JUMP].w = 60;
     
-    
+    for (int i = 0; i < TOTAL_CLIP; i += 1) {
+        clips[i].y = 0;
+        clips[i].h = STICK_HEIGHT;
+    }
 }
 
 void Sprite::handle_input(SDL_Event event, Level * level){
@@ -106,7 +98,7 @@ void Sprite::handle_input(SDL_Event event, Level * level){
                 level->move_on_level(box, SDLK_DOWN, 20);
                 break;
             case SDLK_SPACE:
-                debug("SPACE Pressed");
+                frame = JUMP;
                 break;
             default: break;
         }

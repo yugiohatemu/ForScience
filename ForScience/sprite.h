@@ -27,6 +27,7 @@ private:
         WALK_L1,
         WALK_L2,
         WALK_L3,
+        JUMP,
         TOTAL_CLIP,
     };
     SDL_Rect clips[TOTAL_CLIP];
