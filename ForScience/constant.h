@@ -25,6 +25,9 @@ const int STICK_HEIGHT = 120;
 //Robot
 const int ROBOT_WIDTH = 45;
 const int ROBOT_HEIGHT = 80; //or 40
+//Fan
+const int FAN_WIDTH = 60;
+const int FAN_HEIGHT = 70;
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 640;
@@ -38,7 +41,7 @@ const int TOTAL_TILES = 192;
 const int TILE_COLUMN = 16;
 const int TILE_ROW = 12;
 
-//
+//Tile
 const int TILE_SPRITES = 5;
 const int TILE_EMPTY = 0;
 const int TILE_FLOOR = 1;

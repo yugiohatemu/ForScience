@@ -28,6 +28,8 @@ private:
         WALK_L1,
         WALK_L2,
         WALK_L3,
+        FAN_R,
+        FAN_L,
         TOTAL_STATE
     };
     
