@@ -10,6 +10,7 @@
 #include "constant.h"
 #include "utility.h"
 
+
 Robot::Robot(){
     box.x = 8*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
@@ -26,12 +27,16 @@ Robot::Robot(){
     dir = SDLK_RIGHT;
     state = WALK;
     clip_tile();
-    
+    //Text
     sub_title = NULL;
+    
+    //Survielence quest
+    quest = new Quest(1);
 }
 
 Robot::~Robot(){
     sub_title = NULL;
+    delete quest;
 }
 
 void Robot::clip_tile(){
@@ -56,7 +61,7 @@ void Robot::clip_tile(){
 }
 
 void Robot::animate(Level * level){
-    if(state == STAND) return  ;
+    if(state == STAND || state == QUEST) return  ;
     
     int oldx = box.x;
     level->move_on_level(box, dir, 15);
@@ -90,17 +95,27 @@ void Robot::react_to(Sprite * stick){
         return ;
     }
     //set state to stand
-    state = STAND;
-    //show that in the message bar
-    sub_title->set_text("JUMP!");
-    //ask the stick to do something
-    //send the stick a request, ....., and the stick ifself check whether it is done?
-    
-    
-    //if the stick did that
-    
-    //the robot will let go unless interact again
-    
+    //if in normal wtate, then set it to quest, ask ppl to process quest
+    if (state == WALK) {
+        state = QUEST;
+        sub_title->set_text("JUMP!");
+       
+        stick->set_quest(quest);
+    }else if(state == QUEST){
+        if (quest->is_done()) {
+            state = WALK;
+            //walk to other direction
+            if (dir == SDLK_RIGHT) {
+                dir = SDLK_LEFT;
+                frame = WALK_L0;
+            }else{
+                dir = SDLK_RIGHT;
+                frame = WALK_R0;
+            }
+            quest->set_done(false);
+            stick->set_quest(NULL);
+        }
+    }
 }
 
 void Robot::link_text(Text * text){

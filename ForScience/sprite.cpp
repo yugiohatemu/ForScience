@@ -21,12 +21,15 @@ Sprite::Sprite(){
     clip_tile();
     
     frame = 0;
-    
+    quest = NULL;
 }
 
+//Clear the tile sheet that is being used
+Sprite::~Sprite(){
+    quest = NULL;
+}
 
 void Sprite::clip_tile(){
-    
     
     clips[STAND].x = 0;
     clips[STAND].y = 0;
@@ -102,11 +105,31 @@ void Sprite::handle_input(SDL_Event event, Level * level){
             case SDLK_DOWN:
                 level->move_on_level(box, SDLK_DOWN, 20);
                 break;
+            case SDLK_SPACE:
+                debug("SPACE Pressed");
+                break;
             default: break;
         }
+        if (quest != NULL) {
+            if(event.key.keysym.sym == SDLK_SPACE){
+                quest->set_done(true);
+            }
+        }
+        
+        
     }else if(event.type == SDL_KEYUP){
         //return to stand
         frame = STAND;
+    }
+}
+
+
+void Sprite::set_quest(Quest * quest){
+    this->quest = quest;
+}
+void Sprite::process_quest(){
+    if (quest != NULL) {
+        
     }
 }
 
@@ -116,10 +139,7 @@ void Sprite::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen
 }
 
 
-//Clear the tile sheet that is being used
-Sprite::~Sprite(){
-   
-}
+
 
 SDL_Rect Sprite::get_rect(){
     return box;

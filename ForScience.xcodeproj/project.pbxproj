@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B600299617860937007CD0FA /* text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B600299417860936007CD0FA /* text.cpp */; };
+		B60029991787772D007CD0FA /* quest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029971787772D007CD0FA /* quest.cpp */; };
 		B62443C8177DCE34000041FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443C7177DCE34000041FE /* main.cpp */; };
 		B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B62443C9177DCE34000041FE /* ForScience.1 */; };
 		B62443D2177DCE54000041FE /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B62443D1177DCE54000041FE /* SDLMain.m */; };
@@ -39,6 +40,8 @@
 /* Begin PBXFileReference section */
 		B600299417860936007CD0FA /* text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = text.cpp; sourceTree = "<group>"; };
 		B600299517860937007CD0FA /* text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text.h; sourceTree = "<group>"; };
+		B60029971787772D007CD0FA /* quest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quest.cpp; sourceTree = "<group>"; };
+		B60029981787772D007CD0FA /* quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quest.h; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 				B62443E7177DFD07000041FE /* lazy.map */,
 				B62443F4177E394C000041FE /* image */,
 				B62443EE177E02ED000041FE /* miscellaneous */,
+				B60029971787772D007CD0FA /* quest.cpp */,
+				B60029981787772D007CD0FA /* quest.h */,
 			);
 			path = ForScience;
 			sourceTree = "<group>";
@@ -212,6 +217,7 @@
 				B63F59CC1780DE45000B09C9 /* level.cpp in Sources */,
 				B63F59D017820E19000B09C9 /* switch.cpp in Sources */,
 				B600299617860937007CD0FA /* text.cpp in Sources */,
+				B60029991787772D007CD0FA /* quest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

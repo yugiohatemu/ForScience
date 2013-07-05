@@ -13,7 +13,7 @@
 #include "level.h"
 #include "sprite.h"
 #include "text.h"
-
+#include "quest.h"
 class Robot{
 private:
     SDL_Rect box;
@@ -32,11 +32,14 @@ private:
         STAND = 0,
         WALK,
         JUMP,
+        QUEST,
+        
         TOTAL_STATE,
     };
     int state;
     
     Text * sub_title;
+    Quest * quest;
 public:
     Robot();
     ~Robot();
