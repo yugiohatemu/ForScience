@@ -32,7 +32,7 @@ void Level::set_clip(){
     clips[ TILE_EMPTY ].x = 40;
     clips[ TILE_LADDER ].x = 80;
     clips[ TILE_FLOOR ].x = 120;
-    clips[ TILE_BACKWALL ].x = 200;
+    clips[ TILE_BACKWALL ].x = 0;
     clips[ TILE_BRICK ].x = 160;
       
     for (int i = 0; i < TOTAL_TILES; i ++) {
