@@ -11,7 +11,7 @@
 #include "constant.h"
 #include <iostream>
 
-Stick::Stick(){
+Stick::Stick(Level * level){
     //Initialize the offsets
     box.x = 4*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
@@ -22,7 +22,7 @@ Stick::Stick(){
     
     frame = I_STAND;
     quest = NULL;
-    level = NULL;
+    this->level = level;
     active = false;
 }
 
@@ -47,9 +47,6 @@ void Stick::set_active(bool active){
     }
 }
 
-void Stick::set_level(Level * level){
-    this->level = level;
-}
 
 SDL_Rect Stick::get_rect(){
     return box;

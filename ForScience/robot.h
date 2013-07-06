@@ -40,16 +40,17 @@ private:
     
     Text * sub_title;
     Quest * quest;
+    Level * level;
     void clip_tile();
     void react_to(Stick * stick);
 public:
-    Robot();
+    Robot(Level * level);
     ~Robot();
-    
-    void animate(Level * level);
+    void set_pos(int x, int y);
+    void animate();
     void react_to(StickMaster * stick_master);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-    void link_text(Text * text);
+    void set_text(Text * text);
 };
 
 

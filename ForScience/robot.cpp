@@ -11,7 +11,7 @@
 #include "utility.h"
 
 #include <iostream>
-Robot::Robot(){
+Robot::Robot(Level * level){
     box.x = 8*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
     box.w = ROBOT_WIDTH ;
@@ -32,12 +32,28 @@ Robot::Robot(){
     
     //Survielence quest
     quest = new Quest(1);
+    this->level = level;
 }
 
 Robot::~Robot(){
     sub_title = NULL;
+    level = NULL;
     delete quest;
 }
+
+
+void Robot::set_pos(int x, int y){
+    //box and fan together
+    box.x = x;
+    box.y = y;
+    fan.x = box.x + box.w;
+    fan.y = box.y - 10;
+}
+
+void Robot::set_text(Text * text){
+    sub_title = text;
+}
+
 
 void Robot::clip_tile(){
     for (int i = 0; i < FAN_R; i += 1) {
@@ -61,7 +77,7 @@ void Robot::clip_tile(){
 }
 
 
-void Robot::animate(Level * level){
+void Robot::animate(){
     if(state == STAND || state == QUEST) return  ;
     
     int oldx = box.x;
@@ -133,9 +149,6 @@ void Robot::react_to(StickMaster * stick_master){
     //then interact
 }
 //
-void Robot::link_text(Text * text){
-    sub_title = text;
-}
 
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){

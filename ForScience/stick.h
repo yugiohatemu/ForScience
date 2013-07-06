@@ -35,11 +35,10 @@ private:
     void clip_tile();
     
 public:
-    Stick();
+    Stick(Level * level);
     ~Stick();
     void set_pos(int x, int y);
     void set_active(bool active);
-    void set_level(Level * level);
     void animate();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);

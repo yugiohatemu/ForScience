@@ -13,8 +13,7 @@ StickMaster::StickMaster(Level * level){
     
     stick_list =new Stick* [total_stick];
     for (int i = 0; i < total_stick; i += 1) {
-        stick_list[i] = new Stick();
-        stick_list[i]->set_level(level);
+        stick_list[i] = new Stick(level);
     }
     
     stick_list[1]->set_pos(8*TILE_WIDTH,3* TILE_HEIGHT);

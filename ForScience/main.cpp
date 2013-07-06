@@ -17,11 +17,11 @@
 #include "timer.h"
 #include "utility.h"
 #include "constant.h"
-#include "robot.h"
+
 #include "level.h"
 #include "text.h"
 #include "stickMaster.h"
-
+#include "robotMaster.h"
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
@@ -118,9 +118,9 @@ int main( int argc, char* args[] )
     
     Level * level = new Level();
     StickMaster * stick_master = new StickMaster(level);
-    Robot * robot = new Robot();
+    RobotMaster * robot_master = new RobotMaster(level);
     Text * text = new Text(0, 480, "For Science", font);
-    robot->link_text(text);
+    robot_master->set_text(text);
     //While the user hasn't quit
     while( quit == false ){
         fps.start();
@@ -139,8 +139,8 @@ int main( int argc, char* args[] )
         
         if(accumulator > 300){
             accumulator -= 200;
-            robot->react_to(stick_master);
-            robot->animate(level);
+            robot_master->react_to(stick_master);
+            robot_master->animate();
             stick_master->animate();
         }
         
@@ -152,7 +152,7 @@ int main( int argc, char* args[] )
         
         level->show(camera, tileSheet, screen);
         stick_master->show(camera, stickSheet,screen);
-        robot->show(camera, robotSheet, screen);
+        robot_master->show(camera, robotSheet, screen);
         
         //text
         text->show(screen);
@@ -172,7 +172,7 @@ int main( int argc, char* args[] )
     //Clean up
     clean_up();
     delete stick_master;
-    delete robot;
+    delete robot_master;
     delete level;
     delete text;
     return 0;
