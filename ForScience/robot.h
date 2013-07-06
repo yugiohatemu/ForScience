@@ -22,24 +22,27 @@ private:
     SDL_Rect fan;
     int frame;
     int dir;
-    enum CLIP{
-        WALK_R0 = 0,WALK_R1,WALK_R2,WALK_R3,
-        WALK_L0,WALK_L1,WALK_L2,WALK_L3,
-        FAN_R,FAN_L,
+    enum CLIP{ //normal, angry, pause?
+        N_WALK_R0 = 0, N_WALK_R1, N_WALK_R2, N_WALK_R3,
+        N_WALK_L0, N_WALK_L1, N_WALK_L2, N_WALK_L3,
+        N_FAN_R,N_FAN_L,
+        A_WALK_R0,A_WALK_R1,A_WALK_R2,A_WALK_R3,
+        A_WALK_L0,A_WALK_L1,A_WALK_L2,A_WALK_L3,
+        A_FAN_R,A_FAN_L,
         TOTAL_CLIP
     };
     SDL_Rect clips[TOTAL_CLIP];
     
     enum STATE{
         STAND = 0,
-        WALK,
+        NORMAL = 15,
         JUMP,
         QUEST,
-        ANGRY,
+        ANGRY = 25,
         TOTAL_STATE,
     };
     int state;
-    
+    int speed; //walk or angry
     Text * sub_title;
     Timer timer;
     Level * level;

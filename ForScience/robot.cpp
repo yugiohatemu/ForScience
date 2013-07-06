@@ -23,9 +23,10 @@ Robot::Robot(Level * level){
     fan.w = FAN_WIDTH;
     fan.h = FAN_HEIGHT;
     
-    frame = WALK_R0;
+    frame = N_WALK_R0;
     dir = SDLK_RIGHT;
-    state = WALK;
+    state = NORMAL;
+    speed = NORMAL;
     clip_tile();
     //Text
     sub_title = NULL;
@@ -65,7 +66,7 @@ void Robot::set_mission(Mission * mission){
 
 
 void Robot::clip_tile(){
-    for (int i = 0; i < FAN_R; i += 1) {
+    for (int i = 0; i < N_FAN_R; i += 1) {
         clips[i].x = i* ROBOT_WIDTH;
         clips[i].y = 0;
         clips[i].w = ROBOT_WIDTH;
@@ -74,15 +75,21 @@ void Robot::clip_tile(){
     int offset = 8 * ROBOT_WIDTH + 80;
     //now clip the fans
     //grid 20 sub grid 5
-    clips[FAN_R].x = offset+60;
-    clips[FAN_R].y = 5;
-    clips[FAN_R].w = 60;
-    clips[FAN_R].h = 70;
+    clips[N_FAN_R].x = offset+60;
+    clips[N_FAN_R].y = 5;
+    clips[N_FAN_R].w = 60;
+    clips[N_FAN_R].h = 70;
     
-    clips[FAN_L].x = offset;
-    clips[FAN_L].y = 5;
-    clips[FAN_L].w = 60;
-    clips[FAN_L].h = 70;
+    clips[N_FAN_L].x = offset;
+    clips[N_FAN_L].y = 5;
+    clips[N_FAN_L].w = 60;
+    clips[N_FAN_L].h = 70;
+    
+    
+    for (int i = A_WALK_R0; i < TOTAL_CLIP; i +=1) {
+        clips[i] = clips[i-A_WALK_R0];
+        clips[i].y = ROBOT_HEIGHT;
+    }
 }
 
 
@@ -90,14 +97,27 @@ void Robot::animate(){
     if(state == STAND || state == QUEST) return  ;
     
     int oldx = box.x;
-    level->move_on_level(box, dir, 15);
-    if ((frame >= WALK_R0 && frame < WALK_R3) || (frame >= WALK_L0 && frame < WALK_L3)) {
-        frame += 1;
-    }else if(frame == WALK_R3){
-        frame = WALK_R0;
-    }else if(frame == WALK_L3){
-        frame = WALK_L0;
+    level->move_on_level(box, dir, speed);
+    if (state == ANGRY) {
+        if ((frame >= A_WALK_R0 && frame < A_WALK_R3) || (frame >= A_WALK_L0 && frame < A_WALK_L3)) {
+            frame += 1;
+        }else if(frame == A_WALK_R3){
+            frame = A_WALK_R0;
+        }else if(frame == A_WALK_L3){
+            frame = A_WALK_L0;
+        }
+    }else{
+        
+        if ((frame >= N_WALK_R0 && frame < N_WALK_R3) || (frame >= N_WALK_L0 && frame < N_WALK_L3)) {
+            frame += 1;
+        }else if(frame == N_WALK_R3){
+            frame = N_WALK_R0;
+        }else if(frame == N_WALK_L3){
+            frame = N_WALK_L0;
+        }
+
     }
+    
     //mission
     if (mission) {
         if(mission->is_active()) {
@@ -105,6 +125,7 @@ void Robot::animate(){
         }
         else {
             state = ANGRY;
+            frame += A_WALK_R0;
             //maybe not necessary latter
             delete mission;
             mission = NULL;
@@ -112,7 +133,8 @@ void Robot::animate(){
             if(test_stick) test_stick->delete_quest();
             timer.stop();
             test_stick = NULL;
-            debug("Angry");
+            speed = ANGRY;
+            
         }
     }
     
@@ -120,24 +142,41 @@ void Robot::animate(){
     if (oldx == box.x) { 
         if (dir == SDLK_RIGHT) {
             dir = SDLK_LEFT;
-            frame = WALK_L0;
+            if (state == ANGRY) {
+                frame = A_WALK_L0;
+            }else{
+                frame = N_WALK_L0;
+            }
         }else{
             dir = SDLK_RIGHT;
-            frame = WALK_R0;
+            if (state == ANGRY) {
+                frame = A_WALK_R0;
+            }else{
+                frame = N_WALK_R0;
+            }
         }
     }
+   
 }
 
 void Robot::stop_quest(){
-    state = WALK;
+    state = NORMAL;
     sub_title->set_text("For Science");
     test_stick->delete_quest();
     if (dir == SDLK_RIGHT) {
         dir = SDLK_LEFT;
-        frame = WALK_L0;
+        if (state == ANGRY) {
+            frame = A_WALK_L0;
+        }else{
+            frame = N_WALK_L0;
+        }
     }else{
         dir = SDLK_RIGHT;
-        frame = WALK_R0;
+        if (state == ANGRY) {
+            frame = A_WALK_R0;
+        }else{
+            frame = N_WALK_R0;
+        }
     }
     timer.stop();
     test_stick = NULL;
@@ -151,9 +190,16 @@ void Robot::react_to(Stick * stick){
     if ( !collide && test_stick != stick) {
         return ;
     }
+    if (state == ANGRY && collide) {
+        stick->minus_life();
+        debug("lose life");
+        state = NORMAL;
+        frame -= A_WALK_R0;
+        return ;
+    }
     //collide or test_stick == stick
     //suppose normal state is walk
-    if (state == WALK && collide) {
+    if (state == NORMAL && collide) {
         
         state = QUEST;
         stick->get_quest(new Quest(1));
@@ -182,6 +228,7 @@ void Robot::react_to(Stick * stick){
             }
         }else{
             stick->minus_life();
+            debug("lose life");
             stop_quest();
         }
         
@@ -204,9 +251,12 @@ void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
     if (dir == SDLK_RIGHT) { // x +w, y-10,
         fan.x = box.x + box.w;
-        apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[FAN_R]);
+        if (state == ANGRY) apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[A_FAN_R]);
+        else apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[N_FAN_R]);
+        
     }else if(dir == SDLK_LEFT){ // x - fan.w, y - 10
         fan.x = box.x - fan.w;
-        apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[FAN_L]);
+        if(state == ANGRY) apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[A_FAN_L]);
+        else apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[N_FAN_L]);
     }
 }
