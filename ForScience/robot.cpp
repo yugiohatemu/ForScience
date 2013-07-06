@@ -9,7 +9,7 @@
 #include "robot.h"
 #include "constant.h"
 #include "utility.h"
-
+#include "quest.h"
 #include <iostream>
 Robot::Robot(Level * level){
     box.x = 8*TILE_WIDTH;
@@ -31,14 +31,15 @@ Robot::Robot(Level * level){
     sub_title = NULL;
     
     //Survielence quest
-    quest = new Quest(1);
+   
     this->level = level;
+    test_stick = NULL;
 }
 
 Robot::~Robot(){
     sub_title = NULL;
     level = NULL;
-    delete quest;
+    test_stick = NULL;
 }
 
 
@@ -105,33 +106,64 @@ void Robot::animate(){
 void Robot::react_to(Stick * stick){
     //need to judge position first
     SDL_Rect rect = stick->get_rect();
-    //if not interactive, do nothing
-    if (!check_collision(box, rect) && !check_collision(fan, rect)) {
+    bool collide = (check_collision(box, rect) || check_collision(fan, rect));
+    //if not interactive nor the stick that robot cares now
+    if ( !collide && test_stick != stick) {
         return ;
     }
-    //set state to stand
-    //if in normal wtate, then set it to quest, ask ppl to process quest
-    if (state == WALK) {
+    //collide or test_stick == stick
+    //suppose normal state is walk
+    if (state == WALK && collide) {
+        std::cout<<"s0"<<std::endl;
         state = QUEST;
-        sub_title->set_text("JUMP!");
-        
-        stick->set_quest(quest);
+        stick->get_quest(new Quest(1));
+        //if the stick is on auto pilot mode, do not change sub title
+        if (!stick->is_autopilot()) {
+            sub_title->set_text("JUMP!");
+        }
+        test_stick = stick;
     }else if(state == QUEST){
-        
-        if (quest->is_done()) {
-            state = WALK;
-            //walk to other direction
-            if (dir == SDLK_RIGHT) {
-                dir = SDLK_LEFT;
-                frame = WALK_L0;
+        if (collide) {
+            if (stick->has_quest()&&stick->is_quest_done()) {
+                debug("s1");
+                state = WALK;
+                //walk to other direction
+                if (dir == SDLK_RIGHT) {
+                    dir = SDLK_LEFT;
+                    frame = WALK_L0;
+                }else{
+                    dir = SDLK_RIGHT;
+                    frame = WALK_R0;
+                }
+                stick->delete_quest();
+                sub_title->set_text("For Science");
+                test_stick = NULL;
             }else{
-                dir = SDLK_RIGHT;
-                frame = WALK_R0;
+                debug("s2");
+                //add timer for processing time later
             }
-            quest->set_done(false);
-            stick->set_quest(NULL);
-            state = WALK;
-            sub_title->set_text("For Science");
+           
+        }else{ //escaping from questing
+            if (! collide) {
+                debug("s3");
+                state = WALK;
+                stick->delete_quest();
+                stick->minus_life();
+                //std::cout<<"minus life"<<std::endl;
+                sub_title->set_text("For Science");
+                test_stick = NULL;
+                if (dir == SDLK_RIGHT) {
+                    dir = SDLK_LEFT;
+                    frame = WALK_L0;
+                }else{
+                    dir = SDLK_RIGHT;
+                    frame = WALK_R0;
+                }
+            }else{
+                debug("s4");
+            }
+            //test_stick = NULL;
+            
         }
     }
 }
@@ -146,7 +178,6 @@ void Robot::react_to(StickMaster * stick_master){
     for (int i = 0; i < total_count; i += 1) {
         react_to(stick_list[i]);
     }
-    //then interact
 }
 //
 

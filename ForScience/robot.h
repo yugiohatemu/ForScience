@@ -12,7 +12,7 @@
 #include "SDL/SDL.h"
 #include "level.h"
 #include "text.h"
-#include "quest.h"
+
 #include "stickMaster.h"
 
 class Robot{
@@ -39,8 +39,9 @@ private:
     int state;
     
     Text * sub_title;
-    Quest * quest;
+    //Quest * quest;
     Level * level;
+    Stick * test_stick;
     void clip_tile();
     void react_to(Stick * stick);
 public:

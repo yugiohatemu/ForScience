@@ -24,11 +24,15 @@ Stick::Stick(Level * level){
     quest = NULL;
     this->level = level;
     active = false;
+    life = 1;
 }
 
 
 //Clear the tile sheet that is being used
 Stick::~Stick(){
+    if (quest != NULL) {
+        delete quest;
+    }else
     quest = NULL;
     level = NULL;
 }
@@ -39,12 +43,14 @@ void Stick::set_pos(int x, int y){
 }
 
 void Stick::set_active(bool active){
-    this->active = active;
-    if (active) {
-        frame = A_STAND;
-    }else{
-        frame = I_STAND;
-    }
+//    if (life != 0) {
+        this->active = active;
+        if (active) {
+            frame = A_STAND;
+        }else{
+            frame = I_STAND;
+        }
+//    }
 }
 
 
@@ -52,9 +58,35 @@ SDL_Rect Stick::get_rect(){
     return box;
 }
 
-void Stick::set_quest(Quest * quest){
-    if (this->quest != quest) {
-        this->quest = quest;
+void Stick::get_quest(Quest * quest){
+    this->quest = quest;
+}
+bool Stick::has_quest(){
+    return quest != NULL;
+}
+
+bool Stick::is_quest_done(){
+    if (quest != NULL) {
+        return quest->is_done();
+    }else{
+        return true;
+    }
+}
+
+void Stick::delete_quest(){
+    delete quest;
+    quest = NULL;
+}
+
+bool Stick::is_autopilot(){
+    return !active;
+}
+
+void Stick::minus_life(){
+    life -= 1;
+    if (life < 0) {
+        life = 0;
+       //active = false;
     }
 }
 
@@ -166,9 +198,10 @@ void Stick::animate(){
     if(!active && quest != NULL){
         if (frame == I_STAND) {
             frame = I_JUMP;
+           
         }else if(frame == I_JUMP){
             frame = I_STAND;
-            quest->set_done(true);
+             quest->set_done(true);
         }
     }
 }

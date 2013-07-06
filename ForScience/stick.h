@@ -17,6 +17,7 @@ class Stick{
 private:
     SDL_Rect box;
     int frame;
+    int life;
     enum CLIP{ //I - Inactive, A - Active
         I_STAND = 0,
         I_WALK_R0,I_WALK_R1,I_WALK_R2,I_WALK_R3,
@@ -43,8 +44,13 @@ public:
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     SDL_Rect get_rect();
-    void set_quest(Quest * quest);
-    
+    //Quest realted
+    void get_quest(Quest * quest);
+    bool has_quest();
+    bool is_quest_done();
+    void delete_quest();
+    bool is_autopilot();
+    void minus_life();
 };
 
 

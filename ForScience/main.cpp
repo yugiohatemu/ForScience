@@ -72,7 +72,7 @@ bool load_files(){
     return true;
 }
 
-void clean_up( ){
+void clean_up(){
     //Free the surfaces
     SDL_FreeSurface( tileSheet );
     SDL_FreeSurface( robotSheet);
@@ -88,8 +88,7 @@ void clean_up( ){
 
 
 
-int main( int argc, char* args[] )
-{
+int main( int argc, char* args[] ){
     //Quit flag
     bool quit = false;
     Timer fps;
@@ -137,7 +136,7 @@ int main( int argc, char* args[] )
         
         accumulator += diff_time;
         
-        if(accumulator > 300){
+        if(accumulator > 200){
             accumulator -= 200;
             robot_master->react_to(stick_master);
             robot_master->animate();
