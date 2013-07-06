@@ -11,6 +11,7 @@
 		B60029991787772D007CD0FA /* quest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029971787772D007CD0FA /* quest.cpp */; };
 		B600299C17879D48007CD0FA /* stickMaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B600299A17879D48007CD0FA /* stickMaster.cpp */; };
 		B60029A11787B8BC007CD0FA /* robotMaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B600299F1787B8BC007CD0FA /* robotMaster.cpp */; };
+		B60029AD1788A0A0007CD0FA /* mission.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029AB1788A09F007CD0FA /* mission.cpp */; };
 		B62443C8177DCE34000041FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443C7177DCE34000041FE /* main.cpp */; };
 		B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B62443C9177DCE34000041FE /* ForScience.1 */; };
 		B62443D2177DCE54000041FE /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B62443D1177DCE54000041FE /* SDLMain.m */; };
@@ -48,6 +49,8 @@
 		B600299B17879D48007CD0FA /* stickMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stickMaster.h; sourceTree = "<group>"; };
 		B600299F1787B8BC007CD0FA /* robotMaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robotMaster.cpp; sourceTree = "<group>"; };
 		B60029A01787B8BC007CD0FA /* robotMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robotMaster.h; sourceTree = "<group>"; };
+		B60029AB1788A09F007CD0FA /* mission.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mission.cpp; sourceTree = "<group>"; };
+		B60029AC1788A09F007CD0FA /* mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mission.h; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -93,7 +96,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B600299D1787B883007CD0FA /* Stick */ = {
+		B600299D1787B883007CD0FA /* stick */ = {
 			isa = PBXGroup;
 			children = (
 				B62443EF177E06E5000041FE /* stick.cpp */,
@@ -101,10 +104,10 @@
 				B62443E2177DF5AF000041FE /* stick.h */,
 				B600299B17879D48007CD0FA /* stickMaster.h */,
 			);
-			name = Stick;
+			name = stick;
 			sourceTree = "<group>";
 		};
-		B600299E1787B8A4007CD0FA /* Robot */ = {
+		B600299E1787B8A4007CD0FA /* robot */ = {
 			isa = PBXGroup;
 			children = (
 				B63F59C61780C06C000B09C9 /* robot.cpp */,
@@ -112,7 +115,18 @@
 				B600299F1787B8BC007CD0FA /* robotMaster.cpp */,
 				B60029A01787B8BC007CD0FA /* robotMaster.h */,
 			);
-			name = Robot;
+			name = robot;
+			sourceTree = "<group>";
+		};
+		B60029AF1788A20D007CD0FA /* model */ = {
+			isa = PBXGroup;
+			children = (
+				B63F59CA1780DE44000B09C9 /* level.cpp */,
+				B63F59CB1780DE45000B09C9 /* level.h */,
+				B60029AB1788A09F007CD0FA /* mission.cpp */,
+				B60029AC1788A09F007CD0FA /* mission.h */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		B62443B8177DCE33000041FE = {
@@ -138,9 +152,6 @@
 		B62443C6177DCE33000041FE /* ForScience */ = {
 			isa = PBXGroup;
 			children = (
-				B600299E1787B8A4007CD0FA /* Robot */,
-				B600299D1787B883007CD0FA /* Stick */,
-				B63F59CA1780DE44000B09C9 /* level.cpp */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B60029971787772D007CD0FA /* quest.cpp */,
 				B63F59CE17820E19000B09C9 /* switch.cpp */,
@@ -148,7 +159,6 @@
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B62443EB177DFF81000041FE /* utility.cpp */,
 				B62443F1177E0CF0000041FE /* constant.h */,
-				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029981787772D007CD0FA /* quest.h */,
 				B63F59CF17820E19000B09C9 /* switch.h */,
 				B600299517860937007CD0FA /* text.h */,
@@ -157,6 +167,9 @@
 				B62443E7177DFD07000041FE /* lazy.map */,
 				B62443F4177E394C000041FE /* image */,
 				B62443EE177E02ED000041FE /* miscellaneous */,
+				B60029AF1788A20D007CD0FA /* model */,
+				B600299E1787B8A4007CD0FA /* robot */,
+				B600299D1787B883007CD0FA /* stick */,
 			);
 			path = ForScience;
 			sourceTree = "<group>";
@@ -246,6 +259,7 @@
 				B60029991787772D007CD0FA /* quest.cpp in Sources */,
 				B600299C17879D48007CD0FA /* stickMaster.cpp in Sources */,
 				B60029A11787B8BC007CD0FA /* robotMaster.cpp in Sources */,
+				B60029AD1788A0A0007CD0FA /* mission.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
