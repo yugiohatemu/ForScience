@@ -16,11 +16,11 @@
 #include <fstream>
 #include "timer.h"
 #include "utility.h"
-#include "stick.h"
 #include "constant.h"
 #include "robot.h"
 #include "level.h"
 #include "text.h"
+#include "stickMaster.h"
 
 //The surfaces
 SDL_Surface *screen = NULL;
@@ -114,7 +114,8 @@ int main( int argc, char* args[] )
     int cur_time = 0;
     int diff_time = 0;
     int accumulator = 0;
-    Stick * stick = new Stick();
+    
+    StickMaster * stickMaster = new StickMaster();
     Robot * robot = new Robot();
     Level * level = new Level();
     Text * text = new Text(0, 480, "For Science", font);
@@ -126,7 +127,7 @@ int main( int argc, char* args[] )
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
 
-            stick->handle_input(event, level);
+            stickMaster->handle_input(event, level);
         }
         
         // Handle game world here
@@ -138,7 +139,7 @@ int main( int argc, char* args[] )
         if(accumulator > 300){
             accumulator -= 300;
             robot->animate(level);
-            robot->react_to(stick);
+            //robot->react_to(stick);
         }
         
         last_time = cur_time;
@@ -148,7 +149,7 @@ int main( int argc, char* args[] )
         //Set the camera//myDot.set_camera();
         
         level->show(camera, tileSheet, screen);
-        stick->show(camera, stickSheet,screen);
+        stickMaster->show(camera, stickSheet,screen);
         robot->show(camera, robotSheet, screen);
         
         //text
@@ -168,7 +169,7 @@ int main( int argc, char* args[] )
     
     //Clean up
     clean_up();
-    delete stick;
+    delete stickMaster;
     delete robot;
     delete level;
     delete text;

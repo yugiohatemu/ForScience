@@ -16,7 +16,7 @@ StickMaster::StickMaster(){
         stick_list[i] = new Stick();
     }
     
-    stick_list[1]->set_pos(7*TILE_WIDTH,3* TILE_HEIGHT);
+    stick_list[1]->set_pos(8*TILE_WIDTH,3* TILE_HEIGHT);
     
     active_stick = 0;
     stick_list[active_stick]->set_active(true);
@@ -35,7 +35,7 @@ void StickMaster::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * s
     }
 }
 
-
+//If tab, then we switch active stick figure
 void StickMaster::handle_input(SDL_Event event, Level * level){
     if( event.type == SDL_KEYDOWN ){
         if (event.key.keysym.sym == SDLK_TAB) {
@@ -51,6 +51,6 @@ void StickMaster::handle_input(SDL_Event event, Level * level){
             stick_list[active_stick]->handle_input(event, level);
         }
     }else if(event.type == SDL_KEYUP){
-        
+        stick_list[active_stick]->handle_input(event, level);
     }
 }
