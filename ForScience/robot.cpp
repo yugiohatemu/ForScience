@@ -34,12 +34,16 @@ Robot::Robot(Level * level){
    
     this->level = level;
     test_stick = NULL;
+    mission = NULL;
 }
 
 Robot::~Robot(){
     sub_title = NULL;
     level = NULL;
     test_stick = NULL;
+    if (mission) {
+        delete mission;
+    }
 }
 
 
@@ -53,6 +57,10 @@ void Robot::set_pos(int x, int y){
 
 void Robot::set_text(Text * text){
     sub_title = text;
+}
+
+void Robot::set_mission(Mission * mission){
+    this->mission = mission;
 }
 
 
@@ -90,6 +98,24 @@ void Robot::animate(){
     }else if(frame == WALK_L3){
         frame = WALK_L0;
     }
+    //mission
+    if (mission) {
+        if(mission->is_active()) {
+            mission->update_status(dir, box.x, box.y);
+        }
+        else {
+            state = ANGRY;
+            //maybe not necessary latter
+            delete mission;
+            mission = NULL;
+            //stop questing
+            if(test_stick) test_stick->delete_quest();
+            timer.stop();
+            test_stick = NULL;
+            debug("Angry");
+        }
+    }
+    
     ////we r not progressing, so need to change direction
     if (oldx == box.x) { 
         if (dir == SDLK_RIGHT) {
@@ -137,6 +163,10 @@ void Robot::react_to(Stick * stick){
         }
         test_stick = stick;
         timer.start();
+        //For now, just count for simple collision
+        if (mission  && mission->is_active()) {
+            mission->check_in();
+        }
     }else if(state == QUEST){
         //so the only way quest is done is that
         //collide (do quest in robot area)
@@ -146,6 +176,9 @@ void Robot::react_to(Stick * stick){
         if (collide && stick->has_quest() && timer.get_ticks() <= 2000) {
             if(stick->is_quest_done()){
                 stop_quest();
+                if(mission){
+                    mission->reset(dir,box.x,box.y);
+                }
             }
         }else{
             stick->minus_life();
@@ -155,9 +188,7 @@ void Robot::react_to(Stick * stick){
     }
 }
 
-//TODO: what if two are in interaction
-//will only interact with the first one
-//if already processing quest, then no need to do other quest
+
 void Robot::react_to(StickMaster * stick_master){
     //ask stickmaster to return a list of stick that might interact
     Stick ** stick_list = stick_master->get_stick_list();
@@ -166,7 +197,7 @@ void Robot::react_to(StickMaster * stick_master){
         react_to(stick_list[i]);
     }
 }
-//
+
 
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){

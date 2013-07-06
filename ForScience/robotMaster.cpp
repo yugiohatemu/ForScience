@@ -9,6 +9,7 @@
 #include "robotMaster.h"
 #include "utility.h"
 #include "constant.h"
+#include "mission.h"
 
 RobotMaster::RobotMaster(Level * level){
     total_robot = 2;
@@ -18,6 +19,9 @@ RobotMaster::RobotMaster(Level * level){
         robot_list[i] = new Robot(level);
     }
     robot_list[1]->set_pos(TILE_WIDTH, 6*TILE_HEIGHT - ROBOT_HEIGHT);
+    //set mission for robot 0
+    robot_list[0]->set_mission(new Mission(SDLK_RIGHT,8*TILE_WIDTH, LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT));
+ 
 }
 
 RobotMaster::~RobotMaster(){
@@ -37,7 +41,6 @@ void RobotMaster::animate(){
     for (int i = 0; i < total_robot; i +=1) {
         robot_list[i]->animate();
     }
-
 }
 
 

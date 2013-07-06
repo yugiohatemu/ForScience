@@ -10,7 +10,6 @@
 #include "SDL/SDL.h"
 
 Mission::Mission(int dir, int x, int y){
-    check = false;
     active = true;
     reset(dir, x, y);
 }

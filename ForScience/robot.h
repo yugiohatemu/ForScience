@@ -14,6 +14,7 @@
 #include "text.h"
 #include "timer.h"
 #include "stickMaster.h"
+#include "mission.h"
 
 class Robot{
 private:
@@ -34,6 +35,7 @@ private:
         WALK,
         JUMP,
         QUEST,
+        ANGRY,
         TOTAL_STATE,
     };
     int state;
@@ -42,6 +44,7 @@ private:
     Timer timer;
     Level * level;
     Stick * test_stick;
+    Mission * mission;
     void clip_tile();
     void react_to(Stick * stick);
     void stop_quest();
@@ -53,7 +56,7 @@ public:
     void react_to(StickMaster * stick_master);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void set_text(Text * text);
-    
+    void set_mission(Mission * mission);
 };
 
 

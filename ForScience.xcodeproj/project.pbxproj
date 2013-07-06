@@ -121,6 +121,8 @@
 		B60029AF1788A20D007CD0FA /* model */ = {
 			isa = PBXGroup;
 			children = (
+				B60029971787772D007CD0FA /* quest.cpp */,
+				B60029981787772D007CD0FA /* quest.h */,
 				B63F59CA1780DE44000B09C9 /* level.cpp */,
 				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029AB1788A09F007CD0FA /* mission.cpp */,
@@ -153,13 +155,11 @@
 			isa = PBXGroup;
 			children = (
 				B62443C7177DCE34000041FE /* main.cpp */,
-				B60029971787772D007CD0FA /* quest.cpp */,
 				B63F59CE17820E19000B09C9 /* switch.cpp */,
 				B600299417860936007CD0FA /* text.cpp */,
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B62443EB177DFF81000041FE /* utility.cpp */,
 				B62443F1177E0CF0000041FE /* constant.h */,
-				B60029981787772D007CD0FA /* quest.h */,
 				B63F59CF17820E19000B09C9 /* switch.h */,
 				B600299517860937007CD0FA /* text.h */,
 				B62443E3177DF655000041FE /* timer.h */,
