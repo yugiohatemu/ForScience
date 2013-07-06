@@ -16,7 +16,7 @@
 #include <fstream>
 #include "timer.h"
 #include "utility.h"
-#include "sprite.h"
+#include "stick.h"
 #include "constant.h"
 #include "robot.h"
 #include "level.h"
@@ -114,7 +114,7 @@ int main( int argc, char* args[] )
     int cur_time = 0;
     int diff_time = 0;
     int accumulator = 0;
-    Sprite * stick = new Sprite();
+    Stick * stick = new Stick();
     Robot * robot = new Robot();
     Level * level = new Level();
     Text * text = new Text(0, 480, "For Science", font);

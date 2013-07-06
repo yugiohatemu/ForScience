@@ -85,7 +85,7 @@ void Robot::animate(Level * level){
 }
 
 
-void Robot::react_to(Sprite * stick){
+void Robot::react_to(Stick * stick){
     //need to judge position first
     SDL_Rect rect = stick->get_rect();
     if (!check_collision(box, rect) && !check_collision(fan, rect)) {

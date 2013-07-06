@@ -1,17 +1,17 @@
 //
-//  sprite.cpp
+//  Stick.cpp
 //  ForScience
 //
 //  Created by Yue on 6/28/13.
 //  Copyright (c) 2013 Yue. All rights reserved.
 //
 
-#include "sprite.h"
+#include "stick.h"
 #include "utility.h"
 #include "constant.h"
 #include <iostream>
 
-Sprite::Sprite(){
+Stick::Stick(){
     //Initialize the offsets
     box.x = 4*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - STICK_HEIGHT;
@@ -22,73 +22,89 @@ Sprite::Sprite(){
     
     frame = 0;
     quest = NULL;
+    active = false;
 }
 
+
 //Clear the tile sheet that is being used
-Sprite::~Sprite(){
+Stick::~Stick(){
     quest = NULL;
 }
 
-void Sprite::clip_tile(){
-    
-    clips[STAND].x = 0;
-    clips[STAND].w = STICK_WIDTH;
+void Stick::set_pos(int x, int y){
+    box.x = x;
+    box.y = y;
+}
+
+void Stick::set_active(bool active){
+    this->active = active;
+}
+
+void Stick::clip_tile(){
+    //In active
+    clips[I_STAND].x = 0;
+    clips[I_STAND].w = STICK_WIDTH;
    
     //Right
-    clips[WALK_R0].x = clips[STAND].x + STICK_WIDTH;
-    clips[WALK_R0].w = STICK_WIDTH;
+    clips[I_WALK_R0].x = clips[I_STAND].x + STICK_WIDTH;
+    clips[I_WALK_R0].w = STICK_WIDTH;
     
-    clips[WALK_R1].x = clips[WALK_R0].x + STICK_WIDTH ;
-    clips[WALK_R1].w =STICK_WIDTH;
+    clips[I_WALK_R1].x = clips[I_WALK_R0].x + STICK_WIDTH ;
+    clips[I_WALK_R1].w =STICK_WIDTH;
     
-    clips[WALK_R2].x = clips[WALK_R1].x + STICK_WIDTH;
-    clips[WALK_R2].w = STICK_WIDTH;
+    clips[I_WALK_R2].x = clips[I_WALK_R1].x + STICK_WIDTH;
+    clips[I_WALK_R2].w = STICK_WIDTH;
     
-    clips[WALK_R3] = clips[WALK_R1]; //R3 = R1
+    clips[I_WALK_R3] = clips[I_WALK_R1]; //R3 = R1
     
     //Left
-    clips[WALK_L0].x = clips[WALK_R2].x + STICK_WIDTH ;
-    clips[WALK_L0].w = STICK_WIDTH;
+    clips[I_WALK_L0].x = clips[I_WALK_R2].x + STICK_WIDTH ;
+    clips[I_WALK_L0].w = STICK_WIDTH;
     
-    clips[WALK_L1].x = clips[WALK_L0].x+ STICK_WIDTH ;
-    clips[WALK_L1].w = STICK_WIDTH;
+    clips[I_WALK_L1].x = clips[I_WALK_L0].x+ STICK_WIDTH ;
+    clips[I_WALK_L1].w = STICK_WIDTH;
    
-    clips[WALK_L2].x = clips[WALK_L1].x + STICK_WIDTH ;
-    clips[WALK_L2].w = STICK_WIDTH;
+    clips[I_WALK_L2].x = clips[I_WALK_L1].x + STICK_WIDTH ;
+    clips[I_WALK_L2].w = STICK_WIDTH;
        
-    clips[WALK_L3] = clips[WALK_L1];
+    clips[I_WALK_L3] = clips[I_WALK_L1];
     //Jump
-    clips[JUMP].x = 7 * STICK_WIDTH;
-    clips[JUMP].w = 60;
+    clips[I_JUMP].x = 7 * STICK_WIDTH;
+    clips[I_JUMP].w = 60;
     
-    for (int i = 0; i < TOTAL_CLIP; i += 1) {
+    for (int i = 0; i <= I_JUMP; i += 1) {
         clips[i].y = 0;
         clips[i].h = STICK_HEIGHT;
     }
+    
+    for (int i = A_STAND;i <= A_JUMP ;i +=1) {
+        clips[i] = clips[i - A_STAND];
+        clips[i].y = STICK_HEIGHT;
+    }
 }
 
-void Sprite::handle_input(SDL_Event event, Level * level){
+void Stick::handle_input(SDL_Event event, Level * level){
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
                 level->move_on_level(box, SDLK_RIGHT, 20);
                 frame += 1;
-                if (frame < WALK_R0) {
-                    frame = WALK_R0;
+                if (frame < I_WALK_R0) {
+                    frame = I_WALK_R0;
                 }
-                if (frame > WALK_R3) {
-                    frame = WALK_R0;
+                if (frame > I_WALK_R3) {
+                    frame = I_WALK_R0;
                 }
                 break;
             case SDLK_LEFT:
                 level->move_on_level(box, SDLK_LEFT, 20);
                 frame += 1;
-                if (frame < WALK_L0) { //stand or run right
-                    frame = WALK_L0;
+                if (frame < I_WALK_L0) { //stand or run right
+                    frame = I_WALK_L0;
                 }
-                if (frame > WALK_L3) {
-                    frame = WALK_L0;
+                if (frame > I_WALK_L3) {
+                    frame = I_WALK_L0;
                 }
                 break;
             case SDLK_UP:
@@ -98,7 +114,7 @@ void Sprite::handle_input(SDL_Event event, Level * level){
                 level->move_on_level(box, SDLK_DOWN, 20);
                 break;
             case SDLK_SPACE:
-                frame = JUMP;
+                frame = I_JUMP;
                 break;
             default: break;
         }
@@ -111,35 +127,35 @@ void Sprite::handle_input(SDL_Event event, Level * level){
         
     }else if(event.type == SDL_KEYUP){
         //return to stand
-        frame = STAND;
+        frame = I_STAND;
     }
 }
 
 
-void Sprite::set_quest(Quest * quest){
+void Stick::set_quest(Quest * quest){
     this->quest = quest;
 }
-void Sprite::process_quest(){
+void Stick::process_quest(){
     if (quest != NULL) {
         
     }
 }
 
 
-void Sprite::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
+void Stick::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }
 
 
 
 
-SDL_Rect Sprite::get_rect(){
+SDL_Rect Stick::get_rect(){
     return box;
 }
 
-//void Sprite::set_camera(SDL_Rect camera)
+//void Stick::set_camera(SDL_Rect camera)
 //{
-//    //Center the camera over the Sprite
+//    //Center the camera over the Stick
 //    camera.x = ( box.x + DOT_WIDTH  / 2 ) - DOT_WIDTH  / 2;
 //    camera.y = ( box.y + box.y / 2 ) - box.y / 2;
 //    

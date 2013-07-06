@@ -11,7 +11,7 @@
 
 #include "SDL/SDL.h"
 #include "level.h"
-#include "sprite.h"
+#include "stick.h"
 #include "text.h"
 #include "quest.h"
 class Robot{
@@ -45,7 +45,7 @@ public:
     ~Robot();
     void clip_tile();
     void animate(Level * level);
-    void react_to(Sprite * stick);
+    void react_to(Stick * stick);
     //void animate(Tile * tiles[]);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void link_text(Text * text);
