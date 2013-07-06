@@ -30,15 +30,18 @@ private:
     };
     SDL_Rect clips[TOTAL_CLIP];
     Quest * quest;
+    Level * level;
     bool active;
     void clip_tile();
-    void process_quest();
+    
 public:
     Stick();
     ~Stick();
     void set_pos(int x, int y);
     void set_active(bool active);
-    void handle_input(SDL_Event event, Level * level);
+    void set_level(Level * level);
+    void animate();
+    void handle_input(SDL_Event event);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     SDL_Rect get_rect();
     void set_quest(Quest * quest);

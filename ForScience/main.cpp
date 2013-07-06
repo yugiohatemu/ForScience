@@ -115,9 +115,10 @@ int main( int argc, char* args[] )
     int diff_time = 0;
     int accumulator = 0;
     
-    StickMaster * stick_master = new StickMaster();
-    Robot * robot = new Robot();
+    
     Level * level = new Level();
+    StickMaster * stick_master = new StickMaster(level);
+    Robot * robot = new Robot();
     Text * text = new Text(0, 480, "For Science", font);
     robot->link_text(text);
     //While the user hasn't quit
@@ -127,7 +128,7 @@ int main( int argc, char* args[] )
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
 
-            stick_master->handle_input(event, level);
+            stick_master->handle_input(event);
         }
         
         // Handle game world here
@@ -140,6 +141,7 @@ int main( int argc, char* args[] )
             accumulator -= 200;
             robot->react_to(stick_master);
             robot->animate(level);
+            stick_master->animate();
         }
         
         last_time = cur_time;

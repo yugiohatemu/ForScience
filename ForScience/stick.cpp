@@ -22,6 +22,7 @@ Stick::Stick(){
     
     frame = I_STAND;
     quest = NULL;
+    level = NULL;
     active = false;
 }
 
@@ -29,6 +30,7 @@ Stick::Stick(){
 //Clear the tile sheet that is being used
 Stick::~Stick(){
     quest = NULL;
+    level = NULL;
 }
 
 void Stick::set_pos(int x, int y){
@@ -43,6 +45,10 @@ void Stick::set_active(bool active){
     }else{
         frame = I_STAND;
     }
+}
+
+void Stick::set_level(Level * level){
+    this->level = level;
 }
 
 SDL_Rect Stick::get_rect(){
@@ -99,8 +105,7 @@ void Stick::clip_tile(){
     }
 }
 
-void Stick::handle_input(SDL_Event event, Level * level){
-    
+void Stick::handle_input(SDL_Event event){
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
@@ -159,12 +164,15 @@ void Stick::handle_input(SDL_Event event, Level * level){
     }
 }
 
-
-
-
-void Stick::process_quest(){
-    if (quest != NULL) {
-        
+//For auto pilot mode
+void Stick::animate(){
+    if(!active && quest != NULL){
+        if (frame == I_STAND) {
+            frame = I_JUMP;
+        }else if(frame == I_JUMP){
+            frame = I_STAND;
+            quest->set_done(true);
+        }
     }
 }
 

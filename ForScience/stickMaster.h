@@ -18,11 +18,13 @@ class StickMaster{
     int total_stick;
     int active_stick;
     Stick ** stick_list;
+   
 public:
-    StickMaster();
+    StickMaster(Level * level);
     ~StickMaster();
+    void animate();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-    void handle_input(SDL_Event event, Level * level);
+    void handle_input(SDL_Event event);
     int get_stick_count();
     Stick ** get_stick_list();
 };
