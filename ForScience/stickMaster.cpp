@@ -29,6 +29,14 @@ StickMaster::~StickMaster(){
     delete [] stick_list;
 }
 
+int StickMaster::get_stick_count(){
+    return total_stick;
+}
+
+Stick ** StickMaster::get_stick_list(){
+    return stick_list;
+}
+
 void StickMaster::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     for (int i = 0; i < total_stick; i += 1) {
         stick_list[i]->show(camera, tileSheet, screen);

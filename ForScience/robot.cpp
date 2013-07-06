@@ -10,7 +10,7 @@
 #include "constant.h"
 #include "utility.h"
 
-
+#include <iostream>
 Robot::Robot(){
     box.x = 8*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
@@ -60,6 +60,7 @@ void Robot::clip_tile(){
     clips[FAN_L].h = 70;
 }
 
+
 void Robot::animate(Level * level){
     if(state == STAND || state == QUEST) return  ;
     
@@ -88,10 +89,8 @@ void Robot::animate(Level * level){
 void Robot::react_to(Stick * stick){
     //need to judge position first
     SDL_Rect rect = stick->get_rect();
+    //if not interactive, do nothing
     if (!check_collision(box, rect) && !check_collision(fan, rect)) {
-        //set the state to walk
-        state = WALK;
-        sub_title->set_text("For Science");
         return ;
     }
     //set state to stand
@@ -99,9 +98,10 @@ void Robot::react_to(Stick * stick){
     if (state == WALK) {
         state = QUEST;
         sub_title->set_text("JUMP!");
-       
+        
         stick->set_quest(quest);
     }else if(state == QUEST){
+        
         if (quest->is_done()) {
             state = WALK;
             //walk to other direction
@@ -114,10 +114,25 @@ void Robot::react_to(Stick * stick){
             }
             quest->set_done(false);
             stick->set_quest(NULL);
+            state = WALK;
+            sub_title->set_text("For Science");
         }
     }
 }
 
+//TODO: what if two are in interaction
+//will only interact with the first one
+//if already processing quest, then no need to do other quest
+void Robot::react_to(StickMaster * stick_master){
+    //ask stickmaster to return a list of stick that might interact
+    Stick ** stick_list = stick_master->get_stick_list();
+    int total_count = stick_master->get_stick_count();
+    for (int i = 0; i < total_count; i += 1) {
+        react_to(stick_list[i]);
+    }
+    //then interact
+}
+//
 void Robot::link_text(Text * text){
     sub_title = text;
 }

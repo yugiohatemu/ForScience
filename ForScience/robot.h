@@ -11,9 +11,10 @@
 
 #include "SDL/SDL.h"
 #include "level.h"
-#include "stick.h"
 #include "text.h"
 #include "quest.h"
+#include "stickMaster.h"
+
 class Robot{
 private:
     SDL_Rect box;
@@ -33,20 +34,20 @@ private:
         WALK,
         JUMP,
         QUEST,
-        
         TOTAL_STATE,
     };
     int state;
     
     Text * sub_title;
     Quest * quest;
+    void clip_tile();
+    void react_to(Stick * stick);
 public:
     Robot();
     ~Robot();
-    void clip_tile();
+    
     void animate(Level * level);
-    void react_to(Stick * stick);
-    //void animate(Tile * tiles[]);
+    void react_to(StickMaster * stick_master);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void link_text(Text * text);
 };

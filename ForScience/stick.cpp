@@ -45,6 +45,16 @@ void Stick::set_active(bool active){
     }
 }
 
+SDL_Rect Stick::get_rect(){
+    return box;
+}
+
+void Stick::set_quest(Quest * quest){
+    if (this->quest != quest) {
+        this->quest = quest;
+    }
+}
+
 void Stick::clip_tile(){
     //In active
     clips[I_STAND].x = 0;
@@ -82,6 +92,7 @@ void Stick::clip_tile(){
         clips[i].h = STICK_HEIGHT;
     }
     
+    //Active sprite clips
     for (int i = A_STAND;i <= A_JUMP ;i +=1) {
         clips[i] = clips[i - A_STAND];
         clips[i].y = STICK_HEIGHT;
@@ -149,9 +160,7 @@ void Stick::handle_input(SDL_Event event, Level * level){
 }
 
 
-void Stick::set_quest(Quest * quest){
-    this->quest = quest;
-}
+
 
 void Stick::process_quest(){
     if (quest != NULL) {
@@ -165,11 +174,6 @@ void Stick::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen)
 }
 
 
-
-
-SDL_Rect Stick::get_rect(){
-    return box;
-}
 
 //void Stick::set_camera(SDL_Rect camera)
 //{

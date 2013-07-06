@@ -22,7 +22,9 @@ public:
     StickMaster();
     ~StickMaster();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-void handle_input(SDL_Event event, Level * level);
+    void handle_input(SDL_Event event, Level * level);
+    int get_stick_count();
+    Stick ** get_stick_list();
 };
 
 #endif /* defined(__ForScience__stickMaster__) */

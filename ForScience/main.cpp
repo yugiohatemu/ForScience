@@ -108,14 +108,14 @@ int main( int argc, char* args[] )
     }
     
     //Continuous key press
-    if(SDL_EnableKeyRepeat(300,300)<0) return 1;
+    if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
     int last_time = 0;
     int cur_time = 0;
     int diff_time = 0;
     int accumulator = 0;
     
-    StickMaster * stickMaster = new StickMaster();
+    StickMaster * stick_master = new StickMaster();
     Robot * robot = new Robot();
     Level * level = new Level();
     Text * text = new Text(0, 480, "For Science", font);
@@ -127,7 +127,7 @@ int main( int argc, char* args[] )
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
 
-            stickMaster->handle_input(event, level);
+            stick_master->handle_input(event, level);
         }
         
         // Handle game world here
@@ -137,9 +137,9 @@ int main( int argc, char* args[] )
         accumulator += diff_time;
         
         if(accumulator > 300){
-            accumulator -= 300;
+            accumulator -= 200;
+            robot->react_to(stick_master);
             robot->animate(level);
-            //robot->react_to(stick);
         }
         
         last_time = cur_time;
@@ -149,7 +149,7 @@ int main( int argc, char* args[] )
         //Set the camera//myDot.set_camera();
         
         level->show(camera, tileSheet, screen);
-        stickMaster->show(camera, stickSheet,screen);
+        stick_master->show(camera, stickSheet,screen);
         robot->show(camera, robotSheet, screen);
         
         //text
@@ -169,7 +169,7 @@ int main( int argc, char* args[] )
     
     //Clean up
     clean_up();
-    delete stickMaster;
+    delete stick_master;
     delete robot;
     delete level;
     delete text;
