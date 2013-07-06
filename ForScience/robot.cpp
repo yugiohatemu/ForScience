@@ -102,6 +102,20 @@ void Robot::animate(){
     }
 }
 
+void Robot::stop_quest(){
+    state = WALK;
+    sub_title->set_text("For Science");
+    test_stick->delete_quest();
+    if (dir == SDLK_RIGHT) {
+        dir = SDLK_LEFT;
+        frame = WALK_L0;
+    }else{
+        dir = SDLK_RIGHT;
+        frame = WALK_R0;
+    }
+    timer.stop();
+    test_stick = NULL;
+}
 
 void Robot::react_to(Stick * stick){
     //need to judge position first
@@ -114,7 +128,7 @@ void Robot::react_to(Stick * stick){
     //collide or test_stick == stick
     //suppose normal state is walk
     if (state == WALK && collide) {
-        std::cout<<"s0"<<std::endl;
+        
         state = QUEST;
         stick->get_quest(new Quest(1));
         //if the stick is on auto pilot mode, do not change sub title
@@ -122,49 +136,22 @@ void Robot::react_to(Stick * stick){
             sub_title->set_text("JUMP!");
         }
         test_stick = stick;
+        timer.start();
     }else if(state == QUEST){
-        if (collide) {
-            if (stick->has_quest()&&stick->is_quest_done()) {
-                debug("s1");
-                state = WALK;
-                //walk to other direction
-                if (dir == SDLK_RIGHT) {
-                    dir = SDLK_LEFT;
-                    frame = WALK_L0;
-                }else{
-                    dir = SDLK_RIGHT;
-                    frame = WALK_R0;
-                }
-                stick->delete_quest();
-                sub_title->set_text("For Science");
-                test_stick = NULL;
-            }else{
-                debug("s2");
-                //add timer for processing time later
+        //so the only way quest is done is that
+        //collide (do quest in robot area)
+        //has quest, get quest done, not time out
+        //doing quest is collide, has quest, quest not done
+        //others are abandon questing
+        if (collide && stick->has_quest() && timer.get_ticks() <= 2000) {
+            if(stick->is_quest_done()){
+                stop_quest();
             }
-           
-        }else{ //escaping from questing
-            if (! collide) {
-                debug("s3");
-                state = WALK;
-                stick->delete_quest();
-                stick->minus_life();
-                //std::cout<<"minus life"<<std::endl;
-                sub_title->set_text("For Science");
-                test_stick = NULL;
-                if (dir == SDLK_RIGHT) {
-                    dir = SDLK_LEFT;
-                    frame = WALK_L0;
-                }else{
-                    dir = SDLK_RIGHT;
-                    frame = WALK_R0;
-                }
-            }else{
-                debug("s4");
-            }
-            //test_stick = NULL;
-            
+        }else{
+            stick->minus_life();
+            stop_quest();
         }
+        
     }
 }
 
