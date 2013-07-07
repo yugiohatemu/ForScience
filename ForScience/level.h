@@ -24,11 +24,12 @@ class Level{
     void set_clip();
     void set_tile();
     int get_tile_pos(int x, int y);
+    
 public:
     Level();
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
-    void move_on_level(SDL_Rect &box, int dir, int speed);
+    bool move_on_level(SDL_Rect &box, int dir, int speed);
 
 };
 

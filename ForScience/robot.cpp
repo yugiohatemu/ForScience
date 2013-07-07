@@ -96,8 +96,8 @@ void Robot::clip_tile(){
 void Robot::animate(){
     if(state == STAND || state == QUEST) return  ;
     
-    int oldx = box.x;
-    level->move_on_level(box, dir, speed);
+    
+    bool movable = level->move_on_level(box, dir, speed);
     if (state == ANGRY) {
         if ((frame >= A_WALK_R0 && frame < A_WALK_R3) || (frame >= A_WALK_L0 && frame < A_WALK_L3)) {
             frame += 1;
@@ -117,7 +117,24 @@ void Robot::animate(){
         }
 
     }
-    
+    ////we r not progressing, so need to change direction
+    if (!movable) {
+        if (dir == SDLK_RIGHT) {
+            dir = SDLK_LEFT;
+            if (state == ANGRY) {
+                frame = A_WALK_L0;
+            }else{
+                frame = N_WALK_L0;
+            }
+        }else{
+            dir = SDLK_RIGHT;
+            if (state == ANGRY) {
+                frame = A_WALK_R0;
+            }else{
+                frame = N_WALK_R0;
+            }
+        }
+    }
     //mission
     if (mission) {
         if(mission->is_active()) {
@@ -138,24 +155,7 @@ void Robot::animate(){
         }
     }
     
-    ////we r not progressing, so need to change direction
-    if (oldx == box.x) { 
-        if (dir == SDLK_RIGHT) {
-            dir = SDLK_LEFT;
-            if (state == ANGRY) {
-                frame = A_WALK_L0;
-            }else{
-                frame = N_WALK_L0;
-            }
-        }else{
-            dir = SDLK_RIGHT;
-            if (state == ANGRY) {
-                frame = A_WALK_R0;
-            }else{
-                frame = N_WALK_R0;
-            }
-        }
-    }
+    
    
 }
 

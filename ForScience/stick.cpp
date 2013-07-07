@@ -131,7 +131,7 @@ void Stick::clip_tile(){
     clips[I_CLIMB1].x = clips[I_CLIMB0].x + STICK_WIDTH;
     clips[I_CLIMB1].w = STICK_WIDTH;
     
-    for (int i = 0; i <= I_JUMP; i += 1) {
+    for (int i = 0; i <= I_CLIMB1; i += 1) {
         clips[i].y = 0;
         clips[i].h = STICK_HEIGHT;
     }
@@ -148,79 +148,93 @@ void Stick::handle_input(SDL_Event event){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
-                state = WALK;
-                level->move_on_level(box, SDLK_RIGHT, 20);
-                frame += 1;
-                if (active) {
-                    if (frame < A_WALK_R0) frame = A_WALK_R0;
-                    if (frame > A_WALK_R3) frame = A_WALK_R0;
-                }else{
-                    if (frame < I_WALK_R0) frame = I_WALK_R0;
-                    if (frame > I_WALK_R3) frame = I_WALK_R0;
-                }
                 
+                if(level->move_on_level(box, SDLK_RIGHT, 20)){
+                    state = WALK;
+                    frame += 1;
+                    if (active) {
+                        if (frame < A_WALK_R0) frame = A_WALK_R0;
+                        if (frame > A_WALK_R3) frame = A_WALK_R0;
+                    }else{
+                        if (frame < I_WALK_R0) frame = I_WALK_R0;
+                        if (frame > I_WALK_R3) frame = I_WALK_R0;
+                    }
+                }
                 
                 break;
             case SDLK_LEFT:
-                state = WALK;
-                level->move_on_level(box, SDLK_LEFT, 20);
-                frame += 1;
-                if (active) {
-                    if (frame < A_WALK_L0) frame = A_WALK_L0;
-                    if (frame > A_WALK_L3) frame = A_WALK_L0;
-                }else{
-                    if (frame < I_WALK_L0) frame = I_WALK_L0;
-                    if (frame > I_WALK_L3) frame = I_WALK_L0;
-                }
                 
+                if(level->move_on_level(box, SDLK_LEFT, 20)){
+                    state = WALK;
+                    frame += 1;
+                    if (active) {
+                        if (frame < A_WALK_L0) frame = A_WALK_L0;
+                        if (frame > A_WALK_L3) frame = A_WALK_L0;
+                    }else{
+                        if (frame < I_WALK_L0) frame = I_WALK_L0;
+                        if (frame > I_WALK_L3) frame = I_WALK_L0;
+                    }
+                }
                 break;
             case SDLK_UP:
-                state = CLIMB;
-                level->move_on_level(box, SDLK_UP, 20);
-                frame += 1;
-                if (active){
-                    if(frame < A_CLIMB0) frame = A_CLIMB0;
-                    else if(frame > A_CLIMB1) frame = A_CLIMB0;
+                if(level->move_on_level(box, SDLK_UP, 20)){
+                    state = CLIMB;
+                    frame += 1;
+                    
+                    if (active){
+                        if(frame < A_CLIMB0) frame = A_CLIMB0;
+                        if(frame > A_CLIMB1) frame = A_CLIMB0;
+                    }else{
+                        if(frame < I_CLIMB0) frame = I_CLIMB0;
+                        if(frame > I_CLIMB1) frame = I_CLIMB0;
+                    }
                     
                 }else{
-                    if(frame < I_CLIMB0) frame = A_CLIMB0;
-                    else if(frame > I_CLIMB1) frame = A_CLIMB0;
-
+                    state = WALK;
                 }
                 break;
             case SDLK_DOWN:
-                state = CLIMB;
-                level->move_on_level(box, SDLK_DOWN, 20);
-                frame += 1;
-                if (active){
-                    if(frame < A_CLIMB0) frame = A_CLIMB0;
-                    else if(frame > A_CLIMB1) frame = A_CLIMB0;
+                
+                if(level->move_on_level(box, SDLK_DOWN, 20)){
+                    state = CLIMB;
+                    frame += 1;
+                    
+                    if (active){
+                        if(frame < A_CLIMB0) frame = A_CLIMB0;
+                        if(frame > A_CLIMB1) frame = A_CLIMB0;
+                    }else{
+                        if(frame < I_CLIMB0) frame = I_CLIMB0;
+                        if(frame > I_CLIMB1) frame = I_CLIMB0;
+                    }
+
                 }else{
-                    if(frame < I_CLIMB0) frame = A_CLIMB0;
-                    else if(frame > I_CLIMB1) frame = A_CLIMB0;
+                    state = WALK;
                 }
                 break;
             case SDLK_SPACE:
-                state = JUMP;
-                if (active) {
-                    frame = A_JUMP;
-                }else{
-                    frame = I_JUMP;
+                if (level->move_on_level(box, SDLK_SPACE, 0)) {
+                    state = JUMP;
+                    if (active) {
+                        frame = A_JUMP;
+                    }else{
+                        frame = I_JUMP;
+                    }
+                    //dirty quest
+                    if (quest != NULL){
+                        quest->set_done(true);
+                    }
                 }
                 
                 break;
             default: break;
         }
-        if (quest != NULL) {
-            if(event.key.keysym.sym == SDLK_SPACE){
-                quest->set_done(true);
-            }
-        }
+        
     }else if(event.type == SDL_KEYUP){
         //return to stand
         if(state != CLIMB){
             if (active) frame = A_STAND;
             else frame = I_STAND;
+        
         }
     }
 }
