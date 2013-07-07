@@ -23,10 +23,12 @@ private:
         I_WALK_R0,I_WALK_R1,I_WALK_R2,I_WALK_R3,
         I_WALK_L0,I_WALK_L1,I_WALK_L2,I_WALK_L3,
         I_JUMP,
+        I_CLIMB0, I_CLIMB1,
         A_STAND,
         A_WALK_R0,A_WALK_R1,A_WALK_R2,A_WALK_R3,
         A_WALK_L0,A_WALK_L1,A_WALK_L2,A_WALK_L3,
         A_JUMP,
+        A_CLIMB0, A_CLIMB1,
         TOTAL_CLIP,
     };
     SDL_Rect clips[TOTAL_CLIP];
@@ -34,7 +36,13 @@ private:
     Level * level;
     bool active;
     void clip_tile();
-    
+    enum STATE{
+        WALK,
+        JUMP,
+        CLIMB,
+        TOTAL_STATE
+    };
+    STATE state;
 public:
     Stick(Level * level);
     ~Stick();

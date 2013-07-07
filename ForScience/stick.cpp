@@ -25,6 +25,7 @@ Stick::Stick(Level * level){
     this->level = level;
     active = false;
     life = 1;
+    state = WALK;
 }
 
 
@@ -118,9 +119,17 @@ void Stick::clip_tile(){
     clips[I_WALK_L2].w = STICK_WIDTH;
        
     clips[I_WALK_L3] = clips[I_WALK_L1];
+    
     //Jump
     clips[I_JUMP].x = 7 * STICK_WIDTH;
     clips[I_JUMP].w = 60;
+    
+    //climb
+    clips[I_CLIMB0].x = clips[I_JUMP].x + clips[I_JUMP].w;
+    clips[I_CLIMB0].w = STICK_WIDTH;
+    
+    clips[I_CLIMB1].x = clips[I_CLIMB0].x + STICK_WIDTH;
+    clips[I_CLIMB1].w = STICK_WIDTH;
     
     for (int i = 0; i <= I_JUMP; i += 1) {
         clips[i].y = 0;
@@ -128,7 +137,7 @@ void Stick::clip_tile(){
     }
     
     //Active sprite clips
-    for (int i = A_STAND;i <= A_JUMP ;i +=1) {
+    for (int i = A_STAND;i < TOTAL_CLIP ;i +=1) {
         clips[i] = clips[i - A_STAND];
         clips[i].y = STICK_HEIGHT;
     }
@@ -139,6 +148,7 @@ void Stick::handle_input(SDL_Event event){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
+                state = WALK;
                 level->move_on_level(box, SDLK_RIGHT, 20);
                 frame += 1;
                 if (active) {
@@ -152,6 +162,7 @@ void Stick::handle_input(SDL_Event event){
                 
                 break;
             case SDLK_LEFT:
+                state = WALK;
                 level->move_on_level(box, SDLK_LEFT, 20);
                 frame += 1;
                 if (active) {
@@ -164,12 +175,33 @@ void Stick::handle_input(SDL_Event event){
                 
                 break;
             case SDLK_UP:
+                state = CLIMB;
                 level->move_on_level(box, SDLK_UP, 20);
+                frame += 1;
+                if (active){
+                    if(frame < A_CLIMB0) frame = A_CLIMB0;
+                    else if(frame > A_CLIMB1) frame = A_CLIMB0;
+                    
+                }else{
+                    if(frame < I_CLIMB0) frame = A_CLIMB0;
+                    else if(frame > I_CLIMB1) frame = A_CLIMB0;
+
+                }
                 break;
             case SDLK_DOWN:
+                state = CLIMB;
                 level->move_on_level(box, SDLK_DOWN, 20);
+                frame += 1;
+                if (active){
+                    if(frame < A_CLIMB0) frame = A_CLIMB0;
+                    else if(frame > A_CLIMB1) frame = A_CLIMB0;
+                }else{
+                    if(frame < I_CLIMB0) frame = A_CLIMB0;
+                    else if(frame > I_CLIMB1) frame = A_CLIMB0;
+                }
                 break;
             case SDLK_SPACE:
+                state = JUMP;
                 if (active) {
                     frame = A_JUMP;
                 }else{
@@ -184,12 +216,12 @@ void Stick::handle_input(SDL_Event event){
                 quest->set_done(true);
             }
         }
-        
-        
     }else if(event.type == SDL_KEYUP){
         //return to stand
-        if (active) frame = A_STAND;
-        else frame = I_STAND;
+        if(state != CLIMB){
+            if (active) frame = A_STAND;
+            else frame = I_STAND;
+        }
     }
 }
 
@@ -201,7 +233,7 @@ void Stick::animate(){
            
         }else if(frame == I_JUMP){
             frame = I_STAND;
-             quest->set_done(true);
+            quest->set_done(true);
         }
     }
 }
