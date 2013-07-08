@@ -96,8 +96,12 @@ void Robot::clip_tile(){
 void Robot::animate(){
     if(state == STAND || state == QUEST) return  ;
     
-    
-    bool movable = level->move_on_level(box, dir, speed);
+    SDL_Rect whole_box = merge_rect(box, fan);
+    bool movable = false;
+    if (level->move_on_level(whole_box, dir, speed)) {
+        movable = level->move_on_level(box, dir, speed);
+    }
+     
     if (state == ANGRY) {
         if ((frame >= A_WALK_R0 && frame < A_WALK_R3) || (frame >= A_WALK_L0 && frame < A_WALK_L3)) {
             frame += 1;
@@ -135,6 +139,7 @@ void Robot::animate(){
             }
         }
     }
+    
     //mission
     if (mission) {
         if(mission->is_active()) {

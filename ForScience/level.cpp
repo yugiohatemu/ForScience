@@ -81,6 +81,7 @@ int Level::get_tile_pos(int x, int y){
     return n * TILE_COLUMN + m;
 }
 //TODO: boundary check
+//TODO: seperate based on robot?
 bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
     //1st based on the box x, y w h, calculate which area it is on
     int bot_right, top_right, bot_left, top_left = 0;
@@ -171,7 +172,7 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
                 if ( tiles[bot_center + TILE_COLUMN].type >= WALL_H0 && tiles[bot_center + TILE_COLUMN].type <= WALL_H4){
                     movable = true;
                 }else if(tiles[bot_center + TILE_COLUMN].type == LADDER){
-//                     std::cout<<"A"<<std::endl;
+
                     for (int i = bot_center; i >= top_center; i -= TILE_COLUMN) {
                         if (tiles[i].type != BACK_WALL) {
                             is_stuck = true;
@@ -191,7 +192,7 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
 //Tile
 
 Level::Tile::Tile(){
-    type = 0;
+    type = EMPTY;
 }
 
 void Level::Tile::set_tile(int x, int y, int w, int h, int type){

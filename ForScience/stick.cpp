@@ -219,6 +219,7 @@ void Stick::handle_input(SDL_Event event){
                     }else{
                         frame = I_JUMP;
                     }
+                    box.y -= 20;
                     //dirty quest
                     if (quest != NULL){
                         quest->set_done(true);
@@ -232,6 +233,10 @@ void Stick::handle_input(SDL_Event event){
     }else if(event.type == SDL_KEYUP){
         //return to stand
         if(state != CLIMB){
+            if (state == JUMP) {
+                box.y += 20;
+                state = WALK;
+            }
             if (active) frame = A_STAND;
             else frame = I_STAND;
         
@@ -244,9 +249,10 @@ void Stick::animate(){
     if(!active && quest != NULL){
         if (frame == I_STAND) {
             frame = I_JUMP;
-           
+            box.y -= 20;
         }else if(frame == I_JUMP){
             frame = I_STAND;
+            box.y += 20;
             quest->set_done(true);
         }
     }
