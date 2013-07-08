@@ -16,7 +16,7 @@ StickMaster::StickMaster(Level * level){
         stick_list[i] = new Stick(level);
     }
     
-    stick_list[1]->set_pos(8*TILE_WIDTH,3* TILE_HEIGHT);
+    stick_list[1]->set_pos(9*TILE_WIDTH,3* TILE_HEIGHT);
     
     active_stick = 0;
     stick_list[active_stick]->set_active(true);

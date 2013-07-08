@@ -41,12 +41,4 @@ const int TOTAL_TILES = 192;
 const int TILE_COLUMN = 16;
 const int TILE_ROW = 12;
 
-//Tile
-const int TILE_SPRITES = 5;
-const int TILE_EMPTY = 0;
-const int TILE_FLOOR = 1;
-const int TILE_BACKWALL = 2;
-const int TILE_LADDER = 3;
-const int TILE_BRICK = 4;
-
 #endif
