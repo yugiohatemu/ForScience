@@ -115,7 +115,7 @@ int main( int argc, char* args[] ){
     int accumulator = 0;
     
     
-    Level * level = new Level();
+    Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     StickMaster * stick_master = new StickMaster(level);
     RobotMaster * robot_master = new RobotMaster(level);
     Text * text = new Text(0, 480, "For Science", font);
@@ -137,10 +137,10 @@ int main( int argc, char* args[] ){
         accumulator += diff_time;
         
         if(accumulator > 200){
-            accumulator -= 200;
-            robot_master->react_to(stick_master);
-            robot_master->animate();
-            stick_master->animate();
+//            accumulator -= 200;
+//            robot_master->react_to(stick_master);
+//            robot_master->animate();
+//            stick_master->animate();
         }
         
         last_time = cur_time;
@@ -150,8 +150,8 @@ int main( int argc, char* args[] ){
         //Set the camera//myDot.set_camera();
         
         level->show(camera, tileSheet, screen);
-        stick_master->show(camera, stickSheet,screen);
-        robot_master->show(camera, robotSheet, screen);
+//        stick_master->show(camera, stickSheet,screen);
+//        robot_master->show(camera, robotSheet, screen);
         
         //text
         text->show(screen);

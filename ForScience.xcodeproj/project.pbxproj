@@ -56,6 +56,7 @@
 		B60029B71789FD01007CD0FA /* door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = door.h; sourceTree = "<group>"; };
 		B60029BE178A50D4007CD0FA /* door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = door.png; sourceTree = "<group>"; };
 		B60029C0178A7748007CD0FA /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
+		B60029D1178B84A5007CD0FA /* level1.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.map; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -147,6 +148,15 @@
 			name = inteactable;
 			sourceTree = "<group>";
 		};
+		B60029D3178B8988007CD0FA /* level */ = {
+			isa = PBXGroup;
+			children = (
+				B60029D1178B84A5007CD0FA /* level1.map */,
+				B62443E7177DFD07000041FE /* lazy.map */,
+			);
+			name = level;
+			sourceTree = "<group>";
+		};
 		B62443B8177DCE33000041FE = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +180,7 @@
 		B62443C6177DCE33000041FE /* ForScience */ = {
 			isa = PBXGroup;
 			children = (
+				B60029D3178B8988007CD0FA /* level */,
 				B60029B41789FC3F007CD0FA /* inteactable */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B600299417860936007CD0FA /* text.cpp */,
@@ -179,7 +190,6 @@
 				B600299517860937007CD0FA /* text.h */,
 				B62443E3177DF655000041FE /* timer.h */,
 				B62443EC177DFF81000041FE /* utility.h */,
-				B62443E7177DFD07000041FE /* lazy.map */,
 				B62443F4177E394C000041FE /* image */,
 				B62443EE177E02ED000041FE /* miscellaneous */,
 				B60029AF1788A20D007CD0FA /* model */,

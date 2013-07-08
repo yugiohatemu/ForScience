@@ -36,9 +36,5 @@ const int LEVEL_HEIGHT = 480;
 //Tile constants
 const int TILE_WIDTH = 40;
 const int TILE_HEIGHT = 40;
-const int TOTAL_TILES = 192;
-
-const int TILE_COLUMN = 16;
-const int TILE_ROW = 12;
 
 #endif

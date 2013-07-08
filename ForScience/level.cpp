@@ -12,13 +12,15 @@
 #include <fstream>
 #include <iostream>
 
-Level::Level(){
-    //Fill this up later
+Level::Level(std::string file_name, int row, int column){
+    this->file_name = file_name;
+    this->row = row;
+    this->column = column;
+    total_tile = row * column;
     tiles = NULL;
     set_clip();
     set_tile();
 }
-
 
 Level::~Level(){
     delete [] tiles;
@@ -38,11 +40,11 @@ void Level::set_clip(){
 }
 
 void Level::set_tile(){
-    tiles = new Level::Tile[TOTAL_TILES];
+    tiles = new Level::Tile[total_tile];
     
-    std::ifstream map( "/Users/wei/Desktop/ForScience/ForScience/lazy.map" );
-    for (int i = 0; i < TILE_ROW; i++) {
-        for (int j = 0; j < TILE_COLUMN; j ++) {
+    std::ifstream map( file_name.c_str() );
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j ++) {
             int tileType = -1;
             map >> tileType;
             if( map.fail() == true ){
@@ -51,7 +53,7 @@ void Level::set_tile(){
             
             //If the number is a valid tile number, else close
             if( ( tileType >= 0 ) && ( tileType < TOTAL_CLIP ) ){
-                tiles[i * TILE_COLUMN + j].set_tile(j * TILE_HEIGHT, i * TILE_WIDTH, TILE_WIDTH, TILE_HEIGHT, tileType);
+                tiles[i * column + j].set_tile(j * TILE_HEIGHT, i * TILE_WIDTH, TILE_WIDTH, TILE_HEIGHT, tileType);
             }else{
                 break;
             }
@@ -63,7 +65,7 @@ void Level::set_tile(){
 }
 
 void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
-    for (int i = 0; i < TOTAL_TILES; i ++) {
+    for (int i = 0; i < total_tile; i ++) {
         apply_surface(tiles[i].box.x,tiles[i].box.y, tileSheet, screen, &clips[tiles[i].type]);
     }
 }
@@ -78,7 +80,7 @@ int Level::get_tile_pos(int x, int y){
     if (x % TILE_WIDTH == 0) m -= 1 ;
     if (y % TILE_HEIGHT == 0) n -= 1;
     
-    return n * TILE_COLUMN + m;
+    return n * column + m;
 }
 //TODO: boundary check
 //TODO: seperate based on robot?
@@ -97,17 +99,17 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             //whether the it is actually touch on the ground
             //do air jump later
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
-                ((tiles[bot_right + TILE_COLUMN].type >= WALL_H0 &&  tiles[bot_right + TILE_COLUMN].type <= WALL_H4)
-                 || tiles[bot_right + TILE_COLUMN].type == LADDER)) {
+                ((tiles[bot_right + column].type >= WALL_H0 &&  tiles[bot_right + column].type <= WALL_H4)
+                 || tiles[bot_right + column].type == LADDER)) {
                 //2nd, no obstacle for body
-                for (int i = top_right; i <= bot_right; i += TILE_COLUMN) {
+                for (int i = top_right; i <= bot_right; i += column) {
                     if (tiles[i].type == BRICK) {
                         is_stuck = true;
                         break;
                     }
                 }
                 if (is_stuck ) {
-                    box.x  = (top_right % TILE_COLUMN - 1) * TILE_WIDTH;
+                    box.x  = (top_right % column - 1) * TILE_WIDTH;
                 }else{
                     box.x += speed;
                     movable = true;
@@ -120,16 +122,16 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
 //            std::cout<<box.y + box.h<<std::endl;
 //            std::cout<<top_left<<" "<<bot_left<<" "<<box.x<<" "<<box.y<<std::endl;
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
-                ((tiles[bot_left + TILE_COLUMN].type >= WALL_H0 &&  tiles[bot_left + TILE_COLUMN].type <= WALL_H4) ||
-                 tiles[bot_left + TILE_COLUMN].type == LADDER)) {
-                for (int i = top_left; i <= bot_left; i += TILE_COLUMN) {
+                ((tiles[bot_left + column].type >= WALL_H0 &&  tiles[bot_left + column].type <= WALL_H4) ||
+                 tiles[bot_left + column].type == LADDER)) {
+                for (int i = top_left; i <= bot_left; i += column) {
                     if (tiles[i].type == BRICK) {
                         is_stuck = true;
                         break;
                     }
                 }
                 if (is_stuck) {
-                    box.x =  (top_left % TILE_COLUMN + 1) * TILE_WIDTH;
+                    box.x =  (top_left % column + 1) * TILE_WIDTH;
                     //movable = true;
                 }else{
                     box.x -= speed;
@@ -142,25 +144,25 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             //the center has to in the stair
             bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
             if (tiles[bot_center].type == LADDER) {
-                box.x = (bot_center % TILE_COLUMN) * TILE_WIDTH;
-                if ( tiles[bot_center - TILE_COLUMN].type == LADDER) {
+                box.x = (bot_center % column) * TILE_WIDTH;
+                if ( tiles[bot_center - column].type == LADDER) {
                     box.y -= speed;
                     movable = true;
-                }else if(tiles[bot_center - TILE_COLUMN].type == BACK_WALL){
-                    box.y = (int) (bot_center / TILE_COLUMN)  * TILE_HEIGHT - box.h;
+                }else if(tiles[bot_center - column].type == BACK_WALL){
+                    box.y = (int) (bot_center / column)  * TILE_HEIGHT - box.h;
                     //movable = true;
                 }
             }
             break;
         case SDLK_DOWN:
             bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
-            if (tiles[bot_center].type == LADDER || tiles[bot_center + TILE_COLUMN].type == LADDER) {
+            if (tiles[bot_center].type == LADDER || tiles[bot_center + column].type == LADDER) {
                 box.x = (int)(box.x / TILE_WIDTH) * TILE_WIDTH;
-                if ( tiles[bot_center + TILE_COLUMN].type == LADDER) {
+                if ( tiles[bot_center + column].type == LADDER) {
                     box.y += speed;
                     movable = true;
-                }else if(tiles[bot_center + TILE_COLUMN].type >= WALL_H0 && tiles[bot_center + TILE_COLUMN].type <= WALL_H4){
-                    box.y = (int) ((bot_center / TILE_COLUMN) +1)  * TILE_HEIGHT - box.h;
+                }else if(tiles[bot_center + column].type >= WALL_H0 && tiles[bot_center + column].type <= WALL_H4){
+                    box.y = (int) ((bot_center / column) +1)  * TILE_HEIGHT - box.h;
                    // movable = true;
                 }
             }
@@ -169,11 +171,11 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
             top_center = get_tile_pos(box.x + box.w/2, box.y);
             if ((box.y + box.h)%TILE_HEIGHT == 0) {
-                if ( tiles[bot_center + TILE_COLUMN].type >= WALL_H0 && tiles[bot_center + TILE_COLUMN].type <= WALL_H4){
+                if ( tiles[bot_center + column].type >= WALL_H0 && tiles[bot_center + column].type <= WALL_H4){
                     movable = true;
-                }else if(tiles[bot_center + TILE_COLUMN].type == LADDER){
+                }else if(tiles[bot_center + column].type == LADDER){
 
-                    for (int i = bot_center; i >= top_center; i -= TILE_COLUMN) {
+                    for (int i = bot_center; i >= top_center; i -= column) {
                         if (tiles[i].type != BACK_WALL) {
                             is_stuck = true;
                             break;
