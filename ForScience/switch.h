@@ -15,11 +15,11 @@ class Switch{
     enum{
         S_OFF = 0,
         S_ON,
-        TOTAL_STATE
-    }state;
+        TOTAL_CLIP
+    }CLIPS;
     SDL_Rect box;
     void set_clip();
-    SDL_Rect clips[TOTAL_STATE];
+    SDL_Rect clips[TOTAL_CLIP];
     int frame;
 public:
     Switch();
