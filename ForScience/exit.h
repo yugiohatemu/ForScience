@@ -9,16 +9,14 @@
 #ifndef __ForScience__exit__
 #define __ForScience__exit__
 
-#include "SDL/SDL.h"
+#include "sprite.h"
 
-class Exit{
-    SDL_Rect box;
+class Exit:public Sprite{
     enum CLIP{
         CLOSE,
         OPEN,
         TOTAL_CLIP
     };
-    int frame;
     SDL_Rect clips[TOTAL_CLIP];
     
     void set_clip();
@@ -26,7 +24,6 @@ public:
     Exit(int x, int y);
     ~Exit();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-    SDL_Rect get_rect();
     void animate();
 };
 

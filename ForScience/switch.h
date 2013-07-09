@@ -9,24 +9,22 @@
 #ifndef __ForScience__switch__
 #define __ForScience__switch__
 
-#include "SDL/SDL.h"
+#include "sprite.h"
 
-class Switch{
+class Switch: public Sprite{
     enum{
-        S_OFF = 0,
-        S_ON,
+        OFF = 0,
+        ON,
         TOTAL_CLIP
     }CLIPS;
-    SDL_Rect box;
+    
     void set_clip();
     SDL_Rect clips[TOTAL_CLIP];
-    int frame;
 public:
-    Switch();
+    Switch(int x, int y);
     ~Switch();
-    void handle_input(int key);
+    void animate();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
-    bool is_interacble(SDL_Rect rect);
 };
 
 #endif /* defined(__ForScience__switch__) */

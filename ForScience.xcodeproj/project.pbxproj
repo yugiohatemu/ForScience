@@ -59,6 +59,7 @@
 		B60029D1178B84A5007CD0FA /* level1.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.map; sourceTree = "<group>"; };
 		B60029D4178B9052007CD0FA /* exit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exit.cpp; sourceTree = "<group>"; };
 		B60029D5178B9052007CD0FA /* exit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exit.h; sourceTree = "<group>"; };
+		B60029E5178BC795007CD0FA /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 				B60029B71789FD01007CD0FA /* door.h */,
 				B60029D4178B9052007CD0FA /* exit.cpp */,
 				B60029D5178B9052007CD0FA /* exit.h */,
+				B60029E5178BC795007CD0FA /* sprite.h */,
 			);
 			name = inteactable;
 			sourceTree = "<group>";

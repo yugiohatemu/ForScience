@@ -9,9 +9,7 @@
 #include "door.h"
 #include "utility.h"
 
-Door::Door(int x, int y){
-    box.x = x;
-    box.y = y;
+Door::Door(int x, int y):Sprite(x, y){
     box.w = 40;
     box.h = 120;
     
@@ -56,6 +54,3 @@ void Door::animate(){
     }
 }
 
-SDL_Rect Door::get_rect(){
-    return box;
-}

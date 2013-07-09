@@ -10,32 +10,27 @@
 #include "constant.h"
 #include "utility.h"
 
-Switch::Switch(){
-    box.x = 7 * TILE_WIDTH;
-    box.y = 9 * TILE_HEIGHT;
+Switch::Switch(int x, int y):Sprite(x, y){
     box.w = 40;
     box.h = 40;
     
-    frame = 0;
+    frame = OFF;
+    set_clip();
 }
 
 Switch::~Switch(){
     
 }
 
-//only interactable if rect collide
-bool Switch::is_interacble(SDL_Rect rect){
-    //Also shows that it is interacable to player, right?
-    return check_collision(rect, box);
+void Switch::set_clip(){
+    
 }
 
-void Switch::handle_input(int key){
-    if(key == SDLK_RETURN){
-        if (frame == 0) {
-            frame = 1;
-        }else{
-            frame = 0;
-        }
+void Switch::animate(){
+    if (frame == OFF) {
+        frame = ON;
+    }else{
+        frame = OFF;
     }
 }
 
