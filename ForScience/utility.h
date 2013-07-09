@@ -12,7 +12,14 @@
 #include "SDL_image/SDL_image.h"
 #include <string>
 
-
+enum Interaction{
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN,
+    SPACE,
+    ENTER,
+};
 
 SDL_Surface *load_image( std::string filename );
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip = NULL );

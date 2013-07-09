@@ -13,7 +13,7 @@ Exit::Exit(int x, int y):Sprite(x, y){
     box.w = 60;
     box.h = 160;
     frame = CLOSE;
-    
+    attr = STICK_ACTIVE;
     set_clip();
 }
 
@@ -41,4 +41,8 @@ void Exit::animate(){
     }else{
         frame = CLOSE;
     }
+}
+
+bool Exit::is_block(){
+    return false;
 }

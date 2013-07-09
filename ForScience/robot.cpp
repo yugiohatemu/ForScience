@@ -101,7 +101,7 @@ void Robot::animate(){
     if (level->move_on_level(whole_box, dir, speed)) {
         movable = level->move_on_level(box, dir, speed);
     }
-     
+   // level->interact_with_level(whole_box);
     if (state == ANGRY) {
         if ((frame >= A_WALK_R0 && frame < A_WALK_R3) || (frame >= A_WALK_L0 && frame < A_WALK_L3)) {
             frame += 1;

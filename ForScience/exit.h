@@ -25,6 +25,7 @@ public:
     ~Exit();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void animate();
+    bool is_block();
 };
 
 #endif /* defined(__ForScience__exit__) */

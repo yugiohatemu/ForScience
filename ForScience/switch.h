@@ -25,6 +25,7 @@ public:
     ~Switch();
     void animate();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
+    bool is_block();
 };
 
 #endif /* defined(__ForScience__switch__) */

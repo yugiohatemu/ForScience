@@ -12,7 +12,7 @@
 Door::Door(int x, int y):Sprite(x, y){
     box.w = 40;
     box.h = 120;
-    
+    attr = ROBOT_ACTIVE;
     frame = CLOSE;
     set_clip();
 }

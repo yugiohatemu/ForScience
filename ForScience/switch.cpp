@@ -39,3 +39,7 @@ void Switch::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen
     //show hint to player that it is active
     //or not?
 }
+
+bool Switch::is_block(){
+    return false;
+}

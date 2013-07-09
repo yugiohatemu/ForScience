@@ -11,8 +11,8 @@
 
 #include "SDL/SDL.h"
 #include <string>
-#include "exit.h"
-#include "door.h"
+
+#include "sprite.h"
 
 class Level{
     struct Tile{
@@ -30,7 +30,7 @@ class Level{
     };
     
     Tile * tiles;
-    Exit * exit; Door * door;
+    Sprite ** sprite_list;
     SDL_Rect clips[TOTAL_CLIP];
     void set_clip();
     void set_tile();

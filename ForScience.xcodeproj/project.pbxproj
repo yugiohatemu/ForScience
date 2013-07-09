@@ -132,8 +132,6 @@
 			children = (
 				B60029971787772D007CD0FA /* quest.cpp */,
 				B60029981787772D007CD0FA /* quest.h */,
-				B63F59CA1780DE44000B09C9 /* level.cpp */,
-				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029AB1788A09F007CD0FA /* mission.cpp */,
 				B60029AC1788A09F007CD0FA /* mission.h */,
 			);
@@ -157,6 +155,8 @@
 		B60029D3178B8988007CD0FA /* level */ = {
 			isa = PBXGroup;
 			children = (
+				B63F59CA1780DE44000B09C9 /* level.cpp */,
+				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029D1178B84A5007CD0FA /* level1.map */,
 				B62443E7177DFD07000041FE /* lazy.map */,
 			);
