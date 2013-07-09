@@ -24,9 +24,12 @@ class Door{
     
     void set_clip();
 public:
-    Door();
+    Door(int x, int y);
     ~Door();
+    SDL_Rect get_rect();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
+    void animate();
+    bool is_block();
 };
 
 #endif /* defined(__ForScience__door__) */
