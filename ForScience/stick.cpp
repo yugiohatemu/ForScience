@@ -33,7 +33,7 @@ Stick::Stick(Level * level){
 Stick::~Stick(){
     if (quest != NULL) {
         delete quest;
-    }else
+    }
     quest = NULL;
     level = NULL;
 }
@@ -226,6 +226,9 @@ void Stick::handle_input(SDL_Event event){
                     }
                 }
                 
+                break;
+            case SDLK_RETURN:
+                level->interact_with_level(box);
                 break;
             default: break;
         }

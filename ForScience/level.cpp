@@ -18,12 +18,14 @@ Level::Level(std::string file_name, int row, int column){
     this->column = column;
     total_tile = row * column;
     tiles = NULL;
+    exit = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
     set_clip();
     set_tile();
 }
 
 Level::~Level(){
     delete [] tiles;
+    delete exit;
 }
 
 //It would be easier if I can just read a file
@@ -68,6 +70,7 @@ void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     for (int i = 0; i < total_tile; i ++) {
         apply_surface(tiles[i].box.x,tiles[i].box.y, tileSheet, screen, &clips[tiles[i].type]);
     }
+    exit->show(camera, tileSheet, screen);
 }
 
 //get which pos on given x and y
@@ -190,6 +193,12 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             break;
     }
     return movable;
+}
+
+void Level::interact_with_level(SDL_Rect box){
+    if (check_collision(box, exit->get_rect())) {
+        exit->animate();
+    }
 }
 
 //Tile

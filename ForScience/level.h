@@ -11,6 +11,7 @@
 
 #include "SDL/SDL.h"
 #include <string>
+#include "exit.h"
 
 class Level{
     struct Tile{
@@ -28,6 +29,7 @@ class Level{
     };
     
     Tile * tiles;
+    Exit * exit;
     SDL_Rect clips[TOTAL_CLIP];
     void set_clip();
     void set_tile();
@@ -39,6 +41,7 @@ public:
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     bool move_on_level(SDL_Rect &box, int dir, int speed);
+    void interact_with_level(SDL_Rect box);
 
 };
 

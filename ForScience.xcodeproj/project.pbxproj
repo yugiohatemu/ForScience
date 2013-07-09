@@ -13,6 +13,7 @@
 		B60029A11787B8BC007CD0FA /* robotMaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B600299F1787B8BC007CD0FA /* robotMaster.cpp */; };
 		B60029AD1788A0A0007CD0FA /* mission.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029AB1788A09F007CD0FA /* mission.cpp */; };
 		B60029B81789FD01007CD0FA /* door.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029B61789FD01007CD0FA /* door.cpp */; };
+		B60029D6178B9052007CD0FA /* exit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029D4178B9052007CD0FA /* exit.cpp */; };
 		B62443C8177DCE34000041FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443C7177DCE34000041FE /* main.cpp */; };
 		B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B62443C9177DCE34000041FE /* ForScience.1 */; };
 		B62443D2177DCE54000041FE /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B62443D1177DCE54000041FE /* SDLMain.m */; };
@@ -55,8 +56,9 @@
 		B60029B61789FD01007CD0FA /* door.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = door.cpp; sourceTree = "<group>"; };
 		B60029B71789FD01007CD0FA /* door.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = door.h; sourceTree = "<group>"; };
 		B60029BE178A50D4007CD0FA /* door.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = door.png; sourceTree = "<group>"; };
-		B60029C0178A7748007CD0FA /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
 		B60029D1178B84A5007CD0FA /* level1.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.map; sourceTree = "<group>"; };
+		B60029D4178B9052007CD0FA /* exit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exit.cpp; sourceTree = "<group>"; };
+		B60029D5178B9052007CD0FA /* exit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exit.h; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -144,6 +146,8 @@
 				B63F59CF17820E19000B09C9 /* switch.h */,
 				B60029B61789FD01007CD0FA /* door.cpp */,
 				B60029B71789FD01007CD0FA /* door.h */,
+				B60029D4178B9052007CD0FA /* exit.cpp */,
+				B60029D5178B9052007CD0FA /* exit.h */,
 			);
 			name = inteactable;
 			sourceTree = "<group>";
@@ -213,7 +217,6 @@
 		B62443F4177E394C000041FE /* image */ = {
 			isa = PBXGroup;
 			children = (
-				B60029C0178A7748007CD0FA /* exit.png */,
 				B60029BE178A50D4007CD0FA /* door.png */,
 				B63F59CD17820DE7000B09C9 /* switch.png */,
 				B63F59C91780C5D2000B09C9 /* robot.png */,
@@ -288,6 +291,7 @@
 				B60029A11787B8BC007CD0FA /* robotMaster.cpp in Sources */,
 				B60029AD1788A0A0007CD0FA /* mission.cpp in Sources */,
 				B60029B81789FD01007CD0FA /* door.cpp in Sources */,
+				B60029D6178B9052007CD0FA /* exit.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
