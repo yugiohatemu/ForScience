@@ -8,18 +8,20 @@
 
 #include "stickMaster.h"
 #include "constant.h"
-StickMaster::StickMaster(Level * level){
-    total_stick = 2;
+
+
+StickMaster::StickMaster(Level * level,int total_stick, int pos[]){
+    this->total_stick = total_stick;
     
     stick_list =new Stick* [total_stick];
     for (int i = 0; i < total_stick; i += 1) {
         stick_list[i] = new Stick(level);
+        stick_list[i]->set_pos(pos[2*i], pos[2*i+1]);
     }
-    
-    stick_list[1]->set_pos(9*TILE_WIDTH,3* TILE_HEIGHT);
     
     active_stick = 0;
     stick_list[active_stick]->set_active(true);
+    
 }
 
 StickMaster::~StickMaster(){

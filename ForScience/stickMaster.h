@@ -20,7 +20,7 @@ class StickMaster{
     Stick ** stick_list;
    
 public:
-    StickMaster(Level * level);
+    StickMaster(Level * level,int total_stick, int pos[]);
     ~StickMaster();
     void animate();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);

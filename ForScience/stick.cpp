@@ -212,7 +212,7 @@ void Stick::handle_input(SDL_Event event){
                 }
                 break;
             case SDLK_SPACE:
-                if (level->move_on_level(box, SDLK_SPACE, 0)) {
+                if (level->move_on_level(box, SDLK_SPACE, 20)) {
                     state = JUMP;
                     if (active) {
                         frame = A_JUMP;

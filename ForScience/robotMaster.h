@@ -20,7 +20,8 @@ class RobotMaster{
     int active_robot;
     Robot ** robot_list;
 public:
-    RobotMaster(Level * level);
+    
+    RobotMaster(Level * level, int total_robot, int pos[]);
     ~RobotMaster();
     void animate();
     void set_text(Text *text);
