@@ -31,6 +31,7 @@ class Level{
     
     Tile * tiles;
     Sprite ** sprite_list;
+    int total_sprites;
     SDL_Rect clips[TOTAL_CLIP];
     void set_clip();
     void set_tile();
@@ -42,8 +43,9 @@ public:
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     bool move_on_level(SDL_Rect &box, int dir, int speed);
-    void interact_with_level(SDL_Rect box);
-
+    void interact_with_level(SDL_Rect &box);
+//    void stick_interact_with_level(Stick * stick);
+//    void robot_interact_with_level(Robot * robot);
 };
 
 #endif /* defined(__ForScience__level__) */

@@ -10,7 +10,7 @@
 #include "utility.h"
 #include "constant.h"
 #include <iostream>
-
+#include "book.h"
 Stick::Stick(Level * level){
     //Initialize the offsets
     box.x = 4*TILE_WIDTH;
@@ -26,6 +26,7 @@ Stick::Stick(Level * level){
     active = false;
     life = 1;
     state = WALK;
+    item = NULL;
 }
 
 
@@ -36,6 +37,7 @@ Stick::~Stick(){
     }
     quest = NULL;
     level = NULL;
+    item  = NULL;
 }
 
 void Stick::set_pos(int x, int y){
@@ -144,6 +146,9 @@ void Stick::clip_tile(){
 }
 
 void Stick::handle_input(SDL_Event event){
+    SDL_Rect box_copy = box;
+    //calculate the diff between box_copy and box
+    //apply the change
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
@@ -247,6 +252,10 @@ void Stick::handle_input(SDL_Event event){
     }
 }
 
+void Stick::hold_item(Sprite * item){
+    this->item = item;
+}
+
 //For auto pilot mode
 void Stick::animate(){
     if(!active && quest != NULL){
@@ -259,6 +268,7 @@ void Stick::animate(){
             quest->set_done(true);
         }
     }
+    
 }
 
 

@@ -12,7 +12,7 @@
 #include "SDL/SDL.h"
 #include "level.h"
 #include "quest.h"
-
+#include "sprite.h"
 class Stick{
 private:
     SDL_Rect box;
@@ -34,6 +34,7 @@ private:
     SDL_Rect clips[TOTAL_CLIP];
     Quest * quest;
     Level * level;
+    Sprite * item;
     bool active;
     void clip_tile();
     enum STATE{
@@ -59,6 +60,7 @@ public:
     void delete_quest();
     bool is_autopilot();
     void minus_life();
+    void hold_item(Sprite * item);
 };
 
 

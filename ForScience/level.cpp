@@ -11,6 +11,7 @@
 #include "constant.h"
 #include "exit.h"
 #include "door.h"
+#include "book.h"
 #include <fstream>
 #include <iostream>
 
@@ -20,17 +21,18 @@ Level::Level(std::string file_name, int row, int column){
     this->column = column;
     total_tile = row * column;
     tiles = NULL;
-    sprite_list = new Sprite*[2];
+    total_sprites = 3;
+    sprite_list = new Sprite*[total_sprites];
     sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
     sprite_list[1] = new Door(7 * TILE_WIDTH, 3 * TILE_HEIGHT);
-    
+    sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
     set_clip();
     set_tile();
 }
 
 Level::~Level(){
     delete [] tiles;
-    for (int i = 0; i < 2; i+=1) {
+    for (int i = 0; i < total_sprites; i+=1) {
         delete sprite_list[i]; //???
     }
     delete [] sprite_list;
@@ -79,7 +81,7 @@ void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     for (int i = 0; i < total_tile; i ++) {
         apply_surface(tiles[i].box.x,tiles[i].box.y, tileSheet, screen, &clips[tiles[i].type]);
     }
-    for (int i = 0; i < 2; i +=1) {
+    for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->show(camera, tileSheet, screen);
     }    
 }
@@ -215,19 +217,35 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
                 }
             }
             break;
+        case SDLK_RETURN:
+            interact_with_level(box);
         default:
             break;
     }
     return movable;
 }
 
-void Level::interact_with_level(SDL_Rect box){
-//    if (check_collision(box, exit->get_rect())) {
-//        exit->animate();
-//    }else if(check_collision(box, door->get_rect())){
-//        door->animate();
-//    }
+void Level::interact_with_level(SDL_Rect &box){
+    for (int i = 0; i < total_sprites; i+=1) {
+        Book * test = dynamic_cast<Book *>(sprite_list[i]);
+        if (test) { //it it is the book,
+            std::cout<<"a"<<std::endl;
+            if (check_collision(box, test->get_rect())) {
+                test->set_stick_rect(&box);
+            }
+            test->animate();
+        }
+    }
+
 }
+//void Level::stick_interact_with_level(Stick * stick){
+//
+//}
+//
+//void Level::robot_interact_with_level(Robot * robot){
+//    
+//}
+
 
 //Tile
 

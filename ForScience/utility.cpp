@@ -91,6 +91,23 @@ SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B){
     return rect;
 }
 
+int collide_position(SDL_Rect A, SDL_Rect B){ //related to A
+    if (!check_collision(A, B)) {
+        return -1;
+    }
+    //check for center
+    int center_A_x = A.x + A.w/2;
+    int center_A_y = A.y + A.h/2;
+    int center_B_x = B.x + B.w/2;
+    int center_B_y = B.y + B.h/2;
+    if (center_B_x < center_A_x) {
+        if (center_B_y < A.y) return LEFT_UP;
+        else if(center_B_y < A.y + A.h) return LEFT;
+        else return LEFT_DOWN;
+    }
+    return -1;
+}
+
 void debug(std::string s){
     std::cout<<s<<std::endl;
 }

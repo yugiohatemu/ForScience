@@ -17,6 +17,10 @@ enum Interaction{
     RIGHT,
     UP,
     DOWN,
+    LEFT_UP,
+    LEFT_DOWN,
+    RIGHT_UP,
+    RIGHT_DOWN,
     SPACE,
     ENTER,
 };
@@ -26,5 +30,6 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination,
 bool check_collision( SDL_Rect A, SDL_Rect B );
 SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B);
 void debug(std::string s);
+int collide_position(SDL_Rect A, SDL_Rect B); // not done;
 
 #endif /* defined(__ForScience__utility__) */
