@@ -14,6 +14,7 @@
 #include "quest.h"
 #include "sprite.h"
 #include "constant.h"
+
 class Stick{
 private:
     SDL_Rect box;
@@ -70,7 +71,6 @@ public:
     void delete_quest();
     bool is_autopilot();
     void minus_life();
-    void hold_item(Sprite * item);
 };
 
 

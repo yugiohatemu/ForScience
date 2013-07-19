@@ -8,7 +8,7 @@
 
 #include "book.h"
 #include "utility.h"
-
+#include <iostream>
 
 Book::Book(int x, int y):Sprite(x,y){
     box.w = 40;
@@ -21,7 +21,7 @@ Book::Book(int x, int y):Sprite(x,y){
 }
 
 Book::~Book(){
-    stick_rect= NULL;
+    stick_rect = NULL;
 }
 
 void Book::set_clip(){
@@ -32,14 +32,15 @@ void Book::set_clip(){
 }
 
 void Book::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
-     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
+    if (stick_rect) {
+        box.x = stick_rect->x + stick_rect->w/2;
+        box.y = stick_rect->y + stick_rect->h/2;
+    }
+    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }
 
 void Book::animate(){
-    if (state == PICKED) {
-        box.x = stick_rect->x + stick_rect->w/2;
-        box.y = stick_rect->y + stick_rect->h/2;
-    }//else do nothing
+    //else do nothing
 }
 
 bool Book::is_block(){
@@ -48,20 +49,14 @@ bool Book::is_block(){
 
 //two state, one states, the books position will go with the stick
 //another state just stay on ground
-void Book::set_stick_rect(SDL_Rect *sitck_rect){
-    if (stick_rect == this->stick_rect) {
-        debug("c");
-        return ;
-    }
-    //can use this for interchanging object between sticks latter
-    if (this->stick_rect == NULL && state == DROPED) {
-        state = PICKED;
-        box.x = stick_rect->x + stick_rect->w/2;
-        box.y = stick_rect->y + stick_rect->h/2;
-        debug("b");
-    }else{ //not nulled
+void Book::set_stick_rect(SDL_Rect *rect){
+  
+    if (rect) {
+        box.x = rect->x + rect->w/2;
+        box.y = rect->y + rect->h/2;
+    }else{
         box.x = stick_rect->x + stick_rect->w/2;
         box.y = stick_rect->y + stick_rect->h;
     }
-    this->stick_rect = stick_rect;
+    stick_rect = rect;
 }

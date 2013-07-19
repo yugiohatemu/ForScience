@@ -32,4 +32,5 @@ SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B);
 void debug(std::string s);
 int collide_position(SDL_Rect A, SDL_Rect B); // not done;
 
+
 #endif /* defined(__ForScience__utility__) */

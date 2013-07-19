@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "book.h"
+
 Stick::Stick(Level * level){
     //Initialize the offsets
     box.x = 4*TILE_WIDTH;
@@ -239,6 +240,11 @@ void Stick::handle_input(SDL_Event event){
                 }
             }
         }
+        
+        if (dir == SDLK_RETURN) {
+            level->interact_with_level(&box);
+            
+        }
     }else if(event.type == SDL_KEYUP){
         if(state == WALK || state == JUMP){
             if (state == JUMP) {
@@ -250,11 +256,10 @@ void Stick::handle_input(SDL_Event event){
             
         }
     }
+
 }
 
-void Stick::hold_item(Sprite * item){
-    this->item = item;
-}
+
 
 //For auto pilot mode
 void Stick::animate(){

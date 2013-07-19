@@ -43,7 +43,7 @@ public:
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     bool move_on_level(SDL_Rect &box, int dir, int speed);
-    void interact_with_level(SDL_Rect &box);
+    void interact_with_level(SDL_Rect *box);
     //start to seperate stick and robot
   
     bool is_on_ground(SDL_Rect &box);

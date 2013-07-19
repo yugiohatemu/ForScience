@@ -218,22 +218,21 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             }
             break;
         case SDLK_RETURN:
-            interact_with_level(box);
+            interact_with_level(&box);
         default:
             break;
     }
     return movable;
 }
 
-void Level::interact_with_level(SDL_Rect &box){
+void Level::interact_with_level(SDL_Rect *box){
     for (int i = 0; i < total_sprites; i+=1) {
         Book * test = dynamic_cast<Book *>(sprite_list[i]);
         if (test) { //it it is the book,
-            std::cout<<"a"<<std::endl;
-            if (check_collision(box, test->get_rect())) {
-                test->set_stick_rect(&box);
+           if (check_collision(*box, test->get_rect())) {
+                test->set_stick_rect(box);
+                
             }
-            test->animate();
         }
     }
 
@@ -309,8 +308,6 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                 box.y += speed;
                 state = CLIMB;
             }
-        }else if(dir == SDLK_RETURN){
-            //do interactions?
         }
     }else if(state == CLIMB){
         if (dir == SDLK_UP) {
