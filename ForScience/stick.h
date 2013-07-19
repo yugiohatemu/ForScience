@@ -24,11 +24,15 @@ private:
         I_WALK_L0,I_WALK_L1,I_WALK_L2,I_WALK_L3,
         I_JUMP,
         I_CLIMB0, I_CLIMB1,
+        I_CRAWL0, I_CRAWL1, I_CRAWL2, I_CRAWL3,
+        I_FALL,
         A_STAND,
         A_WALK_R0,A_WALK_R1,A_WALK_R2,A_WALK_R3,
         A_WALK_L0,A_WALK_L1,A_WALK_L2,A_WALK_L3,
         A_JUMP,
         A_CLIMB0, A_CLIMB1,
+        A_CRAWL0, A_CRAWL1, A_CRAWL2, A_CRAWL3,
+        A_FALL,
         TOTAL_CLIP,
     };
     SDL_Rect clips[TOTAL_CLIP];
@@ -41,6 +45,9 @@ private:
         WALK,
         JUMP,
         CLIMB,
+        CRAWL,
+        FALL,
+        STUCK,
         TOTAL_STATE
     };
     STATE state;
@@ -53,6 +60,8 @@ public:
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     SDL_Rect get_rect();
+   
+    //getting rectangle address
     //Quest realted
     void get_quest(Quest * quest);
     bool has_quest();

@@ -61,6 +61,8 @@ SDL_Rect Stick::get_rect(){
     return box;
 }
 
+
+
 void Stick::get_quest(Quest * quest){
     this->quest = quest;
 }
@@ -133,6 +135,30 @@ void Stick::clip_tile(){
     clips[I_CLIMB1].x = clips[I_CLIMB0].x + STICK_WIDTH;
     clips[I_CLIMB1].w = STICK_WIDTH;
     
+    //crawl
+    clips[I_CRAWL0].x = clips[I_CLIMB1].x + STICK_WIDTH;
+    clips[I_CRAWL0].y = 0;
+    clips[I_CRAWL0].w = STICK_HEIGHT;
+    clips[I_CRAWL0].h = STICK_WIDTH;
+    
+    clips[I_CRAWL1] = clips[I_CRAWL0];
+    clips[I_CRAWL1].y = 40;
+    
+    clips[I_CRAWL2].x = clips[I_CRAWL0].x + clips[I_CRAWL0].w;
+    clips[I_CRAWL2].y = 0;
+    clips[I_CRAWL2].w = 80;
+    clips[I_CRAWL2].h = 80;
+    
+    clips[I_CRAWL3].x = clips[I_CRAWL2].x + clips[I_CRAWL2].w;
+    clips[I_CRAWL3].y = 0;
+    clips[I_CRAWL3].w = 80;
+    clips[I_CRAWL3].h = 120;
+    
+    clips[I_FALL].x = clips[I_CRAWL3].x + clips[I_CRAWL3].w;
+    clips[I_FALL].y = 0;
+    clips[I_FALL].w = STICK_WIDTH;
+    clips[I_FALL].h = STICK_HEIGHT;
+    
     for (int i = 0; i <= I_CLIMB1; i += 1) {
         clips[i].y = 0;
         clips[i].h = STICK_HEIGHT;
@@ -141,48 +167,95 @@ void Stick::clip_tile(){
     //Active sprite clips
     for (int i = A_STAND;i < TOTAL_CLIP ;i +=1) {
         clips[i] = clips[i - A_STAND];
-        clips[i].y = STICK_HEIGHT;
+        clips[i].y = STICK_HEIGHT + clips[i - A_STAND].y;
     }
 }
 
 void Stick::handle_input(SDL_Event event){
-    SDL_Rect box_copy = box;
     //calculate the diff between box_copy and box
     //apply the change
     if( event.type == SDL_KEYDOWN ){
         //Adjust the velocity
         switch( event.key.keysym.sym ){
             case SDLK_RIGHT:
+                if (state == CRAWL ) {
+                    if(level->crawl_tunnel(box, SDLK_RIGHT, 15)){
+                        frame += 1;
+                        if (active) {
+                            if (frame < A_CRAWL0 || frame > A_CRAWL1) frame = A_CRAWL0;
+                        }else{
+                            if (frame < I_CRAWL0 || frame > I_CRAWL1) frame = I_CRAWL0;
+                        }
+                    }else{ //no more tunnel left, assume tunnel never get stuck now, we will change frame and change state to fall
+                        state = FALL;
+                        if (active) frame = A_CRAWL3;
+                        else frame = I_CRAWL3;
+                        //change box
+                        box.x += 80;
+                        box.w = STICK_WIDTH;
+                        box.h = STICK_HEIGHT;
+                    }
+                }
+//                else if(state == FALL){
+//                    debug("s2");
+//                    if (frame != A_FALL || frame != I_FALL) {
+//                        //adjust box
+//                        box.x += 40;
+//                        debug("s1");
+//                    }
+//                    if (active) frame = A_FALL;
+//                    else frame = I_FALL;
+//                }
+                else{
                 
-                if(level->move_on_level(box, SDLK_RIGHT, 20)){
+                
+                    
+                    
+                if(level->stick_on_level(box, SDLK_RIGHT, 20)){
                     state = WALK;
                     frame += 1;
                     if (active) {
-                        if (frame < A_WALK_R0) frame = A_WALK_R0;
-                        if (frame > A_WALK_R3) frame = A_WALK_R0;
+                        if (frame < A_WALK_R0 || frame > A_WALK_R3) frame = A_WALK_R0;
                     }else{
-                        if (frame < I_WALK_R0) frame = I_WALK_R0;
-                        if (frame > I_WALK_R3) frame = I_WALK_R0;
+                        if (frame < I_WALK_R0 || frame > I_WALK_R3) frame = I_WALK_R0;
                     }
+                }else{
+                    if (level->is_tunnel(box, SDLK_RIGHT)) {
+                        //change the state = CLAW
+                        state = CRAWL;
+                        
+                        //change frame
+                        if (active) {
+                            frame = A_CRAWL2;
+                        }else{
+                            frame = I_CRAWL2;
+                        }
+                        //and change box
+                        box.w = STICK_HEIGHT;
+                        box.h = STICK_WIDTH;
+                    }
+                }
                 }
                 
                 break;
             case SDLK_LEFT:
                 
-                if(level->move_on_level(box, SDLK_LEFT, 20)){
+                if(level->stick_on_level(box, SDLK_LEFT, 20)){
                     state = WALK;
                     frame += 1;
                     if (active) {
-                        if (frame < A_WALK_L0) frame = A_WALK_L0;
-                        if (frame > A_WALK_L3) frame = A_WALK_L0;
+                        if (frame < A_WALK_L0 || frame > A_WALK_L3) frame = A_WALK_L0;
                     }else{
-                        if (frame < I_WALK_L0) frame = I_WALK_L0;
-                        if (frame > I_WALK_L3) frame = I_WALK_L0;
+                        if (frame < I_WALK_L0 || frame > I_WALK_L3) frame = I_WALK_L0;
+                    }
+                }else{
+                    if (level->is_tunnel(box, SDLK_LEFT)) {
+                        
                     }
                 }
                 break;
             case SDLK_UP:
-                if(level->move_on_level(box, SDLK_UP, 20)){
+                if(level->stick_on_level(box, SDLK_UP, 20)){
                     state = CLIMB;
                     frame += 1;
                     
@@ -200,7 +273,7 @@ void Stick::handle_input(SDL_Event event){
                 break;
             case SDLK_DOWN:
                 
-                if(level->move_on_level(box, SDLK_DOWN, 20)){
+                if(level->stick_on_level(box, SDLK_DOWN, 20)){
                     state = CLIMB;
                     frame += 1;
                     
@@ -217,7 +290,7 @@ void Stick::handle_input(SDL_Event event){
                 }
                 break;
             case SDLK_SPACE:
-                if (level->move_on_level(box, SDLK_SPACE, 20)) {
+                if (level->stick_on_level(box, SDLK_SPACE, 20)) {
                     state = JUMP;
                     if (active) {
                         frame = A_JUMP;
@@ -240,7 +313,7 @@ void Stick::handle_input(SDL_Event event){
         
     }else if(event.type == SDL_KEYUP){
         //return to stand
-        if(state != CLIMB){
+        if(state == WALK || state == JUMP){
             if (state == JUMP) {
                 box.y += 20;
                 state = WALK;
@@ -248,6 +321,17 @@ void Stick::handle_input(SDL_Event event){
             if (active) frame = A_STAND;
             else frame = I_STAND;
         
+        }else if(state == FALL){
+            if (frame == I_CRAWL3){
+                frame = I_FALL;
+                box.x += 40;
+                
+            }else if(frame == A_CRAWL3){
+                
+                frame = A_FALL;
+                box.x += 40;
+                
+            }
         }
     }
 }
@@ -266,6 +350,15 @@ void Stick::animate(){
             frame = I_STAND;
             box.y += 20;
             quest->set_done(true);
+        }
+    }
+    if (state == FALL) {
+       
+        box.y += 20;
+        if (level->is_on_ground(box)) {
+            state = WALK;
+            if (active) frame = A_STAND;
+            else frame = I_STAND;
         }
     }
     

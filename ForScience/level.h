@@ -13,7 +13,6 @@
 #include <string>
 
 #include "sprite.h"
-
 class Level{
     struct Tile{
         SDL_Rect box;
@@ -44,8 +43,11 @@ public:
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     bool move_on_level(SDL_Rect &box, int dir, int speed);
     void interact_with_level(SDL_Rect &box);
-//    void stick_interact_with_level(Stick * stick);
-//    void robot_interact_with_level(Robot * robot);
+    //start to seperate stick and robot
+    bool stick_on_level(SDL_Rect &box, int dir, int speed);
+    bool is_tunnel(SDL_Rect &box, int dir);
+    bool crawl_tunnel(SDL_Rect &box, int dir, int speed);
+    bool is_on_ground(SDL_Rect &box);
 };
 
 #endif /* defined(__ForScience__level__) */
