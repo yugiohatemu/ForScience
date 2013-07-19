@@ -139,8 +139,8 @@ int main( int argc, char* args[] ){
         
         if(accumulator > 200){
             accumulator -= 200;
-            //robot_master->react_to(stick_master);
-            //robot_master->animate();
+            robot_master->react_to(stick_master);
+            robot_master->animate();
             stick_master->animate();
         }
         
@@ -152,7 +152,7 @@ int main( int argc, char* args[] ){
         
         level->show(camera, tileSheet, screen);
         stick_master->show(camera, stickSheet,screen);
-        //robot_master->show(camera, robotSheet, screen);
+        robot_master->show(camera, robotSheet, screen);
         
         //text
         text->show(screen);

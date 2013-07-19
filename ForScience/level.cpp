@@ -24,7 +24,7 @@ Level::Level(std::string file_name, int row, int column){
     total_sprites = 3;
     sprite_list = new Sprite*[total_sprites];
     sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
-    sprite_list[1] = new Door(7 * TILE_WIDTH, 3 * TILE_HEIGHT);
+    sprite_list[1] = new Door(5 * TILE_WIDTH, 3 * TILE_HEIGHT);
     sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
     set_clip();
     set_tile();

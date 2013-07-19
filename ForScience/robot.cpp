@@ -20,8 +20,8 @@ Robot::Robot(Level * level){
     //the head of robot is around 25
     fan.x = box.x + box.w;
     fan.y = box.y - 10;
-    fan.w = FAN_WIDTH;
-    fan.h = FAN_HEIGHT;
+    fan.w = 120;
+    fan.h = 140;
     
     frame = N_WALK_R0;
     dir = SDLK_RIGHT;
@@ -53,7 +53,7 @@ void Robot::set_pos(int x, int y){
     box.x = x;
     box.y = y;
     fan.x = box.x + box.w;
-    fan.y = box.y - 10;
+    fan.y = box.y - 40;
 }
 
 void Robot::set_text(Text * text){
@@ -72,24 +72,28 @@ void Robot::clip_tile(){
         clips[i].w = ROBOT_WIDTH;
         clips[i].h = ROBOT_HEIGHT;
     }
-    int offset = 8 * ROBOT_WIDTH + 80;
-    //now clip the fans
-    //grid 20 sub grid 5
-    clips[N_FAN_R].x = offset+60;
-    clips[N_FAN_R].y = 5;
-    clips[N_FAN_R].w = 60;
-    clips[N_FAN_R].h = 70;
-    
-    clips[N_FAN_L].x = offset;
-    clips[N_FAN_L].y = 5;
-    clips[N_FAN_L].w = 60;
-    clips[N_FAN_L].h = 70;
-    
     
     for (int i = A_WALK_R0; i < TOTAL_CLIP; i +=1) {
         clips[i] = clips[i-A_WALK_R0];
         clips[i].y = ROBOT_HEIGHT;
     }
+    
+    //now clip the fans
+    //grid 20 sub grid 5
+    clips[N_FAN_R].x = 120;
+    clips[N_FAN_R].y = 160;
+    clips[N_FAN_R].w = 120;
+    clips[N_FAN_R].h = 140;
+    
+    clips[N_FAN_L].x = 0;
+    clips[N_FAN_L].y = 160;
+    clips[N_FAN_L].w = 120;
+    clips[N_FAN_L].h = 140;
+    
+    clips[A_FAN_L] = clips[N_FAN_L];
+    clips[A_FAN_L].y = clips[N_FAN_L].y + 140;
+    clips[A_FAN_R] = clips[N_FAN_R];
+    clips[A_FAN_R].y = clips[N_FAN_L].y + 140;
 }
 
 
@@ -254,8 +258,10 @@ void Robot::react_to(StickMaster * stick_master){
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
+    
     if (dir == SDLK_RIGHT) { // x +w, y-10,
         fan.x = box.x + box.w;
+        
         if (state == ANGRY) apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[A_FAN_R]);
         else apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[N_FAN_R]);
         
