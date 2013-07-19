@@ -13,6 +13,7 @@
 #include "level.h"
 #include "quest.h"
 #include "sprite.h"
+#include "constant.h"
 class Stick{
 private:
     SDL_Rect box;
@@ -41,16 +42,16 @@ private:
     Sprite * item;
     bool active;
     void clip_tile();
-    enum STATE{
-        WALK,
-        JUMP,
-        CLIMB,
-        CRAWL,
-        FALL,
-        STUCK,
-        TOTAL_STATE
-    };
-    STATE state;
+//    enum STATE{
+//        WALK,
+//        JUMP,
+//        CLIMB,
+//        CRAWL,
+//        FALL,
+//        STUCK,
+//        TOTAL_STATE
+//    };
+    HUMAN_STATE state;
 public:
     Stick(Level * level);
     ~Stick();

@@ -8,7 +8,7 @@
 
 #include "level.h"
 #include "utility.h"
-#include "constant.h"
+
 #include "exit.h"
 #include "door.h"
 #include "book.h"
@@ -239,19 +239,13 @@ void Level::interact_with_level(SDL_Rect &box){
 
 }
 
-bool Level::stick_on_level(SDL_Rect &box, int dir, int speed){
-    
-    int bot_right, top_right, bot_left, top_left = 0;
-    int bot_center, top_center = 0;
-    bool is_stuck = false;
-    bool movable = false; //do not change frame is state is not enterable
-    
-    switch (dir) {
-        case SDLK_RIGHT:
-            //check for further posistion directly
-            bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
-            top_right = get_tile_pos(box.x + box.w + speed, box.y);
 
+HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state){
+    
+    if (state == WALK) {
+        if (dir == SDLK_RIGHT) {
+            int bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
+            int top_right = get_tile_pos(box.x + box.w + speed, box.y);
             
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
                 ((tiles[bot_right + column].type >= WALL_C0 &&  tiles[bot_right + column].type <= WALL_H4)
@@ -259,144 +253,123 @@ bool Level::stick_on_level(SDL_Rect &box, int dir, int speed){
                     //2nd, no obstacle for body
                     for (int i = bot_right; i > top_right; i -=column) {
                         if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) { //dirty fix
-                            is_stuck = true;
+                            state = STUCK;
                             break;
                         }
                     }
                     
-                    
-                    if (is_stuck ) {
-                        box.x  = (top_right % column - 1) * TILE_WIDTH;
-                    }else{
-                        box.x += speed;
-                        movable = true;
-                    }
-                }
-            break;
-        case SDLK_LEFT:
-            top_left = get_tile_pos(box.x - speed, box.y);
-            bot_left = get_tile_pos(box.x - speed, box.y + box.h);
+                    if (state == STUCK )box.x  = (top_right % column - 1) * TILE_WIDTH;
+                    else box.x += speed;
+            }
+        }else if(dir == SDLK_LEFT){
+            int top_left = get_tile_pos(box.x - speed, box.y);
+            int bot_left = get_tile_pos(box.x - speed, box.y + box.h);
             
-            //            if (door->is_block() && check_collision(door->get_rect(), box)) {
-            //                break;
-            //            }
             
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
                 ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_H4) ||
                  tiles[bot_left + column].type == LADDER)) {
                     for (int i = bot_left; i > top_left; i -= column) {
                         if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) {
-                            is_stuck = true;
+                            state = STUCK;
                             break;
                         }
                     }
                     
-                    if (is_stuck) {
-                        
-                        box.x =  (top_left % column + 1) * TILE_WIDTH;
-                        //movable = true;
-                    }else{
-                        box.x -= speed;
-                        movable = true;
-                    }
-                }
+                    if (state == STUCK) box.x =  (top_left % column + 1) * TILE_WIDTH;
+                    else box.x -= speed;
+            }
+        }else if(dir == SDLK_SPACE){
             
-            break;
-        case SDLK_UP: //TODO: care about don;t stuck case latter
-            //the center has to in the stair
-            bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
-            top_center = get_tile_pos(box.x + box.w/2, box.y-20);
+            int top_center = get_tile_pos(box.x + box.w/2, box.y - speed);
+            if (tiles[top_center].type != BACK_WALL && tiles[top_center].type != LADDER) { //- column?
+                state = STUCK;
+            }else {
+                box.y -= speed;
+                state = JUMP;
+            }
+        }else if(dir == SDLK_UP){
+            int bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
+            int top_center = get_tile_pos(box.x + box.w/2, box.y-20); //why 20 here?
             if (tiles[bot_center].type == LADDER ) {
-                box.x = (bot_center % column) * TILE_WIDTH;
-                if (tiles[top_center].type >= WALL_C0 && tiles[top_center].type <= WALL_H4) {
-                    is_stuck = true;
-                }
                 
-                if ( tiles[bot_center - column].type == LADDER && !is_stuck) {
+                if (tiles[top_center].type >= WALL_C0 && tiles[top_center].type <= WALL_H4) {
+                    state = STUCK;
+                }else if ( tiles[bot_center - column].type == LADDER) {
+                    box.x = (bot_center % column) * TILE_WIDTH;
                     box.y -= speed;
-                    movable = true;
-                }else if(tiles[bot_center - column].type == BACK_WALL){
-                    box.y = (int) (bot_center / column)  * TILE_HEIGHT - box.h;
-                }else if(is_stuck){
-                    box.y = (int) (top_center /column + 1) * TILE_HEIGHT;
+                    state = CLIMB;
                 }
             }
-            break;
-        case SDLK_DOWN:
-            bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
+            
+        }else if(dir == SDLK_DOWN){
+            int bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
+            if (tiles[bot_center + column].type == LADDER) {
+                box.x = (int)(box.x / TILE_WIDTH) * TILE_WIDTH;
+                box.y += speed;
+                state = CLIMB;
+            }
+        }else if(dir == SDLK_RETURN){
+            //do interactions?
+        }
+    }else if(state == CLIMB){
+        if (dir == SDLK_UP) {
+            int bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
+            int top_center = get_tile_pos(box.x + box.w/2, box.y-20);
+            if (tiles[top_center].type >= WALL_C0 && tiles[top_center].type <= WALL_H4) {
+                            
+                state = STUCK;
+                box.y = (int) (top_center /column + 1) * TILE_HEIGHT;
+                
+            }else if ( tiles[bot_center - column].type == LADDER && state != STUCK) {//&& !state == STUCK
+                box.y -= speed;
+            }else if(tiles[bot_center - column].type == BACK_WALL){
+                box.y = (int) (bot_center / column)  * TILE_HEIGHT - box.h;
+                state = WALK;
+            }
+        }else if(dir == SDLK_DOWN){
+            int bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);
             if (tiles[bot_center].type == LADDER || tiles[bot_center + column].type == LADDER) {
                 box.x = (int)(box.x / TILE_WIDTH) * TILE_WIDTH;
                 if ( tiles[bot_center + column].type == LADDER) {
                     box.y += speed;
-                    movable = true;
                 }else if(tiles[bot_center + column].type >= WALL_H0 && tiles[bot_center + column].type <= WALL_H4){
                     box.y = (int) ((bot_center / column) +1)  * TILE_HEIGHT - box.h;
+                    state = WALK;
                 }
             }
-            break;
-        case SDLK_SPACE:
-            bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h - speed);
-            top_center = get_tile_pos(box.x + box.w/2, box.y - speed);
-            if ((box.y + box.h)%TILE_HEIGHT == 0) {
-                if ( tiles[bot_center + column].type >= WALL_H0 && tiles[bot_center + column].type <= WALL_H4){
-                    movable = true;
-                }else if(tiles[bot_center + column].type == LADDER){
-                    
-                    for (int i = bot_center; i >= top_center; i -= column) {
-                        if (tiles[i].type != BACK_WALL) {
-                            is_stuck = true;
-                            break;
-                        }
-                    }
-                    movable = !is_stuck;
-                }
+        }else if(dir == SDLK_RIGHT){
+            int top_right = get_tile_pos(box.x + box.w , box.y) ;
+            
+            if (tiles[top_right+ column+1].type == TUNNEL) state = CRAWL;
+            else state = STUCK;
+        }else if(dir == SDLK_LEFT){
+            int top_left = get_tile_pos(box.x, box.y);
+            
+            if (tiles[top_left+ column-1].type == TUNNEL) state = CRAWL;
+            else state = STUCK;
+        }
+    }else if(state == CRAWL){
+        if (dir == SDLK_RIGHT) {
+            int top_right = get_tile_pos(box.x + box.w+ speed, box.y)+column + 1;
+            
+            if (tiles[top_right].type == TUNNEL) box.x += speed;
+            else if (tiles[top_right].type  == BACK_WALL ) state = FALL;
+            else if(tiles[top_right].type == LADDER) state = CLIMB;
+            else {
+                    state = STUCK;
+                    box.x = (top_right % column) * TILE_WIDTH;
             }
-            break;
-        case SDLK_RETURN:
-            interact_with_level(box);
-        default:
-            break;
-    }
-    return movable;
-
-}
-
-bool Level::is_tunnel(SDL_Rect &box, int dir){
-    //for now just have the head vision
-    if (dir == SDLK_LEFT) {
-        int top_left = get_tile_pos(box.x, box.y)+ column;
-        if (tiles[top_left-1].type == TUNNEL) {
-            std::cout<<"L"<<std::endl;
-            return true;
+        }else if(dir == SDLK_LEFT){
+            
         }
-    }else if(dir == SDLK_RIGHT){
-        //use center?
-        //the use a head rect maybe
-        int top_right = get_tile_pos(box.x + box.w , box.y) + column;
-//        std::cout<<tiles[top_right].type<<" "<<tiles[top_right+1].type<<std::endl;
-        if (tiles[top_right+1].type == TUNNEL) {
-            return true;
-        }
+    }else if(state == FALL){
+
     }
     
-    return false;
+    return state;
 }
 
-//need more things just then telling yes or no, return a state will be better
-//also want a state as an input
-bool Level::crawl_tunnel(SDL_Rect &box, int dir, int speed){
-    bool movable = false;
-    if (dir == SDLK_RIGHT) {
-        //using the right?
-        int head_right = get_tile_pos(box.x + box.w, box.y) + column;
-        if (tiles[head_right].type == TUNNEL) {
-            box.x += speed;
-            movable = true;
-        }
-        
-    }
-    return movable;
-}
 
 bool Level::is_on_ground(SDL_Rect &box){
     int bot_center = get_tile_pos(box.x + box.w/2, box.y + box.h);

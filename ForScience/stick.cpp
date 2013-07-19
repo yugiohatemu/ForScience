@@ -8,7 +8,7 @@
 
 #include "stick.h"
 #include "utility.h"
-#include "constant.h"
+
 #include <iostream>
 #include "book.h"
 Stick::Stick(Level * level){
@@ -175,144 +175,71 @@ void Stick::handle_input(SDL_Event event){
     //calculate the diff between box_copy and box
     //apply the change
     if( event.type == SDL_KEYDOWN ){
-        //Adjust the velocity
-        switch( event.key.keysym.sym ){
-            case SDLK_RIGHT:
-                if (state == CRAWL ) {
-                    if(level->crawl_tunnel(box, SDLK_RIGHT, 15)){
-                        frame += 1;
-                        if (active) {
-                            if (frame < A_CRAWL0 || frame > A_CRAWL1) frame = A_CRAWL0;
-                        }else{
-                            if (frame < I_CRAWL0 || frame > I_CRAWL1) frame = I_CRAWL0;
-                        }
-                    }else{ //no more tunnel left, assume tunnel never get stuck now, we will change frame and change state to fall
-                        state = FALL;
-                        if (active) frame = A_CRAWL3;
-                        else frame = I_CRAWL3;
-                        //change box
-                        box.x += 80;
-                        box.w = STICK_WIDTH;
-                        box.h = STICK_HEIGHT;
-                    }
-                }
-//                else if(state == FALL){
-//                    debug("s2");
-//                    if (frame != A_FALL || frame != I_FALL) {
-//                        //adjust box
-//                        box.x += 40;
-//                        debug("s1");
-//                    }
-//                    if (active) frame = A_FALL;
-//                    else frame = I_FALL;
-//                }
-                else{
+        int dir = event.key.keysym.sym;
+        HUMAN_STATE next_state = level->stick_on_level(box, dir, 20, state);
+        //handling all the state change
+        //that is not stucked
+        if (next_state != STUCK && next_state != state) {
+            if (state == WALK && next_state == CLIMB) {
+                //change state and frame
+                //god I want an animation class...., but after fixing this
+                if (active) frame = A_CLIMB0;
+                else frame = I_CLIMB0;
+            }else if(state == WALK && next_state == JUMP){
+                if (active) frame = A_JUMP;
+                else frame = I_JUMP;
                 
+                //Dirty quest
+                if (quest != NULL) quest->set_done(true);
                 
-                    
-                    
-                if(level->stick_on_level(box, SDLK_RIGHT, 20)){
-                    state = WALK;
-                    frame += 1;
-                    if (active) {
-                        if (frame < A_WALK_R0 || frame > A_WALK_R3) frame = A_WALK_R0;
-                    }else{
-                        if (frame < I_WALK_R0 || frame > I_WALK_R3) frame = I_WALK_R0;
-                    }
+            }else if(state == CLIMB && next_state == WALK){
+                if (active) frame = A_STAND;
+                else frame = I_STAND;
+            }else if(state == CLIMB && next_state == CRAWL){
+                if(active) frame = A_CRAWL2;
+                else frame = I_CRAWL2;
+                //changin box
+                box.w = STICK_HEIGHT;
+                box.h = STICK_WIDTH;
+            }else if(state == CRAWL && next_state == FALL){
+                if(active) frame = A_CRAWL3;
+                else frame = I_CRAWL3;
+                
+                box.x += 120;
+                box.w = STICK_WIDTH;
+                box.h = STICK_HEIGHT;
+            }
+            state = next_state;
+        }else if (state != STUCK) {
+            frame += 1;
+            if (state == WALK && dir == SDLK_RIGHT) {
+                
+                if (active) {
+                    if (frame < A_WALK_R0 || frame > A_WALK_R3) frame = A_WALK_R0;
                 }else{
-                    if (level->is_tunnel(box, SDLK_RIGHT)) {
-                        //change the state = CLAW
-                        state = CRAWL;
-                        
-                        //change frame
-                        if (active) {
-                            frame = A_CRAWL2;
-                        }else{
-                            frame = I_CRAWL2;
-                        }
-                        //and change box
-                        box.w = STICK_HEIGHT;
-                        box.h = STICK_WIDTH;
-                    }
+                    if (frame < I_WALK_R0 || frame > I_WALK_R3) frame = I_WALK_R0;
                 }
-                }
-                
-                break;
-            case SDLK_LEFT:
-                
-                if(level->stick_on_level(box, SDLK_LEFT, 20)){
-                    state = WALK;
-                    frame += 1;
-                    if (active) {
-                        if (frame < A_WALK_L0 || frame > A_WALK_L3) frame = A_WALK_L0;
-                    }else{
-                        if (frame < I_WALK_L0 || frame > I_WALK_L3) frame = I_WALK_L0;
-                    }
+            }else if(state == WALK && dir == SDLK_LEFT){
+                if (active) {
+                    if (frame < A_WALK_L0 || frame > A_WALK_L3) frame = A_WALK_L0;
                 }else{
-                    if (level->is_tunnel(box, SDLK_LEFT)) {
-                        
-                    }
+                    if (frame < I_WALK_L0 || frame > I_WALK_L3) frame = I_WALK_L0;
                 }
-                break;
-            case SDLK_UP:
-                if(level->stick_on_level(box, SDLK_UP, 20)){
-                    state = CLIMB;
-                    frame += 1;
-                    
-                    if (active){
-                        if(frame < A_CLIMB0) frame = A_CLIMB0;
-                        if(frame > A_CLIMB1) frame = A_CLIMB0;
-                    }else{
-                        if(frame < I_CLIMB0) frame = I_CLIMB0;
-                        if(frame > I_CLIMB1) frame = I_CLIMB0;
-                    }
-                    
+            }else if(state == CLIMB){ //there is a direction about that
+                if (active){
+                    if(frame < A_CLIMB0 || frame > A_CLIMB1) frame = A_CLIMB0;
                 }else{
-                    state = WALK;
+                    if(frame < I_CLIMB0 || frame > I_CLIMB1) frame = I_CLIMB0;
                 }
-                break;
-            case SDLK_DOWN:
-                
-                if(level->stick_on_level(box, SDLK_DOWN, 20)){
-                    state = CLIMB;
-                    frame += 1;
-                    
-                    if (active){
-                        if(frame < A_CLIMB0) frame = A_CLIMB0;
-                        if(frame > A_CLIMB1) frame = A_CLIMB0;
-                    }else{
-                        if(frame < I_CLIMB0) frame = I_CLIMB0;
-                        if(frame > I_CLIMB1) frame = I_CLIMB0;
-                    }
-
+            }else if(state == CRAWL){
+                if (active) {
+                    if (frame < A_CRAWL0 || frame > A_CRAWL1) frame = A_CRAWL0;
                 }else{
-                    state = WALK;
+                    if (frame < I_CRAWL0 || frame > I_CRAWL1) frame = I_CRAWL0;
                 }
-                break;
-            case SDLK_SPACE:
-                if (level->stick_on_level(box, SDLK_SPACE, 20)) {
-                    state = JUMP;
-                    if (active) {
-                        frame = A_JUMP;
-                    }else{
-                        frame = I_JUMP;
-                    }
-                    box.y -= 20;
-                    //dirty quest
-                    if (quest != NULL){
-                        quest->set_done(true);
-                    }
-                }
-                
-                break;
-            case SDLK_RETURN:
-                level->interact_with_level(box);
-                break;
-            default: break;
+            }
         }
-        
     }else if(event.type == SDL_KEYUP){
-        //return to stand
         if(state == WALK || state == JUMP){
             if (state == JUMP) {
                 box.y += 20;
@@ -320,18 +247,7 @@ void Stick::handle_input(SDL_Event event){
             }
             if (active) frame = A_STAND;
             else frame = I_STAND;
-        
-        }else if(state == FALL){
-            if (frame == I_CRAWL3){
-                frame = I_FALL;
-                box.x += 40;
-                
-            }else if(frame == A_CRAWL3){
-                
-                frame = A_FALL;
-                box.x += 40;
-                
-            }
+            
         }
     }
 }
@@ -353,7 +269,15 @@ void Stick::animate(){
         }
     }
     if (state == FALL) {
-       
+        if (frame == I_CRAWL3){
+            frame = I_FALL;
+            box.x += 40;
+            
+        }else if(frame == A_CRAWL3){
+            frame = A_FALL;
+            box.x += 40;
+            
+        }
         box.y += 20;
         if (level->is_on_ground(box)) {
             state = WALK;

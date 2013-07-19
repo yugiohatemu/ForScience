@@ -11,8 +11,9 @@
 
 #include "SDL/SDL.h"
 #include <string>
-
+#include "constant.h"
 #include "sprite.h"
+
 class Level{
     struct Tile{
         SDL_Rect box;
@@ -44,10 +45,10 @@ public:
     bool move_on_level(SDL_Rect &box, int dir, int speed);
     void interact_with_level(SDL_Rect &box);
     //start to seperate stick and robot
-    bool stick_on_level(SDL_Rect &box, int dir, int speed);
-    bool is_tunnel(SDL_Rect &box, int dir);
-    bool crawl_tunnel(SDL_Rect &box, int dir, int speed);
+  
     bool is_on_ground(SDL_Rect &box);
+    HUMAN_STATE stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state);
+//    bool is_stick_stuck(SDL_Rect box, int dir);
 };
 
 #endif /* defined(__ForScience__level__) */

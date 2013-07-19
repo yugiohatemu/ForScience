@@ -37,4 +37,14 @@ const int LEVEL_HEIGHT = 480;
 const int TILE_WIDTH = 40;
 const int TILE_HEIGHT = 40;
 
+enum HUMAN_STATE{
+    WALK,
+    JUMP,
+    CLIMB,
+    CRAWL,
+    FALL,
+    STUCK,
+    TOTAL_STATE
+};
+
 #endif
