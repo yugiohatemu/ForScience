@@ -119,7 +119,8 @@ bool is_rect_on_side(int dir ,SDL_Rect A, SDL_Rect B){
 }
 
 bool is_rect_valid(SDL_Rect A){
-    return A.x > 0 && A.y > 0 && A.w > 0 && A.h > 0;
+    //the first 2 might not matter
+    return A.x >= 0 && A.y >= 0 && A.w > 0 && A.h > 0;
 }
 
 //A is the rect that is substracted
