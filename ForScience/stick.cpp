@@ -92,10 +92,11 @@ bool Stick::is_autopilot(){
 }
 
 void Stick::minus_life(){
-    life -= 1;
-    if (life < 0) {
-        life = 0;
-       //active = false;
+    if (life > 0) {
+        life -= 1;
+        if (active) frame = A_STUN;
+        else frame = I_STUN;
+        box.y += 20;
     }
 }
 
@@ -139,6 +140,11 @@ void Stick::clip_tile(){
     clips[I_CLIMB1].x = clips[I_CLIMB0].x + STICK_WIDTH;
     clips[I_CLIMB1].w = STICK_WIDTH;
     
+    for (int i = 0; i <= I_CLIMB1; i += 1) {
+        clips[i].y = 0;
+        clips[i].h = STICK_HEIGHT;
+    }
+    
     //crawl
     clips[I_CRAWL0].x = clips[I_CLIMB1].x + STICK_WIDTH;
     clips[I_CRAWL0].y = 0;
@@ -163,10 +169,10 @@ void Stick::clip_tile(){
     clips[I_FALL].w = STICK_WIDTH;
     clips[I_FALL].h = STICK_HEIGHT;
     
-    for (int i = 0; i <= I_CLIMB1; i += 1) {
-        clips[i].y = 0;
-        clips[i].h = STICK_HEIGHT;
-    }
+    clips[I_STUN].x = clips[I_FALL].x + clips[I_FALL].w;
+    clips[I_STUN].y = 20;
+    clips[I_STUN].w = 60;
+    clips[I_STUN].h = 100;
     
     //Active sprite clips
     for (int i = A_STAND;i < TOTAL_CLIP ;i +=1) {

@@ -110,10 +110,10 @@ int collide_position(SDL_Rect A, SDL_Rect B){ //related to A
 
 //if A is on ? side of B
 bool is_rect_on_side(int dir ,SDL_Rect A, SDL_Rect B){
-//    if (check_collision(A, B)) return true;
+    if (check_collision(A, B)) return true;
     
-    if(dir == SDLK_LEFT) return A.x > B.x + B.w;
-    else if(dir == SDLK_RIGHT) return A.x + A.w < B.x;
+    if(dir == SDLK_RIGHT) return A.x > B.x + B.w;
+    else if(dir == SDLK_LEFT) return A.x + A.w < B.x;
     
     return false;
 }
@@ -143,6 +143,10 @@ SDL_Rect substract_rect(SDL_Rect A, SDL_Rect B){
     return rect;
 }
 
+//if use the y to judge, need to redefine area
+bool is_rect_inside(SDL_Rect A, SDL_Rect B){
+    return A.x >= B.x && A.x + A.w <= B.x + B.w;
+}
 
 void debug(std::string s){
     std::cout<<s<<std::endl;

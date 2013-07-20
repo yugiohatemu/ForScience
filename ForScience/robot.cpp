@@ -38,6 +38,7 @@ Robot::Robot(Level * level){
     mission = NULL;
     //
     search_area = new AreaSearch(1*TILE_WIDTH, 5 * TILE_HEIGHT,4 * TILE_WIDTH , TILE_HEIGHT);
+    stopWatch = new StopWatch(1.5);
 }
 
 Robot::~Robot(){
@@ -48,6 +49,8 @@ Robot::~Robot(){
         delete mission;
     }
     delete search_area;
+    delete stopWatch;
+    
 }
 
 
@@ -136,21 +139,7 @@ void Robot::animate(){
     }
     ////we r not progressing, so need to change direction
     if (!movable) {
-        if (dir == SDLK_RIGHT) {
-            dir = SDLK_LEFT;
-            if (state == ALERT) {
-                frame = A_WALK_L0;
-            }else{
-                frame = N_WALK_L0;
-            }
-        }else{
-            dir = SDLK_RIGHT;
-            if (state == ALERT) {
-                frame = A_WALK_R0;
-            }else{
-                frame = N_WALK_R0;
-            }
-        }
+        turn_back();
     }
     
     //mission
@@ -175,6 +164,18 @@ void Robot::animate(){
     
     
    
+}
+
+void Robot::turn_back(){
+    if (dir == SDLK_RIGHT) {
+        dir = SDLK_LEFT;
+        if (state == ALERT) frame = A_WALK_L0;
+        else frame = N_WALK_L0;
+    }else{
+        dir = SDLK_RIGHT;
+        if (state == ALERT) frame = A_WALK_R0;
+        else frame = N_WALK_R0;
+    }
 }
 
 void Robot::stop_quest(){
@@ -203,97 +204,114 @@ void Robot::stop_quest(){
 void Robot::react_to(Stick * stick){
     //need to judge position first
     SDL_Rect radar = fan;
-    if (dir == SDLK_RIGHT) {
-        radar.w += 20;
-    }else{
-        radar.x -= 20;
-    }
+    //    if (dir == SDLK_RIGHT) {
+    //        radar.w += 20;
+    //    }else{
+    //        radar.x -= 20;
+    //    }
     SDL_Rect rect = stick->get_rect();
     HUMAN_STATE h_state = stick->get_state();
     SDL_Rect range = merge_rect(box, radar);
+    SDL_Rect area = search_area->get_area();
     //based on dir, if the robot is facing right, and rect is on left, then ignore behaviour and collison
     //if in visible range
     if (state == NORMAL) {
-        if (is_rect_on_side(dir, rect, box) && h_state != WALK) {
+        if (is_rect_on_side(dir, rect, box) &&( h_state != WALK || !is_rect_inside(rect, area)) ) {
             state = SUSPICIOUS;
-            debug("SUS");
+            debug("->Suspicious");
         }
     }else if (state == SUSPICIOUS) {
-        //need use scanner to check the radar
-        //1st robot collide with search area
-        
-        if (check_collision(search_area->get_area(), range)) {
+        if (check_collision(rect, range) && is_rect_inside(rect, area)) {
+            state = NORMAL;
+            debug("->Normal");
+            search_area->reset();
+            turn_back();
+        }else if(check_collision(rect, range) && !is_rect_inside(rect, area)){
+            state = WARNING;
+            search_area->reset();
+            stopWatch->start();
+            debug("->Warning");
+        }else if(check_collision(search_area->get_area(), range)){
             if (search_area->try_search(range)) {
-                //stick is in there, then good
                 if (check_collision(rect, range) && h_state == WALK) {
                     state = NORMAL;
                     search_area->reset();
-                    //TODO: TURN Direction
-                    debug("NOrmal");
+                    debug("Normal");
+                    turn_back();
                 }
             }else{
                 state = ALERT;
-                debug("alert");
-                //going to excution mode
+                debug("->Alert");
+            }
+        }
+    }else if(state == WARNING){
+        if (stopWatch->is_timeup()) {
+            stopWatch->reset();
+            if (is_rect_inside(rect, area) && h_state == WALK) {
+                state = NORMAL;
+                debug("->Normal");
+            }else{
+                state = ALERT;
+                debug("->Alert");
             }
         }
     }else if (state == ALERT) {
         if (check_collision(rect, range)){
             stick->minus_life();
-            debug("punish");
-            //call the level to end the game maybe?
+            debug("->Punish");
+            turn_back();
         }
     }
     
-//    
-//    bool collide = (check_collision(box, rect) || check_collision(fan, rect));
-//    //if not interactive nor the stick that robot cares now
-//    if ( !collide && test_stick != stick) {
-//        return ;
-//    }
-//    if (state == ALERT && collide) {
-//        stick->minus_life();
-//        debug("lose life");
-//        state = NORMAL;
-//        frame -= A_WALK_R0;
-//        return ;
-//    }
-//    //collide or test_stick == stick
-//    //suppose normal state is walk
-//    if (state == NORMAL && collide) {
-//        
-//        state = QUEST;
-//        stick->get_quest(new Quest(1));
-//        //if the stick is on auto pilot mode, do not change sub title
-//        if (!stick->is_autopilot()) {
-//            sub_title->set_text("JUMP!");
-//        }
-//        test_stick = stick;
-//        timer.start();
-//        //For now, just count for simple collision
-//        if (mission  && mission->is_active()) {
-//            mission->check_in();
-//        }
-//    }else if(state == QUEST){
-//        //so the only way quest is done is that
-//        //collide (do quest in robot area)
-//        //has quest, get quest done, not time out
-//        //doing quest is collide, has quest, quest not done
-//        //others are abandon questing
-//        if (collide && stick->has_quest() && timer.get_ticks() <= 2000) {
-//            if(stick->is_quest_done()){
-//                stop_quest();
-//                if(mission){
-//                    mission->reset(dir,box.x,box.y);
-//                }
-//            }
-//        }else{
-//            stick->minus_life();
-//            debug("lose life");
-//            stop_quest();
-//        }
-//        
-//    }
+    //
+    //    bool collide = (check_collision(box, rect) || check_collision(fan, rect));
+    //    //if not interactive nor the stick that robot cares now
+    //    if ( !collide && test_stick != stick) {
+    //        return ;
+    //    }
+    //    if (state == ALERT && collide) {
+    //        stick->minus_life();
+    //        debug("lose life");
+    //        state = NORMAL;
+    //        frame -= A_WALK_R0;
+    //        return ;
+    //    }
+    //    //collide or test_stick == stick
+    //    //suppose normal state is walk
+    //    if (state == NORMAL && collide) {
+    //
+    //        state = QUEST;
+    //        stick->get_quest(new Quest(1));
+    //        //if the stick is on auto pilot mode, do not change sub title
+    //        if (!stick->is_autopilot()) {
+    //            sub_title->set_text("JUMP!");
+    //        }
+    //        test_stick = stick;
+    //        timer.start();
+    //        //For now, just count for simple collision
+    //        if (mission  && mission->is_active()) {
+    //            mission->check_in();
+    //        }
+    //    }else if(state == QUEST){
+    //        //so the only way quest is done is that
+    //        //collide (do quest in robot area)
+    //        //has quest, get quest done, not time out
+    //        //doing quest is collide, has quest, quest not done
+    //        //others are abandon questing
+    //        if (collide && stick->has_quest() && timer.get_ticks() <= 2000) {
+    //            if(stick->is_quest_done()){
+    //                stop_quest();
+    //                if(mission){
+    //                    mission->reset(dir,box.x,box.y);
+    //                }
+    //            }
+    //        }else{
+    //            stick->minus_life();
+    //            debug("lose life");
+    //            stop_quest();
+    //        }
+    //        
+    //    }
 }
 
 

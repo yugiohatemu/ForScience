@@ -34,4 +34,5 @@ int collide_position(SDL_Rect A, SDL_Rect B); // not done;
 bool is_rect_on_side(int dir, SDL_Rect A, SDL_Rect B);
 SDL_Rect substract_rect(SDL_Rect A, SDL_Rect B);
 bool is_rect_valid(SDL_Rect A);
+bool is_rect_inside(SDL_Rect A, SDL_Rect B);
 #endif /* defined(__ForScience__utility__) */

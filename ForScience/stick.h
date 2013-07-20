@@ -28,6 +28,7 @@ private:
         I_CLIMB0, I_CLIMB1,
         I_CRAWL0, I_CRAWL1, I_CRAWL2, I_CRAWL3,
         I_FALL,
+        I_STUN,
         A_STAND,
         A_WALK_R0,A_WALK_R1,A_WALK_R2,A_WALK_R3,
         A_WALK_L0,A_WALK_L1,A_WALK_L2,A_WALK_L3,
@@ -35,6 +36,7 @@ private:
         A_CLIMB0, A_CLIMB1,
         A_CRAWL0, A_CRAWL1, A_CRAWL2, A_CRAWL3,
         A_FALL,
+        A_STUN,
         TOTAL_CLIP,
     };
     SDL_Rect clips[TOTAL_CLIP];

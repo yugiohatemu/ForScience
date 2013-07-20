@@ -16,6 +16,7 @@
 #include "stickMaster.h"
 #include "mission.h"
 #include "areaSearch.h"
+#include "stopWatch.h"
 
 class Robot{
 private:
@@ -37,7 +38,7 @@ private:
     enum STATE{
         STAND = 0,
         NORMAL = 15,
-        QUEST,
+        WARNING,
         SUSPICIOUS,
         ALERT,
         
@@ -51,11 +52,11 @@ private:
     Stick * test_stick;
     Mission * mission;
     AreaSearch * search_area;
-    
+    StopWatch * stopWatch;
     void clip_tile();
     void react_to(Stick * stick);
     void stop_quest();
-    
+    void turn_back();
 public:
     Robot(Level * level);
     ~Robot();
