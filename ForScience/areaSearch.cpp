@@ -8,6 +8,7 @@
 
 #include "areaSearch.h"
 #include "utility.h"
+#include <iostream>
 
 AreaSearch::AreaSearch(int x, int y, int w, int h){
     area.x = x;
@@ -47,6 +48,7 @@ bool AreaSearch::is_search_end(SDL_Rect rect){
 
 bool AreaSearch::try_search(SDL_Rect rect){
     area_left = substract_rect(area_left, rect);
-    return  !is_rect_valid(area_left);
+//    std::cout<<area_left.x <<" "<<area_left.w<<std::endl;
+    return  is_rect_valid(area_left);
 }
 

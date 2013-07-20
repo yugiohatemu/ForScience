@@ -18,7 +18,7 @@ Robot::Robot(Level * level){
     box.h = ROBOT_HEIGHT;
     
     //the head of robot is around 25
-    fan.x = box.x + box.w;
+    fan.x = box.x + 120;
     fan.y = box.y - 10;
     fan.w = 120;
     fan.h = 140;
@@ -37,7 +37,7 @@ Robot::Robot(Level * level){
     test_stick = NULL;
     mission = NULL;
     //
-    search_area = new AreaSearch(TILE_WIDTH, 5 * TILE_HEIGHT,4 * TILE_WIDTH , TILE_HEIGHT);
+    search_area = new AreaSearch(1*TILE_WIDTH, 5 * TILE_HEIGHT,4 * TILE_WIDTH , TILE_HEIGHT);
 }
 
 Robot::~Robot(){
@@ -101,9 +101,15 @@ void Robot::clip_tile(){
 
 
 void Robot::animate(){
-    if(state == NORMAL || state == QUEST) return  ;
+//    if(state == NORMAL || state == QUEST) return  ;
+    SDL_Rect radar = fan;
+    if (dir == SDLK_RIGHT) {
+        radar.w -= 25;
+    }else{
+        radar.x += 25;
+    }
     
-    SDL_Rect whole_box = merge_rect(box, fan);
+    SDL_Rect whole_box = merge_rect(box, radar);
     bool movable = false;
     if (level->move_on_level(whole_box, dir, speed)) {
         movable = level->move_on_level(box, dir, speed);
@@ -196,18 +202,23 @@ void Robot::stop_quest(){
 
 void Robot::react_to(Stick * stick){
     //need to judge position first
+    SDL_Rect radar = fan;
+    if (dir == SDLK_RIGHT) {
+        radar.w += 20;
+    }else{
+        radar.x -= 20;
+    }
     SDL_Rect rect = stick->get_rect();
     HUMAN_STATE h_state = stick->get_state();
-    SDL_Rect range = merge_rect(box, fan);
+    SDL_Rect range = merge_rect(box, radar);
     //based on dir, if the robot is facing right, and rect is on left, then ignore behaviour and collison
     //if in visible range
-    if (is_rect_on_side(dir, rect, box)) {
-        if (h_state != WALK) { //or space?. maybe expanded latter
-            //then robot is suspicious
+    if (state == NORMAL) {
+        if (is_rect_on_side(dir, rect, box) && h_state != WALK) {
             state = SUSPICIOUS;
+            debug("SUS");
         }
-    }
-    if (state == SUSPICIOUS) {
+    }else if (state == SUSPICIOUS) {
         //need use scanner to check the radar
         //1st robot collide with search area
         
@@ -218,16 +229,18 @@ void Robot::react_to(Stick * stick){
                     state = NORMAL;
                     search_area->reset();
                     //TODO: TURN Direction
+                    debug("NOrmal");
                 }
             }else{
                 state = ALERT;
+                debug("alert");
                 //going to excution mode
             }
         }
-    }
-    if (state == ALERT) {
-        if (check_collision(search_area->get_area(), range)){
+    }else if (state == ALERT) {
+        if (check_collision(rect, range)){
             stick->minus_life();
+            debug("punish");
             //call the level to end the game maybe?
         }
     }

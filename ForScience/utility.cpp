@@ -110,28 +110,35 @@ int collide_position(SDL_Rect A, SDL_Rect B){ //related to A
 
 //if A is on ? side of B
 bool is_rect_on_side(int dir ,SDL_Rect A, SDL_Rect B){
-    if (check_collision(A, B)) return true;
+//    if (check_collision(A, B)) return true;
     
-    if(dir == SDLK_RIGHT) return A.x > B.x + B.w;
-    else if(dir == SDLK_LEFT) return A.x + A.w < B.x;
+    if(dir == SDLK_LEFT) return A.x > B.x + B.w;
+    else if(dir == SDLK_RIGHT) return A.x + A.w < B.x;
     
     return false;
 }
 
 bool is_rect_valid(SDL_Rect A){
-    return A.x >= 0 && A.y >= 0 && A.w >= 0 && A.h >=0;
+    return A.x > 0 && A.y > 0 && A.w > 0 && A.h > 0;
 }
 
 //A is the rect that is substracted
 SDL_Rect substract_rect(SDL_Rect A, SDL_Rect B){
     SDL_Rect rect = A;
-    //A is on the rigth side of B 
-    if (is_rect_on_side(SDLK_RIGHT, A, B)) {
-        rect.x = B.x + B.w;
-        rect.w = A.w - (B.x + B.w - A.x);
-    }else if(is_rect_on_side(SDLK_LEFT, A, B)){
-        rect.w = A.w + A.x - B.x;
+    //A is on the rigth side of B
+    if (check_collision(A, B)) {
+        if (A.x + A.w >= B.x) {
+            //dirty overflow
+            if (A.x > B.x) rect.w = 0;
+            else rect.w = B.x - A.x;
+        }else if(A.x >= B.x + B.w){
+            rect.x = B.x + B.w;
+            if (A.w + A.x < B.x + B.w) rect.w = 0;
+            else rect.w = A.w + A.x - B.x - B.w;
+//            debug("D");
+        }
     }
+    
     return rect;
 }
 
