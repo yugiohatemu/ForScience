@@ -91,6 +91,10 @@ bool Stick::is_autopilot(){
     return !active;
 }
 
+bool Stick::is_alive(){
+    return life > 0;
+}
+
 void Stick::minus_life(){
     if (life > 0) {
         life -= 1;

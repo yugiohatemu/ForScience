@@ -47,6 +47,16 @@ void StickMaster::animate(){
     }
 }
 
+bool StickMaster::is_all_stick_dead(){
+    for (int i = 0; i < total_stick; i += 1){
+        if (stick_list[i]->is_alive()) {
+            return false;
+        }
+    }
+        
+    return true;
+}
+
 
 void StickMaster::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     for (int i = 0; i < total_stick; i += 1) {

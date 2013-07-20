@@ -202,6 +202,10 @@ void Robot::stop_quest(){
 }
 
 void Robot::react_to(Stick * stick){
+    if (!stick->is_alive()) {
+        return ;
+    }
+    
     //need to judge position first
     SDL_Rect radar = fan;
     //    if (dir == SDLK_RIGHT) {

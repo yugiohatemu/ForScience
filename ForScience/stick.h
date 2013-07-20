@@ -66,6 +66,7 @@ public:
     void delete_quest();
     bool is_autopilot();
     void minus_life();
+    bool is_alive();
 };
 
 

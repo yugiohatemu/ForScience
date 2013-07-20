@@ -14,9 +14,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "timer.h"
 #include "utility.h"
 #include "constant.h"
+#include "stopWatch.h"
 
 #include "level.h"
 #include "text.h"
@@ -91,7 +91,8 @@ void clean_up(){
 int main( int argc, char* args[] ){
     //Quit flag
     bool quit = false;
-    Timer fps;
+   
+    StopWatch fps(0.2);
     SDL_Event event;
     SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
     //Initialize
@@ -109,10 +110,6 @@ int main( int argc, char* args[] ){
     //Continuous key press
     if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
-    int last_time = 0;
-    int cur_time = 0;
-    int diff_time = 0;
-    int accumulator = 0;
     
     Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     int pos1[2] = {80,120};
@@ -122,29 +119,26 @@ int main( int argc, char* args[] ){
     Text * text = new Text(0, 480, "For Science", font);
     robot_master->set_text(text);
     //While the user hasn't quit
+    fps.start();
     while( quit == false ){
-        fps.start();
-       
+        if (stick_master->is_all_stick_dead()) {
+//            debug("Game over");
+            //do something, like pop up a notice and etc
+            //ask everything to pause, 
+        }
+        
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
 
             stick_master->handle_input(event);
         }
         
-        // Handle game world here
-        cur_time = SDL_GetTicks();
-        diff_time = cur_time - last_time;
-        
-        accumulator += diff_time;
-        
-        if(accumulator > 200){
-            accumulator -= 200;
+        if (fps.is_timeup()) {
             robot_master->react_to(stick_master);
             robot_master->animate();
             stick_master->animate();
+            fps.start();
         }
-        
-        last_time = cur_time;
         
         //While there's events to handle
         //Move the dot //myDot.move( tiles );
@@ -162,10 +156,10 @@ int main( int argc, char* args[] ){
             return 1;
         }
         
-        //Cap the frame rate, avoid overupdatting
-        if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND ){
-            SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
-        }
+//        //Cap the frame rate, avoid overupdatting
+//        if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND ){
+//            SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
+//        }
     }
     
     

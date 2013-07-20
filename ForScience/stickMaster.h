@@ -27,6 +27,7 @@ public:
     void handle_input(SDL_Event event);
     int get_stick_count();
     Stick ** get_stick_list();
+    bool is_all_stick_dead();
 };
 
 #endif /* defined(__ForScience__stickMaster__) */
