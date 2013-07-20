@@ -21,11 +21,11 @@ Level::Level(std::string file_name, int row, int column){
     this->column = column;
     total_tile = row * column;
     tiles = NULL;
-    total_sprites = 3;
+    total_sprites = 1;
     sprite_list = new Sprite*[total_sprites];
     sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
-    sprite_list[1] = new Door(5 * TILE_WIDTH, 3 * TILE_HEIGHT);
-    sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
+    //sprite_list[1] = new Door(5 * TILE_WIDTH, 3 * TILE_HEIGHT);
+    //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
     set_clip();
     set_tile();
 }
@@ -86,6 +86,11 @@ void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     }    
 }
 
+void Level::animate(){
+    for (int i = 0; i < total_sprites; i +=1) {
+        sprite_list[i]->animate();
+    }
+}
 //get which pos on given x and y
 //special case for bottom line and right line
 
@@ -226,15 +231,20 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
 }
 
 void Level::interact_with_level(SDL_Rect *box){
-    for (int i = 0; i < total_sprites; i+=1) {
-        Book * test = dynamic_cast<Book *>(sprite_list[i]);
-        if (test) { //it it is the book,
-           if (check_collision(*box, test->get_rect())) {
-                test->set_stick_rect(box);
-                
-            }
-        }
-    }
+    //Suppose the first one is always the exit, haha
+    Exit * exit = dynamic_cast<Exit *>(sprite_list[0]);
+    exit->interact(*box);
+    
+//    for (int i = 0; i < total_sprites; i+=1) {
+//       
+//    }
+//    Book * test = dynamic_cast<Book *>(sprite_list[i]);
+//    if (test) { //it it is the book,
+//        if (check_collision(*box, test->get_rect())) {
+//            test->set_stick_rect(box);
+//            
+//        }
+//    }
 
 }
 
@@ -363,7 +373,14 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
     }else if(state == FALL){
 
     }
-    
+    interact_with_level(&box); //a passive interact and an active interact?
+    //dirty prototype for now
+    if (dir == SDLK_RETURN) {
+       Exit * exit = dynamic_cast<Exit *>(sprite_list[0]);
+        if (exit->is_open()) {
+            state = EXIT;
+        }
+    }
     return state;
 }
 

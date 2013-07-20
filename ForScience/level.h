@@ -48,6 +48,7 @@ public:
   
     bool is_on_ground(SDL_Rect &box);
     HUMAN_STATE stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state);
+    void animate();
 //    bool is_stick_stuck(SDL_Rect box, int dir);
 };
 

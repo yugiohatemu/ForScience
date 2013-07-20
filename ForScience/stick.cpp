@@ -222,6 +222,8 @@ void Stick::handle_input(SDL_Event event){
                 box.x += 120;
                 box.w = STICK_WIDTH;
                 box.h = STICK_HEIGHT;
+            }else if(next_state == EXIT){
+                debug("WIN");
             }
             state = next_state;
         }else if (state != STUCK) {

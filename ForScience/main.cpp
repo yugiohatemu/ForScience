@@ -137,6 +137,7 @@ int main( int argc, char* args[] ){
             robot_master->react_to(stick_master);
             robot_master->animate();
             stick_master->animate();
+            level->animate();
             fps.start();
         }
         

@@ -17,6 +17,7 @@
 		B60029FC178DD400007CD0FA /* book.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029FA178DD3FF007CD0FA /* book.cpp */; };
 		B61944D2179A209E0056F918 /* areaSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D0179A209E0056F918 /* areaSearch.cpp */; };
 		B61944DA179AEB1D0056F918 /* stopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D8179AEB1D0056F918 /* stopWatch.cpp */; };
+		B61944DE179B05690056F918 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944DC179B05690056F918 /* animation.cpp */; };
 		B62443C8177DCE34000041FE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62443C7177DCE34000041FE /* main.cpp */; };
 		B62443CA177DCE34000041FE /* ForScience.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B62443C9177DCE34000041FE /* ForScience.1 */; };
 		B62443D2177DCE54000041FE /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B62443D1177DCE54000041FE /* SDLMain.m */; };
@@ -68,6 +69,8 @@
 		B61944D1179A209E0056F918 /* areaSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = areaSearch.h; sourceTree = "<group>"; };
 		B61944D8179AEB1D0056F918 /* stopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stopWatch.cpp; sourceTree = "<group>"; };
 		B61944D9179AEB1D0056F918 /* stopWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stopWatch.h; sourceTree = "<group>"; };
+		B61944DC179B05690056F918 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
+		B61944DD179B05690056F918 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
 		B62443C3177DCE33000041FE /* ForScience */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ForScience; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62443C7177DCE34000041FE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B62443C9177DCE34000041FE /* ForScience.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ForScience.1; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				B60029AC1788A09F007CD0FA /* mission.h */,
 				B61944D0179A209E0056F918 /* areaSearch.cpp */,
 				B61944D1179A209E0056F918 /* areaSearch.h */,
+				B61944DC179B05690056F918 /* animation.cpp */,
+				B61944DD179B05690056F918 /* animation.h */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				B60029FC178DD400007CD0FA /* book.cpp in Sources */,
 				B61944D2179A209E0056F918 /* areaSearch.cpp in Sources */,
 				B61944DA179AEB1D0056F918 /* stopWatch.cpp in Sources */,
+				B61944DE179B05690056F918 /* animation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

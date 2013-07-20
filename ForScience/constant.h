@@ -44,6 +44,7 @@ enum HUMAN_STATE{
     CRAWL,
     FALL,
     STUCK,
+    EXIT,
     TOTAL_STATE
 };
 
