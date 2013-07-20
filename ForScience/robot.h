@@ -15,6 +15,7 @@
 #include "timer.h"
 #include "stickMaster.h"
 #include "mission.h"
+#include "areaSearch.h"
 
 class Robot{
 private:
@@ -36,21 +37,25 @@ private:
     enum STATE{
         STAND = 0,
         NORMAL = 15,
-        JUMP,
         QUEST,
-        ANGRY = 25,
+        SUSPICIOUS,
+        ALERT,
+        
         TOTAL_STATE,
     };
-    int state;
+    STATE state;
     int speed; //walk or angry
     Text * sub_title;
     Timer timer;
     Level * level;
     Stick * test_stick;
     Mission * mission;
+    AreaSearch * search_area;
+    
     void clip_tile();
     void react_to(Stick * stick);
     void stop_quest();
+    
 public:
     Robot(Level * level);
     ~Robot();

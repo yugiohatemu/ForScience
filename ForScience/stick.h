@@ -43,21 +43,14 @@ private:
     Sprite * item;
     bool active;
     void clip_tile();
-//    enum STATE{
-//        WALK,
-//        JUMP,
-//        CLIMB,
-//        CRAWL,
-//        FALL,
-//        STUCK,
-//        TOTAL_STATE
-//    };
+
     HUMAN_STATE state;
 public:
     Stick(Level * level);
     ~Stick();
     void set_pos(int x, int y);
     void set_active(bool active);
+    HUMAN_STATE get_state();
     void animate();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);

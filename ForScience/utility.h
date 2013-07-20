@@ -31,6 +31,7 @@ bool check_collision( SDL_Rect A, SDL_Rect B );
 SDL_Rect merge_rect(SDL_Rect A, SDL_Rect B);
 void debug(std::string s);
 int collide_position(SDL_Rect A, SDL_Rect B); // not done;
-
-
+bool is_rect_on_side(int dir, SDL_Rect A, SDL_Rect B);
+SDL_Rect substract_rect(SDL_Rect A, SDL_Rect B);
+bool is_rect_valid(SDL_Rect A);
 #endif /* defined(__ForScience__utility__) */

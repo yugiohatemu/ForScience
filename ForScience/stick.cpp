@@ -62,6 +62,9 @@ SDL_Rect Stick::get_rect(){
     return box;
 }
 
+HUMAN_STATE Stick::get_state(){
+    return state;
+}
 
 
 void Stick::get_quest(Quest * quest){
