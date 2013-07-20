@@ -30,7 +30,7 @@ void Exit::set_anime(){
     for (int i = 0; i < TOTAL_CLIP; i +=1) {
         frames[i] = i;
     }
-    animation = new Animation(TOTAL_CLIP, frames, true, false);
+    animation = new Animation(TOTAL_CLIP, frames, false);
 }
 
 bool Exit::is_open(){
@@ -63,9 +63,7 @@ void Exit::interact(SDL_Rect rect){
 }
 
 void Exit::animate(){
-    if (interacting) {
-        frame = animation->get_current_frame();
-    }else if(frame != CLOSE0){
+    if (interacting || !animation->is_anime_done()) {
         frame = animation->get_current_frame();
     }
 }

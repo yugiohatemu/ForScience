@@ -12,6 +12,7 @@
 #include "exit.h"
 #include "door.h"
 #include "book.h"
+#include "glassDoor.h"
 #include <fstream>
 #include <iostream>
 
@@ -21,10 +22,10 @@ Level::Level(std::string file_name, int row, int column){
     this->column = column;
     total_tile = row * column;
     tiles = NULL;
-    total_sprites = 1;
+    total_sprites = 2;
     sprite_list = new Sprite*[total_sprites];
     sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
-    //sprite_list[1] = new Door(5 * TILE_WIDTH, 3 * TILE_HEIGHT);
+    sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
     //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
     set_clip();
     set_tile();

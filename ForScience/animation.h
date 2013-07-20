@@ -13,16 +13,14 @@ class Animation{
     int * frames;
     int total_frame;
     int current_frame;
-    bool reverse;
     bool recycle;
     bool is_reversing;
 public:
-    Animation(int total_frame, int * frames, bool reverse, bool recycle);
+    Animation(int total_frame, int * frames, bool recycle);
     ~Animation();
-    void next();
     int get_current_frame();
     void reverse_frame();
-
+    bool is_anime_done();
 };
 
 #endif /* defined(__ForScience__animation__) */
