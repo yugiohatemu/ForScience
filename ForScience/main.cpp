@@ -114,7 +114,7 @@ int main( int argc, char* args[] ){
     Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     int pos1[2] = {80,120};
     StickMaster * stick_master = new StickMaster(level,1,pos1);
-    int pos2[2] = {200,160};
+    int pos2[2] = {280,160};
     RobotMaster * robot_master = new RobotMaster(level,1,pos2);
     Text * text = new Text(0, 480, "For Science", font);
     robot_master->set_text(text);

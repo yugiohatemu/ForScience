@@ -7,10 +7,10 @@
 //
 
 #include "robot.h"
-#include "constant.h"
 #include "utility.h"
 #include "quest.h"
 #include <iostream>
+
 Robot::Robot(Level * level){
     box.x = 8*TILE_WIDTH;
     box.y = LEVEL_HEIGHT - TILE_HEIGHT - ROBOT_HEIGHT;
@@ -104,20 +104,17 @@ void Robot::clip_tile(){
 
 
 void Robot::animate(){
-//    if(state == NORMAL || state == QUEST) return  ;
     SDL_Rect radar = fan;
-    if (dir == SDLK_RIGHT) {
-        radar.w -= 25;
-    }else{
-        radar.x += 25;
+    if (dir == SDLK_RIGHT)radar.w -= 25;
+    else radar.x += 25;
+    SDL_Rect whole_box = merge_rect(box, radar);
+
+    ROBOT_STATE next_state = level->robot_on_level(box, dir, speed, state);
+    if (next_state == TURN) {
+        turn_back();
     }
     
-    SDL_Rect whole_box = merge_rect(box, radar);
-    bool movable = false;
-    if (level->move_on_level(whole_box, dir, speed)) {
-        movable = level->move_on_level(box, dir, speed);
-    }
-   // level->interact_with_level(whole_box);
+
     if (state == ALERT) {
         if ((frame >= A_WALK_R0 && frame < A_WALK_R3) || (frame >= A_WALK_L0 && frame < A_WALK_L3)) {
             frame += 1;
@@ -137,32 +134,6 @@ void Robot::animate(){
         }
 
     }
-    ////we r not progressing, so need to change direction
-    if (!movable) {
-        turn_back();
-    }
-    
-    //mission
-    if (mission) {
-        if(mission->is_active()) {
-            mission->update_status(dir, box.x, box.y);
-        }
-        else {
-            state = ALERT;
-            frame += A_WALK_R0;
-            //maybe not necessary latter
-            delete mission;
-            mission = NULL;
-            //stop questing
-            if(test_stick) test_stick->delete_quest();
-            timer.stop();
-            test_stick = NULL;
-            speed = 30;
-            
-        }
-    }
-    
-    
    
 }
 

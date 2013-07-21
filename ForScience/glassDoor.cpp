@@ -8,14 +8,14 @@
 
 #include "glassDoor.h"
 #include "utility.h"
-
+#include  <iostream>
 GlassDoor::GlassDoor(int x, int y):Sprite(x,y){
     box.w = 20;
     box.h = 120;
     frame = CLOSE0;
     attr = ROBOT_ACTIVE;
     interacting = false;
-    
+    active = false;
     set_clip();
     set_anime();
 }
@@ -47,6 +47,27 @@ void GlassDoor::animate(){
     }
 }
 
+void GlassDoor::set_active(bool active){
+    this->active = active;
+}
+
+
+void GlassDoor::interact(SDL_Rect rect){
+    //need another index
+    active = true;
+    if (check_collision(box, rect)) {
+        //if not animating, animating
+        interacting = true;
+        
+    }else{
+        if (interacting) {
+            animation->reverse_frame();
+            interacting = false;
+            //need to reverse frame, but where
+        }
+    }
+}
+
 void GlassDoor::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }
@@ -54,3 +75,5 @@ void GlassDoor::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * scr
 bool GlassDoor::is_block(){
     return frame != OPEN;
 }
+
+ 

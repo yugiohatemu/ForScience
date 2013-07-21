@@ -224,12 +224,82 @@ bool Level::move_on_level(SDL_Rect &box, int dir, int speed){
             }
             break;
         case SDLK_RETURN:
-            interact_with_level(&box);
+            
+            
         default:
             break;
     }
+    GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
+    door->interact(box);
+    
     return movable;
 }
+
+ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE state){
+    GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
+    if (dir == SDLK_RIGHT) {
+        int bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
+        int top_right = get_tile_pos(box.x + box.w + speed, box.y);
+        
+        if ((tiles[bot_right + column].type >= WALL_C0 && tiles[bot_right + column].type <= WALL_H4)
+            || tiles[bot_right + column].type == LADDER) {
+            //2nd, no obstacle for body
+            if (check_collision(door->get_rect(), box)) {
+                
+                if (state == NORMAL) {
+                    state = TURN;
+                    box.x -= speed;
+                }else{
+                    
+                    door->interact(box);
+                    if (!door->is_block()) box.x += speed;
+                }
+            }else{
+                for (int i = bot_right; i > top_right; i -=column) {
+                    if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) {
+                        state = TURN;
+                        break;
+                    }
+                }
+                
+                if (state == TURN )box.x  = (top_right % column - 1) * TILE_WIDTH;
+                else box.x += speed;
+            }
+            
+        }
+    }else if(dir == SDLK_LEFT){
+        int top_left = get_tile_pos(box.x - speed, box.y);
+        int bot_left = get_tile_pos(box.x - speed, box.y + box.h);
+        if (check_collision(door->get_rect(), box)) {
+            if (state == NORMAL) {
+                state = TURN;
+                box.x += speed; //to avoid collison on turn back
+
+            }else{
+                door->interact(box);
+                if (!door->is_block())  box.x -= speed;
+
+            }
+        }else{
+            
+            if ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_H4) ||
+                 tiles[bot_left + column].type == LADDER) {
+                    for (int i = bot_left; i > top_left; i -= column) {
+                        if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) {
+                            state = TURN;
+                            break;
+                        }
+                    }
+                    
+                    if (state == TURN) box.x =  (top_left % column + 1) * TILE_WIDTH;
+                    else box.x -= speed;
+                }
+        }
+    }
+    
+    return state;
+}
+
 
 void Level::interact_with_level(SDL_Rect *box){
     //Suppose the first one is always the exit, haha

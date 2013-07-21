@@ -45,7 +45,14 @@ enum HUMAN_STATE{
     FALL,
     STUCK,
     EXIT,
-    TOTAL_STATE
+};
+
+enum ROBOT_STATE{
+    NORMAL,
+    SUSPICIOUS,
+    WARNING,
+    ALERT,
+    TURN,
 };
 
 #endif

@@ -25,12 +25,15 @@ class GlassDoor:public Sprite{
     void set_anime();
     Animation * animation;
     bool interacting;
+    bool active;
 public:
     GlassDoor(int x, int y);
     ~GlassDoor();
     void animate();
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen) ;
     bool is_block();
+    void interact(SDL_Rect rect);
+    void set_active(bool active);
     
 };
 

@@ -17,6 +17,7 @@
 #include "mission.h"
 #include "areaSearch.h"
 #include "stopWatch.h"
+#include "constant.h"
 
 class Robot{
 private:
@@ -35,16 +36,7 @@ private:
     };
     SDL_Rect clips[TOTAL_CLIP];
     
-    enum STATE{
-        STAND = 0,
-        NORMAL = 15,
-        WARNING,
-        SUSPICIOUS,
-        ALERT,
-        
-        TOTAL_STATE,
-    };
-    STATE state;
+    ROBOT_STATE state;
     int speed; //walk or angry
     Text * sub_title;
     Timer timer;
