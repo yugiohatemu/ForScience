@@ -15,6 +15,7 @@
 		B60029B81789FD01007CD0FA /* door.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029B61789FD01007CD0FA /* door.cpp */; };
 		B60029D6178B9052007CD0FA /* exit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029D4178B9052007CD0FA /* exit.cpp */; };
 		B60029FC178DD400007CD0FA /* book.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B60029FA178DD3FF007CD0FA /* book.cpp */; };
+		B615F7A517AC568C00FDBF32 /* menuScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B615F7A317AC568C00FDBF32 /* menuScreen.cpp */; };
 		B61944D2179A209E0056F918 /* areaSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D0179A209E0056F918 /* areaSearch.cpp */; };
 		B61944DA179AEB1D0056F918 /* stopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D8179AEB1D0056F918 /* stopWatch.cpp */; };
 		B61944DE179B05690056F918 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944DC179B05690056F918 /* animation.cpp */; };
@@ -66,6 +67,9 @@
 		B60029E5178BC795007CD0FA /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		B60029FA178DD3FF007CD0FA /* book.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = book.cpp; sourceTree = "<group>"; };
 		B60029FB178DD3FF007CD0FA /* book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = book.h; sourceTree = "<group>"; };
+		B615F7A317AC568C00FDBF32 /* menuScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = menuScreen.cpp; sourceTree = "<group>"; };
+		B615F7A417AC568C00FDBF32 /* menuScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuScreen.h; sourceTree = "<group>"; };
+		B615F7A617AC5AE400FDBF32 /* menuTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuTile.png; sourceTree = "<group>"; };
 		B61944D0179A209E0056F918 /* areaSearch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = areaSearch.cpp; sourceTree = "<group>"; };
 		B61944D1179A209E0056F918 /* areaSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = areaSearch.h; sourceTree = "<group>"; };
 		B61944D8179AEB1D0056F918 /* stopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stopWatch.cpp; sourceTree = "<group>"; };
@@ -212,6 +216,8 @@
 				B60029B41789FC3F007CD0FA /* inteactable */,
 				B62443C7177DCE34000041FE /* main.cpp */,
 				B600299417860936007CD0FA /* text.cpp */,
+				B615F7A317AC568C00FDBF32 /* menuScreen.cpp */,
+				B615F7A417AC568C00FDBF32 /* menuScreen.h */,
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B61944D8179AEB1D0056F918 /* stopWatch.cpp */,
 				B61944D9179AEB1D0056F918 /* stopWatch.h */,
@@ -243,6 +249,7 @@
 		B62443F4177E394C000041FE /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B615F7A617AC5AE400FDBF32 /* menuTile.png */,
 				B63F59CD17820DE7000B09C9 /* switch.png */,
 				B63F59C91780C5D2000B09C9 /* robot.png */,
 				B63F59C4177F7C46000B09C9 /* tiles.png */,
@@ -322,6 +329,7 @@
 				B61944DA179AEB1D0056F918 /* stopWatch.cpp in Sources */,
 				B61944DE179B05690056F918 /* animation.cpp in Sources */,
 				B61944E9179B247B0056F918 /* glassDoor.cpp in Sources */,
+				B615F7A517AC568C00FDBF32 /* menuScreen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

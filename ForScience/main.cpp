@@ -22,13 +22,13 @@
 #include "text.h"
 #include "stickMaster.h"
 #include "robotMaster.h"
-
+#include "menuScreen.h"
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
 SDL_Surface *robotSheet = NULL;
 SDL_Surface *stickSheet = NULL;
-
+SDL_Surface *menuSheet = NULL;
 //The font and font color that's going to be used
 TTF_Font *font = NULL;
 
@@ -67,6 +67,9 @@ bool load_files(){
     robotSheet = load_image("/Users/wei/Desktop/ForScience/ForScience/robot.png" );
     if (robotSheet == NULL) return false;
     
+    menuSheet = load_image("/Users/wei/Desktop/ForScience/ForScience/menuTile.png" );
+    if (menuSheet == NULL) return false;
+    
     font = TTF_OpenFont( "/Users/wei/Desktop/ForScience/ForScience/font.ttf", 28 );
     if (font == NULL) return false;
     
@@ -80,7 +83,7 @@ void clean_up(){
     SDL_FreeSurface( tileSheet );
     SDL_FreeSurface( robotSheet);
     SDL_FreeSurface( stickSheet);
-    
+    SDL_FreeSurface( menuSheet);
     //Free font
     TTF_CloseFont(font);
     TTF_Quit();
@@ -113,6 +116,8 @@ int main( int argc, char* args[] ){
     //Continuous key press
     if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
+    MenuScreen * menu_screen = new MenuScreen();
+    
     
     Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     int pos1[2] = {80,120};
@@ -121,19 +126,19 @@ int main( int argc, char* args[] ){
     RobotMaster * robot_master = new RobotMaster(level,1,pos2);
     Text * text = new Text(0, 480, "For Science", font);
     robot_master->set_text(text);
+    
+    
     //While the user hasn't quit
     fps.start();
     while( quit == false ){
-        if (stick_master->is_all_stick_dead()) {
-//            debug("Game over");
-            //do something, like pop up a notice and etc
-            //ask everything to pause, 
-        }
         
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
-
-            stick_master->handle_input(event);
+            if (true) {
+                menu_screen->handle_input(event);
+            }else{
+                stick_master->handle_input(event);
+            }
         }
         
         if (fps.is_timeup()) {
@@ -148,13 +153,17 @@ int main( int argc, char* args[] ){
         //Move the dot //myDot.move( tiles );
         //Set the camera//myDot.set_camera();
         
-        level->show(camera, tileSheet, screen);
-        stick_master->show(camera, stickSheet,screen);
-        robot_master->show(camera, robotSheet, screen);
+        if(true){
+            menu_screen->show(camera,menuSheet,screen);
+        }else{
         
-        //text
-        text->show(screen);
+            level->show(camera, tileSheet, screen);
+            stick_master->show(camera, stickSheet,screen);
+            robot_master->show(camera, robotSheet, screen);
         
+            //text
+            text->show(screen);
+        }
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
             return 1;
@@ -173,5 +182,6 @@ int main( int argc, char* args[] ){
     delete robot_master;
     delete level;
     delete text;
+    delete menu_screen;
     return 0;
 }
