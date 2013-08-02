@@ -18,7 +18,7 @@ class StickMaster{
     int total_stick;
     int active_stick;
     Stick ** stick_list;
-   
+    bool pause;
 public:
     StickMaster(Level * level,int total_stick, int pos[]);
     ~StickMaster();
@@ -28,6 +28,9 @@ public:
     int get_stick_count();
     Stick ** get_stick_list();
     bool is_all_stick_dead();
+    void set_pause(bool p);
+    bool is_win();
+    bool is_gameover();
 };
 
 #endif /* defined(__ForScience__stickMaster__) */

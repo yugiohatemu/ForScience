@@ -19,6 +19,7 @@ class RobotMaster{
     int total_robot;
     int active_robot;
     Robot ** robot_list;
+    bool pause;
 public:
     
     RobotMaster(Level * level, int total_robot, int pos[]);
@@ -27,6 +28,7 @@ public:
     void set_text(Text *text);
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void react_to(StickMaster * stick_master);
+    void set_pause(bool p);
 };
 
 #endif /* defined(__ForScience__robotMaster__) */

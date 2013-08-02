@@ -22,6 +22,7 @@
 #include "text.h"
 #include "stickMaster.h"
 #include "robotMaster.h"
+
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
@@ -31,6 +32,8 @@ SDL_Surface *stickSheet = NULL;
 //The font and font color that's going to be used
 TTF_Font *font = NULL;
 
+//use dirty global variable to do it
+bool LEVEL_PAUSE = false;
 
 bool init(){
     //Initialize all SDL subsystems

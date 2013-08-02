@@ -19,6 +19,7 @@ RobotMaster::RobotMaster(Level * level, int total_robot, int pos[]){
         robot_list[i] = new Robot(level);
         robot_list[i]->set_pos(pos[i*2], pos[2*i+1]);
     }
+    pause = false;
 }
 
 RobotMaster::~RobotMaster(){
@@ -34,7 +35,13 @@ void RobotMaster::set_text(Text *text){
     }
 }
 
+void RobotMaster::set_pause(bool p){
+    pause = p;
+}
+
 void RobotMaster::animate(){
+    if(pause) return ;
+    if (LEVEL_PAUSE) return ;
     for (int i = 0; i < total_robot; i +=1) {
         robot_list[i]->animate();
     }

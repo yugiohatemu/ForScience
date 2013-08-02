@@ -55,4 +55,6 @@ enum ROBOT_STATE{
     TURN,
 };
 
+extern bool LEVEL_PAUSE;
+
 #endif
