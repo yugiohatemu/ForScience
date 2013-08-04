@@ -98,7 +98,7 @@
 		B62443E2177DF5AF000041FE /* stick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stick.h; sourceTree = "<group>"; };
 		B62443E3177DF655000041FE /* timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		B62443E4177DF69F000041FE /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
-		B62443E7177DFD07000041FE /* lazy.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lazy.map; sourceTree = "<group>"; };
+		B62443E7177DFD07000041FE /* level2.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.map; sourceTree = "<group>"; };
 		B62443EB177DFF81000041FE /* utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility.cpp; sourceTree = "<group>"; };
 		B62443EC177DFF81000041FE /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		B62443EF177E06E5000041FE /* stick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = stick.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -191,7 +191,7 @@
 				B63F59CA1780DE44000B09C9 /* level.cpp */,
 				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029D1178B84A5007CD0FA /* level1.map */,
-				B62443E7177DFD07000041FE /* lazy.map */,
+				B62443E7177DFD07000041FE /* level2.map */,
 			);
 			name = level;
 			sourceTree = "<group>";

@@ -11,17 +11,19 @@
 
 #include "SDL/SDL.h"
 #include "drawable.h"
+#include "level.h"
+
 
 class LevelScreen: public Drawable{
 private:
-    void set_clip();
-    
+    Level * level;
 public:
-    LevelScreen();
+    LevelScreen(int selected = 0);
     ~LevelScreen();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
-    
+    void animate();
+    void set_sheet(SDL_Surface * robot, SDL_Surface * stick);
 };
 
 #endif /* defined(__ForScience__levelScreen__) */

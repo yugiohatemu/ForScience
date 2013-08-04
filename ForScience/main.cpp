@@ -20,10 +20,9 @@
 
 #include "level.h"
 #include "text.h"
-#include "stickMaster.h"
-#include "robotMaster.h"
 #include "menuScreen.h"
 #include "levelSelectScreen.h"
+//#include "levelScreen.h"
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
@@ -119,7 +118,7 @@ int main( int argc, char* args[] ){
     
     MenuScreen * menu_screen = new MenuScreen();
     LevelSelectScreen * level_select_screen = new LevelSelectScreen();
-    
+
     Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     level->set_sheet(robotSheet, stickSheet);
     Text * text = new Text(0, 480, "For Science", font);
