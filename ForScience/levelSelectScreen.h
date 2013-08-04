@@ -15,13 +15,16 @@ class LevelSelectScreen{
 private:
     enum CLIP{
         UNSELECT,SELECT,
+//        U_EXIT, S_EXIT,
         TOTAL_CLIP,
     };
     void set_clip();
     SDL_Rect clips[TOTAL_CLIP];
     int total_level;
+    
     int selected_level;
-    bool * levels;
+    bool *levels;
+    void set_selected_level();
 public:
     LevelSelectScreen();
     ~LevelSelectScreen();
