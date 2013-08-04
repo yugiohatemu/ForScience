@@ -14,8 +14,9 @@
 #include "SDL/SDL.h"
 #include "stickMaster.h"
 #include "text.h"
+#include "drawable.h"
 
-class RobotMaster{
+class RobotMaster: public Drawable{
     int total_robot;
     int active_robot;
     Robot ** robot_list;
@@ -29,6 +30,7 @@ public:
     void show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen);
     void react_to(StickMaster * stick_master);
     void set_pause(bool p);
+    void handle_input(SDL_Event event) ;
 };
 
 #endif /* defined(__ForScience__robotMaster__) */

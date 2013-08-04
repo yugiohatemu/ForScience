@@ -15,6 +15,8 @@
 #include "glassDoor.h"
 #include <fstream>
 #include <iostream>
+#include "robotMaster.h"
+#include "stickMaster.h"
 
 Level::Level(std::string file_name, int row, int column){
     this->file_name = file_name;
@@ -27,16 +29,26 @@ Level::Level(std::string file_name, int row, int column){
     sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
     sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
     //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
+    
+    int pos1[2] = {80,120};
+    stick_master = new StickMaster(this,1,pos1);
+    int pos2[2] = {280,160};
+    robot_master = new RobotMaster(this,1,pos2);
+    
     set_clip();
     set_tile();
 }
 
 Level::~Level(){
+    delete stick_master;
+    delete robot_master;
     delete [] tiles;
     for (int i = 0; i < total_sprites; i+=1) {
         delete sprite_list[i]; //???
     }
     delete [] sprite_list;
+    stickSheet = NULL;
+    robotSheet = NULL;
     
 }
 
@@ -78,6 +90,11 @@ void Level::set_tile(){
     map.close();
 }
 
+void Level::set_sheet(SDL_Surface * robot, SDL_Surface * stick){
+    stickSheet = stick;
+    robotSheet = robot;
+}
+
 void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     SDL_FillRect(screen , NULL , 0x000000);
     for (int i = 0; i < total_tile; i ++) {
@@ -85,14 +102,27 @@ void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
     }
     for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->show(camera, tileSheet, screen);
-    }    
+    }
+    
+    stick_master->show(camera, stickSheet,screen);
+    robot_master->show(camera, robotSheet, screen);
 }
 
 void Level::animate(){
     for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->animate();
     }
+    RobotMaster * robot = dynamic_cast<RobotMaster *>(robot_master);
+    StickMaster * stick = dynamic_cast<StickMaster *>(stick_master);
+    robot->react_to(stick);
+    robot->animate();
+    stick->animate();
 }
+
+void Level::handle_input(SDL_Event event){
+    stick_master->handle_input(event);
+}
+
 //get which pos on given x and y
 //special case for bottom line and right line
 

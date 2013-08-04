@@ -12,9 +12,10 @@
 #include "stick.h"
 #include "level.h"
 #include "SDL/SDL.h"
+#include "drawable.h"
 //Handle all the stick figures together
 
-class StickMaster{
+class StickMaster: public Drawable{
     int total_stick;
     int active_stick;
     Stick ** stick_list;

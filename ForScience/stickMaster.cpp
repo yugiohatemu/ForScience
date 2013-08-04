@@ -10,7 +10,7 @@
 #include "constant.h"
 
 
-StickMaster::StickMaster(Level * level,int total_stick, int pos[]){
+StickMaster::StickMaster(Level * level,int total_stick, int pos[]):Drawable(){
     this->total_stick = total_stick;
     
     stick_list =new Stick* [total_stick];

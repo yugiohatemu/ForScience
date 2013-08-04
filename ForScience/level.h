@@ -13,6 +13,7 @@
 #include <string>
 #include "constant.h"
 #include "sprite.h"
+#include "drawable.h"
 
 class Level{
     struct Tile{
@@ -38,13 +39,18 @@ class Level{
     int get_tile_pos(int x, int y);
     std::string file_name;
     int row,column, total_tile;
+    Drawable * robot_master;
+    Drawable * stick_master;
+    SDL_Surface *robotSheet;
+    SDL_Surface *stickSheet;
 public:
     Level(std::string file_name, int row, int column);
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     void interact_with_level(SDL_Rect *box);
+    void set_sheet(SDL_Surface * robot, SDL_Surface * stick);
     //start to seperate stick and robot
-  
+    void handle_input(SDL_Event event);
     bool is_on_ground(SDL_Rect &box);
     HUMAN_STATE stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state);
     ROBOT_STATE robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE state);

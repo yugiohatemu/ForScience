@@ -15,10 +15,12 @@ class Drawable{
 public:
     virtual void handle_input(SDL_Event event) = 0;
     virtual void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen) = 0;
+    virtual ~Drawable(){}
+    
 protected:
     Drawable(){}
-    ~Drawable(){}
-    virtual void set_clip() = 0;
+    
+//    virtual void set_clip() = 0;
 };
 
 #endif

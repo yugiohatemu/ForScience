@@ -12,7 +12,7 @@
 #include "mission.h"
 
 
-RobotMaster::RobotMaster(Level * level, int total_robot, int pos[]){
+RobotMaster::RobotMaster(Level * level, int total_robot, int pos[]):Drawable(){
     this->total_robot= total_robot;
     robot_list = new Robot * [total_robot];
     for (int i = 0; i < total_robot; i +=1) {
@@ -45,6 +45,10 @@ void RobotMaster::animate(){
     for (int i = 0; i < total_robot; i +=1) {
         robot_list[i]->animate();
     }
+}
+
+void RobotMaster::handle_input(SDL_Event event){
+    
 }
 
 
