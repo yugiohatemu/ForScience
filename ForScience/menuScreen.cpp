@@ -51,6 +51,7 @@ void MenuScreen::set_clip(){
 }
 
 void MenuScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
+    SDL_FillRect(screen , NULL , 0x000000);
     apply_surface(40, 50, tileSheet, screen, &clips[TITLE]);
     if (frame[0] == 1){
         apply_surface(250, 200, tileSheet, screen, &clips[S_START]);
