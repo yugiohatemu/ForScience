@@ -31,7 +31,7 @@ public:
     ~LevelSelectScreen();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
-
+    void animate();
 };
 
 #endif /* defined(__ForScience__levelSelectScreen__) */

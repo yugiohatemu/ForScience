@@ -310,7 +310,7 @@ void Stick::animate(){
 
 
 void Stick::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
-    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
+    apply_surface(box.x - camera.x, box.y - camera.y, stickSheet, screen, &clips[frame]);
 }
 
 

@@ -13,11 +13,11 @@
 #include "screen.h"
 #include "SDL/SDL.h"
 
-class ScreenController{
+class ScreenController:public Screen{
     std::stack<Screen *> root;
-    Screen * current;
+    Screen * top;
 public:
-    ScreenController();
+    ScreenController(Screen * s);
     ~ScreenController();
     void push_controller(Screen * next);
     void pop_controller();

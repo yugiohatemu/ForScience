@@ -9,6 +9,8 @@
 #include "menuScreen.h"
 #include "utility.h"
 #include "constant.h"
+#include "screenController.h"
+#include "levelSelectScreen.h"
 
 MenuScreen::MenuScreen():Screen(){
     frame  = new int[TOTAL_STATE];
@@ -53,16 +55,17 @@ void MenuScreen::set_clip(){
 
 void MenuScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
     SDL_FillRect(screen , NULL , 0x000000);
-    apply_surface(40, 50, tileSheet, screen, &clips[TITLE]);
+    apply_surface(40, 50, menuSheet, screen, &clips[TITLE]);
     if (frame[0] == 1){
-        apply_surface(250, 200, tileSheet, screen, &clips[S_START]);
-        apply_surface(250, 300, tileSheet, screen, &clips[U_EXIT]);
+        apply_surface(250, 200, menuSheet, screen, &clips[S_START]);
+        apply_surface(250, 300, menuSheet, screen, &clips[U_EXIT]);
     }else{
-        apply_surface(250, 200, tileSheet, screen, &clips[U_START]);
-        apply_surface(250, 300, tileSheet, screen, &clips[S_EXIT]);
+        apply_surface(250, 200, menuSheet, screen, &clips[U_START]);
+        apply_surface(250, 300, menuSheet, screen, &clips[S_EXIT]);
     }
     
 }
+
 
 void MenuScreen::handle_input(SDL_Event event){
     //arrow key and enter
@@ -87,11 +90,18 @@ void MenuScreen::handle_input(SDL_Event event){
         }else if(dir == SDLK_RETURN){
             //change screeen?
             if (state == START) {
-                current_screen = SELECT_LEVEL_SCREEN;
+//                current_screen = SELECT_LEVEL_SCREEN;
                 //LEVEL_PAUSE = false;
+                LevelSelectScreen * next = new LevelSelectScreen();
+                ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+                root_controller->push_controller(next);
             }
            
         }
     }
+    
+}
+
+void MenuScreen::animate(){
     
 }

@@ -57,10 +57,17 @@ enum ROBOT_STATE{
 
 extern bool LEVEL_PAUSE;
 
-enum SCREEN_STATE{
-    MENU_SCREEN,
-    LEVEL_SCREEN,
-    SELECT_LEVEL_SCREEN,
-};
-extern SCREEN_STATE current_screen;
+//enum SCREEN_STATE{
+//    MENU_SCREEN,
+//    LEVEL_SCREEN,
+//    SELECT_LEVEL_SCREEN,
+//};
+//extern SCREEN_STATE current_screen;
+
+extern SDL_Surface *screen ;
+extern SDL_Surface *tileSheet ;
+extern SDL_Surface *robotSheet ;
+extern SDL_Surface *stickSheet ;
+extern SDL_Surface *menuSheet ;
+
 #endif

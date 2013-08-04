@@ -18,10 +18,11 @@
 #include "constant.h"
 #include "stopWatch.h"
 
-#include "level.h"
+//#include "level.h"
 #include "text.h"
 #include "menuScreen.h"
-#include "levelSelectScreen.h"
+//#include "levelSelectScreen.h"
+#include "screenController.h"
 //#include "levelScreen.h"
 //The surfaces
 SDL_Surface *screen = NULL;
@@ -34,7 +35,7 @@ TTF_Font *font = NULL;
 
 //use dirty global variable to do it
 bool LEVEL_PAUSE = true;
-SCREEN_STATE current_screen = MENU_SCREEN;
+
 bool init(){
     //Initialize all SDL subsystems
     if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) return false;
@@ -116,11 +117,14 @@ int main( int argc, char* args[] ){
     //Continuous key press
     if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
+    
+    
     MenuScreen * menu_screen = new MenuScreen();
-    LevelSelectScreen * level_select_screen = new LevelSelectScreen();
-
-    Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
-    level->set_sheet(robotSheet, stickSheet);
+    ScreenController * screen_controller = new ScreenController(menu_screen);
+//    LevelSelectScreen * level_select_screen = new LevelSelectScreen();
+//
+//    Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
+//    level->set_sheet(robotSheet, stickSheet);
     Text * text = new Text(0, 480, "For Science", font);
     
     //While the user hasn't quit
@@ -129,17 +133,19 @@ int main( int argc, char* args[] ){
         
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
-            if (current_screen== MENU_SCREEN) {
-                menu_screen->handle_input(event);
-            }else if(current_screen == SELECT_LEVEL_SCREEN){
-                level_select_screen->handle_input(event);
-            }else{
-                level->handle_input(event);
-            }
+            screen_controller->handle_input(event);
+//            if (current_screen== MENU_SCREEN) {
+//                menu_screen->handle_input(event);
+//            }else if(current_screen == SELECT_LEVEL_SCREEN){
+//                level_select_screen->handle_input(event);
+//            }else{
+//                level->handle_input(event);
+//            }
         }
         
         if (fps.is_timeup()) {
-            level->animate();
+//            level->animate();
+            screen_controller->animate();
             fps.start();
         }
         
@@ -147,17 +153,19 @@ int main( int argc, char* args[] ){
         //Move the dot //myDot.move( tiles );
         //Set the camera//myDot.set_camera();
         
-        if(current_screen== MENU_SCREEN){
-            menu_screen->show(camera,menuSheet,screen);
-        }else if(current_screen == SELECT_LEVEL_SCREEN){
-            level_select_screen->show(camera,menuSheet, screen);
-        }else{
+        screen_controller->show(camera, menuSheet, screen);
         
-            level->show(camera, tileSheet, screen);
-        
-            //text
-            text->show(screen);
-        }
+//        if(current_screen== MENU_SCREEN){
+//            menu_screen->show(camera,menuSheet,screen);
+//        }else if(current_screen == SELECT_LEVEL_SCREEN){
+//            level_select_screen->show(camera,menuSheet, screen);
+//        }else{
+//        
+//            level->show(camera, tileSheet, screen);
+//        
+//            //text
+//            text->show(screen);
+//        }
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
             return 1;
@@ -172,9 +180,10 @@ int main( int argc, char* args[] ){
     
     //Clean up
     clean_up();
-    delete level;
+//    delete level;
     delete text;
-    delete menu_screen;
-    delete level_select_screen;
+//    delete menu_screen;, already handeled by screen controller
+    delete screen_controller;
+//    delete level_select_screen;
     return 0;
 }

@@ -12,11 +12,13 @@
 #include "level.h"
 #include "screen.h"
 
+
 class LevelScreen:public Screen{
 private:
     Level * level;
+    Screen * controller;
 public:
-    LevelScreen(int selected = 0);
+    LevelScreen(int selected = 1);
     ~LevelScreen();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);

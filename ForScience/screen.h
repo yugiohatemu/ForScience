@@ -12,13 +12,19 @@
 #include "SDL/SDL.h"
 
 class Screen{
-  
+protected:
+    Screen * root;
 public:
     Screen(){};
-    virtual ~Screen(){};
-    void handle_input(SDL_Event event){};
-    void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){};
-    void animate(){};
+    virtual ~Screen(){root = NULL;};
+    virtual void handle_input(SDL_Event event){};
+    virtual void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){};
+    virtual void animate(){};
+    void set_controller(Screen * s){
+        root = s;
+    }
+
+    
 };
 
 #endif

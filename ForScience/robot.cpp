@@ -302,17 +302,17 @@ void Robot::react_to(StickMaster * stick_master){
 
 
 void Robot::show(SDL_Rect camera, SDL_Surface *tileSheet,SDL_Surface *screen){
-    apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
+    apply_surface(box.x - camera.x, box.y - camera.y, robotSheet, screen, &clips[frame]);
     
     if (dir == SDLK_RIGHT) { // x +w, y-10,
         fan.x = box.x + box.w;
         
-        if (state == ALERT) apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[A_FAN_R]);
-        else apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[N_FAN_R]);
+        if (state == ALERT) apply_surface(fan.x - camera.x, fan.y - camera.y, robotSheet, screen, &clips[A_FAN_R]);
+        else apply_surface(fan.x - camera.x, fan.y - camera.y, robotSheet, screen, &clips[N_FAN_R]);
         
     }else if(dir == SDLK_LEFT){ // x - fan.w, y - 10
         fan.x = box.x - fan.w;
-        if(state == ALERT) apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[A_FAN_L]);
-        else apply_surface(fan.x - camera.x, fan.y - camera.y, tileSheet, screen, &clips[N_FAN_L]);
+        if(state == ALERT) apply_surface(fan.x - camera.x, fan.y - camera.y, robotSheet, screen, &clips[A_FAN_L]);
+        else apply_surface(fan.x - camera.x, fan.y - camera.y, robotSheet, screen, &clips[N_FAN_L]);
     }
 }

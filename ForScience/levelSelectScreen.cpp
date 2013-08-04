@@ -9,7 +9,8 @@
 #include "levelSelectScreen.h"
 #include "utility.h"
 #include "constant.h"
-
+#include "screenController.h"
+#include "levelScreen.h"
 LevelSelectScreen::LevelSelectScreen():Screen(){
     total_level = 11;
     selected_level = 0;
@@ -74,10 +75,17 @@ void LevelSelectScreen::handle_input(SDL_Event event){
             selected_level = (selected_level + 1) % total_level;
             set_selected_level();
         }else if(dir == SDLK_RETURN){
-            current_screen = LEVEL_SCREEN;
+//            current_screen = LEVEL_SCREEN;
             LEVEL_PAUSE = false;
+            
+            LevelScreen * next = new LevelScreen();
+            ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+            root_controller->push_controller(next);
+            
         }else if(dir == SDLK_ESCAPE){
-            current_screen = MENU_SCREEN;
+//            current_screen = MENU_SCREEN;
+            ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+            root_controller->pop_controller();
         }
     }
 }
@@ -85,11 +93,15 @@ void LevelSelectScreen::handle_input(SDL_Event event){
 void LevelSelectScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
     SDL_FillRect(screen , NULL , 0x000000);
     for (int i = 0; i < total_level; i += 1) {
-        if(levels[i]) apply_surface((i %5) * 50 + 20,(i / 5)*50, tileSheet, screen, &clips[SELECT]);
-        else apply_surface((i % 5) * 50+ 20,(i / 5) * 50, tileSheet, screen, &clips[UNSELECT]);
+        if(levels[i]) apply_surface((i %5) * 50 + 20,(i / 5)*50, menuSheet, screen, &clips[SELECT]);
+        else apply_surface((i % 5) * 50+ 20,(i / 5) * 50, menuSheet, screen, &clips[UNSELECT]);
     }
     //add exit
 //    if (selected_level == total_level) apply_surface(100, 200, tileSheet, screen, & clips[S_EXIT]);
 //    else apply_surface(100, 200, tileSheet, screen, & clips[U_EXIT]);
+    
+}
+
+void LevelSelectScreen::animate(){
     
 }
