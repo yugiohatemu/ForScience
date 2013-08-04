@@ -7,7 +7,6 @@
 //
 
 #include "screenController.h"
-#include <iostream>
 
 ScreenController::ScreenController(Screen * s):Screen(){
     root.push(s);

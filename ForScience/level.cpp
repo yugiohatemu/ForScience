@@ -74,6 +74,7 @@ void Level::set_tile(){
             int tileType = -1;
             map >> tileType;
             if( map.fail() == true ){
+                debug("Load Tile Fail");
                 break;
             }
             
