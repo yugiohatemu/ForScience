@@ -33,8 +33,8 @@ SDL_Surface *menuSheet = NULL;
 TTF_Font *font = NULL;
 
 //use dirty global variable to do it
-bool LEVEL_PAUSE = false;
-
+bool LEVEL_PAUSE = true;
+SCREEN_STATE current_screen = START_SCREEN;
 bool init(){
     //Initialize all SDL subsystems
     if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 ) return false;
@@ -134,7 +134,7 @@ int main( int argc, char* args[] ){
         
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
-            if (true) {
+            if (current_screen== START_SCREEN) {
                 menu_screen->handle_input(event);
             }else{
                 stick_master->handle_input(event);
@@ -153,7 +153,7 @@ int main( int argc, char* args[] ){
         //Move the dot //myDot.move( tiles );
         //Set the camera//myDot.set_camera();
         
-        if(true){
+        if(current_screen== START_SCREEN){
             menu_screen->show(camera,menuSheet,screen);
         }else{
         

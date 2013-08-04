@@ -57,4 +57,9 @@ enum ROBOT_STATE{
 
 extern bool LEVEL_PAUSE;
 
+enum SCREEN_STATE{
+    START_SCREEN,
+    LEVEL_SCREEN,
+};
+extern SCREEN_STATE current_screen;
 #endif

@@ -15,20 +15,22 @@ class MenuScreen{
     //options?
     enum CLIP{
         TITLE,
-        S_START, U_START,
-        S_OPTION, U_OPTION,
+        S_START,S_EXIT, 
+        U_START,U_EXIT,
         TOTAL_CLIP,
     };
     
     enum STATE{
         START,
+        EXIT,
+        TOTAL_STATE
     };
     
     SDL_Rect clips[TOTAL_CLIP];
     void set_clip();
     bool selected;
-    int frame;
-    STATE state;
+    int *frame;
+    int state;
 public:
     MenuScreen();
     ~MenuScreen();
