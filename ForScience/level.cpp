@@ -95,7 +95,7 @@ void Level::set_sheet(SDL_Surface * robot, SDL_Surface * stick){
     robotSheet = robot;
 }
 
-void Level::show(SDL_Rect camera, SDL_Surface *tileSheet, SDL_Surface *screen){
+void Level::show(SDL_Rect camera, SDL_Surface *tile, SDL_Surface *screen){
     SDL_FillRect(screen , NULL , 0x000000);
     for (int i = 0; i < total_tile; i ++) {
         apply_surface(tiles[i].box.x,tiles[i].box.y, tileSheet, screen, &clips[tiles[i].type]);

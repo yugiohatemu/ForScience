@@ -117,14 +117,9 @@ int main( int argc, char* args[] ){
     //Continuous key press
     if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
-    
-    
+        
     MenuScreen * menu_screen = new MenuScreen();
     ScreenController * screen_controller = new ScreenController(menu_screen);
-//    LevelSelectScreen * level_select_screen = new LevelSelectScreen();
-//
-//    Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
-//    level->set_sheet(robotSheet, stickSheet);
     Text * text = new Text(0, 480, "For Science", font);
     
     //While the user hasn't quit
@@ -134,17 +129,9 @@ int main( int argc, char* args[] ){
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
             screen_controller->handle_input(event);
-//            if (current_screen== MENU_SCREEN) {
-//                menu_screen->handle_input(event);
-//            }else if(current_screen == SELECT_LEVEL_SCREEN){
-//                level_select_screen->handle_input(event);
-//            }else{
-//                level->handle_input(event);
-//            }
         }
         
         if (fps.is_timeup()) {
-//            level->animate();
             screen_controller->animate();
             fps.start();
         }
@@ -154,18 +141,7 @@ int main( int argc, char* args[] ){
         //Set the camera//myDot.set_camera();
         
         screen_controller->show(camera, menuSheet, screen);
-        
-//        if(current_screen== MENU_SCREEN){
-//            menu_screen->show(camera,menuSheet,screen);
-//        }else if(current_screen == SELECT_LEVEL_SCREEN){
-//            level_select_screen->show(camera,menuSheet, screen);
-//        }else{
-//        
-//            level->show(camera, tileSheet, screen);
-//        
-//            //text
-//            text->show(screen);
-//        }
+
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
             return 1;
@@ -180,10 +156,7 @@ int main( int argc, char* args[] ){
     
     //Clean up
     clean_up();
-//    delete level;
     delete text;
-//    delete menu_screen;, already handeled by screen controller
     delete screen_controller;
-//    delete level_select_screen;
     return 0;
 }

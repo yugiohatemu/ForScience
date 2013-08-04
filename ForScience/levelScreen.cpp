@@ -15,7 +15,7 @@
 LevelScreen::LevelScreen(int selected):Screen(){
     //add a new map,hehe
     std::stringstream str;
-    str<<"/Users/wei/Desktop/ForScience/ForScience/level"<<selected<<",map";
+    str<<"/Users/wei/Desktop/ForScience/ForScience/level"<<selected<<".map";
     level = new Level(str.str(), 7,16);
 }
 
@@ -33,7 +33,6 @@ void LevelScreen::handle_input(SDL_Event event){
 }
 
 void LevelScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
-    SDL_FillRect(screen , NULL , 0x000000);
     level->show(camera, tileSheet, screen);
 }
 
