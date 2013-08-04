@@ -9,9 +9,10 @@
 #ifndef __ForScience__levelSelectScreen__
 #define __ForScience__levelSelectScreen__
 
-#include "SDL/SDL.h"
 
-class LevelSelectScreen{
+#include "screen.h"
+
+class LevelSelectScreen:public Screen{
 private:
     enum CLIP{
         UNSELECT,SELECT,

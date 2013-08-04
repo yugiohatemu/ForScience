@@ -10,7 +10,7 @@
 #include "utility.h"
 #include "constant.h"
 
-MenuScreen::MenuScreen(){
+MenuScreen::MenuScreen():Screen(){
     frame  = new int[TOTAL_STATE];
     frame[0] = 1;
     frame[1] = 0;

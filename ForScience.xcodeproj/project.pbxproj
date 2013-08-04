@@ -18,6 +18,7 @@
 		B615F7A517AC568C00FDBF32 /* menuScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B615F7A317AC568C00FDBF32 /* menuScreen.cpp */; };
 		B615F7AF17AEADDE00FDBF32 /* levelSelectScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B615F7AD17AEADDE00FDBF32 /* levelSelectScreen.cpp */; };
 		B615F7B217AED6BF00FDBF32 /* levelScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B615F7B017AED6BF00FDBF32 /* levelScreen.cpp */; };
+		B615F7B717AEE76F00FDBF32 /* screenController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B615F7B517AEE76F00FDBF32 /* screenController.cpp */; };
 		B61944D2179A209E0056F918 /* areaSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D0179A209E0056F918 /* areaSearch.cpp */; };
 		B61944DA179AEB1D0056F918 /* stopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944D8179AEB1D0056F918 /* stopWatch.cpp */; };
 		B61944DE179B05690056F918 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B61944DC179B05690056F918 /* animation.cpp */; };
@@ -77,6 +78,9 @@
 		B615F7B017AED6BF00FDBF32 /* levelScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = levelScreen.cpp; sourceTree = "<group>"; };
 		B615F7B117AED6BF00FDBF32 /* levelScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levelScreen.h; sourceTree = "<group>"; };
 		B615F7B417AED78200FDBF32 /* drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawable.h; sourceTree = "<group>"; };
+		B615F7B517AEE76F00FDBF32 /* screenController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = screenController.cpp; sourceTree = "<group>"; };
+		B615F7B617AEE76F00FDBF32 /* screenController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screenController.h; sourceTree = "<group>"; };
+		B615F7B817AEEAA900FDBF32 /* screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screen.h; sourceTree = "<group>"; };
 		B61944D0179A209E0056F918 /* areaSearch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = areaSearch.cpp; sourceTree = "<group>"; };
 		B61944D1179A209E0056F918 /* areaSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = areaSearch.h; sourceTree = "<group>"; };
 		B61944D8179AEB1D0056F918 /* stopWatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stopWatch.cpp; sourceTree = "<group>"; };
@@ -205,6 +209,9 @@
 				B615F7AE17AEADDE00FDBF32 /* levelSelectScreen.h */,
 				B615F7B017AED6BF00FDBF32 /* levelScreen.cpp */,
 				B615F7B117AED6BF00FDBF32 /* levelScreen.h */,
+				B615F7B517AEE76F00FDBF32 /* screenController.cpp */,
+				B615F7B617AEE76F00FDBF32 /* screenController.h */,
+				B615F7B817AEEAA900FDBF32 /* screen.h */,
 			);
 			name = screen;
 			sourceTree = "<group>";
@@ -360,6 +367,7 @@
 				B615F7A517AC568C00FDBF32 /* menuScreen.cpp in Sources */,
 				B615F7AF17AEADDE00FDBF32 /* levelSelectScreen.cpp in Sources */,
 				B615F7B217AED6BF00FDBF32 /* levelScreen.cpp in Sources */,
+				B615F7B717AEE76F00FDBF32 /* screenController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

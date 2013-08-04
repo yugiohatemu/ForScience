@@ -9,12 +9,10 @@
 #ifndef __ForScience__levelScreen__
 #define __ForScience__levelScreen__
 
-#include "SDL/SDL.h"
-#include "drawable.h"
 #include "level.h"
+#include "screen.h"
 
-
-class LevelScreen: public Drawable{
+class LevelScreen:public Screen{
 private:
     Level * level;
 public:

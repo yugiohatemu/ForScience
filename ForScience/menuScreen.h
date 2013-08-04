@@ -9,9 +9,10 @@
 #ifndef __ForScience__menuScreen__
 #define __ForScience__menuScreen__
 
-#include "SDL/SDL.h"
 
-class MenuScreen{
+#include "screen.h"
+
+class MenuScreen:public Screen{
     //options?
     enum CLIP{
         TITLE,

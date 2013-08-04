@@ -11,7 +11,7 @@
 #include "utility.h"
 #include <sstream>
 
-LevelScreen::LevelScreen(int selected):Drawable(){
+LevelScreen::LevelScreen(int selected):Screen(){
     //add a new map,hehe
     std::stringstream str;
     str<<"/Users/wei/Desktop/ForScience/ForScience/level"<<selected<<",map";

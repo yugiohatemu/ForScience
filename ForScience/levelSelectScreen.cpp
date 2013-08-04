@@ -10,7 +10,7 @@
 #include "utility.h"
 #include "constant.h"
 
-LevelSelectScreen::LevelSelectScreen(){
+LevelSelectScreen::LevelSelectScreen():Screen(){
     total_level = 11;
     selected_level = 0;
     //level_row = 2
