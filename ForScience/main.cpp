@@ -23,6 +23,7 @@
 #include "stickMaster.h"
 #include "robotMaster.h"
 #include "menuScreen.h"
+#include "levelSelectScreen.h"
 //The surfaces
 SDL_Surface *screen = NULL;
 SDL_Surface *tileSheet = NULL;
@@ -117,7 +118,7 @@ int main( int argc, char* args[] ){
     if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
     MenuScreen * menu_screen = new MenuScreen();
-    
+    LevelSelectScreen * level_select_screen = new LevelSelectScreen();
     
     Level * level = new Level("/Users/wei/Desktop/ForScience/ForScience/level1.map", 7,16);
     int pos1[2] = {80,120};
@@ -136,6 +137,8 @@ int main( int argc, char* args[] ){
             if( event.type == SDL_QUIT )quit = true;
             if (current_screen== START_SCREEN) {
                 menu_screen->handle_input(event);
+            }else if(current_screen == SELECT_LEVEL_SCREEN){
+                level_select_screen->handle_input(event);
             }else{
                 stick_master->handle_input(event);
             }
@@ -155,6 +158,8 @@ int main( int argc, char* args[] ){
         
         if(current_screen== START_SCREEN){
             menu_screen->show(camera,menuSheet,screen);
+        }else if(current_screen == SELECT_LEVEL_SCREEN){
+            level_select_screen->show(camera,menuSheet, screen);
         }else{
         
             level->show(camera, tileSheet, screen);
@@ -183,5 +188,6 @@ int main( int argc, char* args[] ){
     delete level;
     delete text;
     delete menu_screen;
+    delete level_select_screen;
     return 0;
 }

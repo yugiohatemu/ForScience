@@ -60,6 +60,7 @@ extern bool LEVEL_PAUSE;
 enum SCREEN_STATE{
     START_SCREEN,
     LEVEL_SCREEN,
+    SELECT_LEVEL_SCREEN,
 };
 extern SCREEN_STATE current_screen;
 #endif

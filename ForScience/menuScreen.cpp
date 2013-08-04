@@ -16,10 +16,11 @@ MenuScreen::MenuScreen(){
     frame[1] = 0;
     //dirty now
     set_clip();
+    state = START;
 }
 
 MenuScreen::~MenuScreen(){
-    
+    delete [] frame;
 }
 
 void MenuScreen::set_clip(){
@@ -86,8 +87,8 @@ void MenuScreen::handle_input(SDL_Event event){
         }else if(dir == SDLK_RETURN){
             //change screeen?
             if (state == START) {
-                current_screen = LEVEL_SCREEN;
-                LEVEL_PAUSE = false;
+                current_screen = SELECT_LEVEL_SCREEN;
+                //LEVEL_PAUSE = false;
             }
            
         }
