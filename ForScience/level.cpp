@@ -34,7 +34,7 @@ Level::Level(std::string file_name, int row, int column){
     stick_master = new StickMaster(this,1,pos1);
     int pos2[2] = {280,160};
     robot_master = new RobotMaster(this,1,pos2);
-    
+    state = PLAYING;
     set_clip();
     set_tile();
 }
@@ -94,6 +94,10 @@ void Level::set_tile(){
 void Level::set_sheet(SDL_Surface * robot, SDL_Surface * stick){
     stickSheet = stick;
     robotSheet = robot;
+}
+
+Level::LEVEL_STATE Level::get_level_state(){
+    return state;
 }
 
 void Level::show(SDL_Rect camera, SDL_Surface *tile, SDL_Surface *screen){

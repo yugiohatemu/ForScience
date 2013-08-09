@@ -55,7 +55,14 @@ public:
     HUMAN_STATE stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state);
     ROBOT_STATE robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE state);
     void animate();
-
+    enum LEVEL_STATE{
+        PLAYING,
+        WIN,
+        LOSE,
+    };
+    LEVEL_STATE state;
+    LEVEL_STATE get_level_state();
+    
 };
 
 #endif /* defined(__ForScience__level__) */

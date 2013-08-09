@@ -11,6 +11,7 @@
 #include "utility.h"
 #include <sstream>
 #include "screenController.h"
+#include "endScreen.h"
 
 LevelScreen::LevelScreen(int selected):Screen(){
     //add a new map,hehe
@@ -34,6 +35,17 @@ void LevelScreen::handle_input(SDL_Event event){
 
 void LevelScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
     level->show(camera, tileSheet, screen);
+    if (level->get_level_state() == Level::WIN) {
+        EndScreen * winScreen = new EndScreen(true);
+        ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+        root_controller->push_controller(winScreen);
+    }else if(level->get_level_state() == Level::LOSE){
+        EndScreen * loseScreen = new EndScreen(false);
+        ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+        root_controller->push_controller(loseScreen);
+    }
+    //if the we have some outcome?
+    //do something
 }
 
 void LevelScreen::animate(){
