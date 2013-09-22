@@ -115,7 +115,7 @@ int main( int argc, char* args[] ){
     }
     
     //Continuous key press
-    if(SDL_EnableKeyRepeat(200,200)<0) return 1;
+//    if(SDL_EnableKeyRepeat(200,200)<0) return 1;
     
         
     MenuScreen * menu_screen = new MenuScreen();
@@ -128,10 +128,11 @@ int main( int argc, char* args[] ){
         
         while( SDL_PollEvent( &event )){
             if( event.type == SDL_QUIT )quit = true;
-            screen_controller->handle_input(event);
+            
         }
         
         if (fps.is_timeup()) {
+            screen_controller->handle_input(event);
             screen_controller->animate();
             fps.start();
         }

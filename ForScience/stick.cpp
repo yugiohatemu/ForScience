@@ -185,6 +185,7 @@ void Stick::clip_tile(){
     }
 }
 
+//change continuous to press event
 void Stick::handle_input(SDL_Event event){
     //calculate the diff between box_copy and box
     //apply the change
