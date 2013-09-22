@@ -126,6 +126,15 @@ void Level::animate(){
 
 void Level::handle_input(SDL_Event event){
     stick_master->handle_input(event);
+    //update level state here
+    StickMaster * stick = dynamic_cast<StickMaster *>(stick_master);
+    if (stick->is_all_stick_escape()) {
+        //ask the levelscreen to push
+        state = WIN;
+    }else if(stick->is_all_stick_dead()){
+        state = LOSE;
+    }
+    
 }
 
 //get which pos on given x and y

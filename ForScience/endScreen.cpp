@@ -9,10 +9,10 @@
 #include "endScreen.h"
 #include "utility.h"
 #include "screenController.h"
-
+#include "constant.h"
 EndScreen::EndScreen(bool win):Screen(){
     this->win = win;
-    
+    set_clip();
     //level complete
     //and press center to continue
     
@@ -39,7 +39,7 @@ void EndScreen::handle_input(SDL_Event event){
     if( event.type == SDL_KEYDOWN ){
         int dir = event.key.keysym.sym;
         if (dir == SDLK_RETURN) {
-           
+           //pop backs to level select for now
             
         }
     }
@@ -47,8 +47,10 @@ void EndScreen::handle_input(SDL_Event event){
 }
 
 void EndScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
-    if (win) apply_surface(100, 300, tileSheet, screen, &clips[YOU_WIN]);
-    else apply_surface(100, 300, tileSheet, screen, &clips[YOU_LOSE]);
+    
+    
+    if (win) apply_surface(100, 100, menuSheet, screen, &clips[YOU_WIN]);
+    else apply_surface(100, 100, menuSheet, screen, &clips[YOU_LOSE]);
 }
 
 void EndScreen::animate(){

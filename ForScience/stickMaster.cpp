@@ -58,6 +58,15 @@ bool StickMaster::is_all_stick_dead(){
         
     return true;
 }
+//for now ,use all escape as condition
+bool StickMaster::is_all_stick_escape(){
+    for (int i = 0; i < total_stick; i += 1){
+        if (stick_list[i]->get_state() != EXIT) {
+            return false;
+        }
+    }
+    return true;
+}
 
 //needs to overwrite
 bool StickMaster::is_win(){

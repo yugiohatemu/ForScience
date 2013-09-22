@@ -29,6 +29,7 @@ public:
     int get_stick_count();
     Stick ** get_stick_list();
     bool is_all_stick_dead();
+    bool is_all_stick_escape();
     void set_pause(bool p);
     bool is_win();
     bool is_gameover();
