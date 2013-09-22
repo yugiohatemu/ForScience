@@ -37,6 +37,7 @@
 		B63F59C81780C06C000B09C9 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59C61780C06C000B09C9 /* robot.cpp */; };
 		B63F59CC1780DE45000B09C9 /* level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59CA1780DE44000B09C9 /* level.cpp */; };
 		B63F59D017820E19000B09C9 /* switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59CE17820E19000B09C9 /* switch.cpp */; };
+		B6F21C1E17EF5E0000C562EA /* pauseScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -120,6 +121,8 @@
 		B63F59CD17820DE7000B09C9 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
 		B63F59CE17820E19000B09C9 /* switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = switch.cpp; sourceTree = "<group>"; };
 		B63F59CF17820E19000B09C9 /* switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = switch.h; sourceTree = "<group>"; };
+		B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pauseScreen.cpp; sourceTree = "<group>"; };
+		B6F21C1D17EF5DFF00C562EA /* pauseScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pauseScreen.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,17 +209,19 @@
 		B615F7AB17AEADA900FDBF32 /* screen */ = {
 			isa = PBXGroup;
 			children = (
+				B615F7B517AEE76F00FDBF32 /* screenController.cpp */,
+				B615F7B617AEE76F00FDBF32 /* screenController.h */,
 				B615F7A317AC568C00FDBF32 /* menuScreen.cpp */,
 				B615F7A417AC568C00FDBF32 /* menuScreen.h */,
 				B615F7AD17AEADDE00FDBF32 /* levelSelectScreen.cpp */,
 				B615F7AE17AEADDE00FDBF32 /* levelSelectScreen.h */,
 				B615F7B017AED6BF00FDBF32 /* levelScreen.cpp */,
 				B615F7B117AED6BF00FDBF32 /* levelScreen.h */,
-				B615F7B517AEE76F00FDBF32 /* screenController.cpp */,
-				B615F7B617AEE76F00FDBF32 /* screenController.h */,
 				B615F7B817AEEAA900FDBF32 /* screen.h */,
 				B601580917B464F4003C8FCD /* endScreen.cpp */,
 				B601580A17B464F4003C8FCD /* endScreen.h */,
+				B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */,
+				B6F21C1D17EF5DFF00C562EA /* pauseScreen.h */,
 			);
 			name = screen;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				B615F7B217AED6BF00FDBF32 /* levelScreen.cpp in Sources */,
 				B615F7B717AEE76F00FDBF32 /* screenController.cpp in Sources */,
 				B601580B17B464F4003C8FCD /* endScreen.cpp in Sources */,
+				B6F21C1E17EF5E0000C562EA /* pauseScreen.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
