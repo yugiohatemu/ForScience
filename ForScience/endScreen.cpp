@@ -10,8 +10,11 @@
 #include "utility.h"
 #include "screenController.h"
 #include "constant.h"
-EndScreen::EndScreen(bool win):Screen(){
+
+
+EndScreen::EndScreen(bool win, Screen * level_select):Screen(){
     this->win = win;
+    this->level_select = level_select;
     set_clip();
     //level complete
     //and press center to continue
@@ -39,15 +42,22 @@ void EndScreen::handle_input(SDL_Event event){
     if( event.type == SDL_KEYDOWN ){
         int dir = event.key.keysym.sym;
         if (dir == SDLK_RETURN) {
-           //pop backs to level select for now
-            
+           //add option later
+            if (true) {
+                ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+                root_controller->pop_controller_to(level_select);
+            }else{
+                ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
+                root_controller->pop_controller();
+            }
         }
     }
 
 }
 
+
 void EndScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
-    
+//    SDL_FillRect(screen , NULL , 0x000000);
     
     if (win) apply_surface(100, 100, menuSheet, screen, &clips[YOU_WIN]);
     else apply_surface(100, 100, menuSheet, screen, &clips[YOU_LOSE]);

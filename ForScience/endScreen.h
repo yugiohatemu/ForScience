@@ -13,6 +13,7 @@
 
 class EndScreen:public Screen{
     Screen * controller;
+    Screen * level_select;
     enum CLIP{
         YOU_WIN,
         YOU_LOSE,
@@ -22,7 +23,7 @@ class EndScreen:public Screen{
     SDL_Rect clips[TOTAL_CLIP];
     bool win;
 public:
-    EndScreen(bool win);
+    EndScreen(bool win, Screen * level_select);
     ~EndScreen();
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);

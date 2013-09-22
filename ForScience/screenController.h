@@ -21,6 +21,7 @@ public:
     ~ScreenController();
     void push_controller(Screen * next);
     void pop_controller();
+    void pop_controller_to(Screen * s);
     void handle_input(SDL_Event event);
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     void animate();

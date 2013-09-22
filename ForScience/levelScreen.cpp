@@ -36,11 +36,11 @@ void LevelScreen::handle_input(SDL_Event event){
 void LevelScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen){
     level->show(camera, tileSheet, screen);
     if (level->get_level_state() == Level::WIN) {
-        EndScreen * winScreen = new EndScreen(true);
+        EndScreen * winScreen = new EndScreen(true,this);
         ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
         root_controller->push_controller(winScreen);
     }else if(level->get_level_state() == Level::LOSE){
-        EndScreen * loseScreen = new EndScreen(false);
+        EndScreen * loseScreen = new EndScreen(false,this);
         ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
         root_controller->push_controller(loseScreen);
     }

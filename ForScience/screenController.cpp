@@ -37,6 +37,21 @@ void ScreenController::pop_controller(){
     //deallocated automatically
 }
 
+//keeps pop the controller so that s is the top
+void ScreenController::pop_controller_to(Screen * s){
+    if (s == NULL) return;
+    
+    while (root.size()>1){
+        if (top != s) {
+            pop_controller();
+        }else{
+            pop_controller();
+            break;
+        }
+    }
+}
+
+
 
 void ScreenController::handle_input(SDL_Event event){
     if (top) top->handle_input(event);
