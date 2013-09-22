@@ -17,7 +17,7 @@ LevelScreen::LevelScreen(int selected):Screen(){
     //add a new map,hehe
     std::stringstream str;
     str<<"/Users/wei/Desktop/ForScience/ForScience/level"<<selected<<".map";
-    level = new Level(str.str(), 7,16);
+    level = new Level(str.str()); //, 7,16
 }
 
 LevelScreen::~LevelScreen(){

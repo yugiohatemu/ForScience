@@ -36,6 +36,8 @@ class Level{
     SDL_Rect clips[TOTAL_CLIP];
     void set_clip();
     void set_tile();
+    int get_int_from_file(std::ifstream &file);
+    void load_file_fail(std::ifstream &file,  std::string s = "load fail");
     int get_tile_pos(int x, int y);
     std::string file_name;
     int row,column, total_tile;
@@ -45,6 +47,7 @@ class Level{
     SDL_Surface *stickSheet;
 public:
     Level(std::string file_name, int row, int column);
+    Level(std::string file_name);
     ~Level();
     void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen);
     void interact_with_level(SDL_Rect *box);

@@ -11,6 +11,7 @@
 #include "constant.h"
 #include "screenController.h"
 #include "levelScreen.h"
+#include <iostream>
 LevelSelectScreen::LevelSelectScreen():Screen(){
     total_level = 11;
     selected_level = 0;
@@ -77,8 +78,8 @@ void LevelSelectScreen::handle_input(SDL_Event event){
         }else if(dir == SDLK_RETURN){
 //            current_screen = LEVEL_SCREEN;
             LEVEL_PAUSE = false;
-            
-            LevelScreen * next = new LevelScreen();
+            std::cout<<selected_level<<std::endl;
+            LevelScreen * next = new LevelScreen(selected_level % 2 + 1); //later be selected_level + 1, since start from 0, 
             ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
             root_controller->push_controller(next);
             

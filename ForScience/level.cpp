@@ -39,6 +39,118 @@ Level::Level(std::string file_name, int row, int column){
     set_tile();
 }
 
+//return -1 if fail to read file
+int Level::get_int_from_file(std::ifstream &file){
+    int n = -1;
+    file >> n;
+    if (file.fail()) {
+        debug("load map fail");
+    }
+    
+    return n;
+}
+
+void Level::load_file_fail(std::ifstream &file, std::string s){
+    debug(s);
+    file.close();
+}
+
+Level::Level(std::string file_name){
+    this->file_name = file_name;
+    set_clip();
+    tiles = NULL;
+    
+    std::ifstream map( file_name.c_str() );
+    
+    //cin row and column
+    row = get_int_from_file(map);
+    column = get_int_from_file(map);
+    if (row < 0 || column < 0) {
+        load_file_fail(map, "r & c fail");
+        return ;
+    }
+    total_tile = row * column;
+    
+    
+    //set_tile();
+    tiles = new Level::Tile[total_tile];
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < column; j ++) {
+            int tileType = get_int_from_file(map);
+            if (tileType < 0) {
+                load_file_fail(map, "tile fail");
+                return ;
+            }
+            
+            //If the number is a valid tile number, else close
+            if( ( tileType >= 0 ) && ( tileType < TOTAL_CLIP ) ){
+                tiles[i * column + j].set_tile(j * TILE_HEIGHT, i * TILE_WIDTH, TILE_WIDTH, TILE_HEIGHT, tileType);
+            }else{
+                break;
+            }
+        }
+    }
+    
+    //1, 80 120, //1 280, 160
+    int stick_count = get_int_from_file(map);
+    
+    if (stick_count > 0) {
+        int * pos = new int[2 * stick_count];
+        for (int i = 0; i < stick_count; i++) {
+            int x = get_int_from_file(map);
+            int y = get_int_from_file(map);
+            if (x >= 0 && y >= 0) {
+                pos[2 * i] = x;
+                pos[2 * i + 1] = y;
+               
+            }else{
+                load_file_fail(map, "stick fail");
+                delete [] pos;
+                return ;
+            }
+            
+        }
+        stick_master = new StickMaster(this,stick_count,pos);
+        delete [] pos;
+    }
+    
+    int robot_count = get_int_from_file(map);
+    if (robot_count > 0) {
+        int * pos = new int[2 * robot_count];
+        for (int i = 0; i < robot_count; i++) {
+            int x = get_int_from_file(map);
+            int y = get_int_from_file(map);
+            if (x >= 0 && y >= 0) {
+                pos[2 * i] = x;
+                pos[2 * i + 1] = y;
+                
+            }else{
+                load_file_fail(map, "robot fail");
+                delete [] pos;
+                return ;
+            }
+            
+        }
+        robot_master = new RobotMaster(this,stick_count,pos);
+        delete [] pos;
+    }
+    
+    state = PLAYING;
+    
+    total_sprites = 2;
+    //should also be loaded dynamically
+    sprite_list = new Sprite*[total_sprites];
+    sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
+    sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
+    //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
+
+    
+    //Close the file
+    map.close();
+}
+
+
+
 Level::~Level(){
     delete stick_master;
     delete robot_master;
