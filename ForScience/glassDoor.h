@@ -34,7 +34,7 @@ public:
     bool is_block();
     void interact(SDL_Rect rect);
     void set_active(bool active);
-    
+    void interact_with_stick(SDL_Rect rect);
 };
 
 #endif /* defined(__ForScience__glassDoor__) */

@@ -11,7 +11,7 @@
 #include "screenController.h"
 #include "constant.h"
 
-PauseScreen::PauseScreen(Screen * level_select){
+PauseScreen::PauseScreen(Screen * level_select):Screen(){
     set_clip();
 }
 

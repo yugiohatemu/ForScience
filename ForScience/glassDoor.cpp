@@ -68,6 +68,16 @@ void GlassDoor::interact(SDL_Rect rect){
     }
 }
 
+void GlassDoor::interact_with_stick(SDL_Rect rect){ //add a direction?
+    if (check_collision(box, rect)) {
+        if (frame == OPEN) {
+            //add speed vector, allow the stick to pass?
+        }else{ //block, 
+            
+        }
+    }
+}
+
 void GlassDoor::show(SDL_Rect camera, SDL_Surface * tileSheet, SDL_Surface * screen){
     apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[frame]);
 }

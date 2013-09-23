@@ -349,6 +349,8 @@ void Level::interact_with_level(SDL_Rect *box){
 
 
 HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state){
+    //do a dirty test first
+    GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
     
     if (state == WALK) {
         if (dir == SDLK_RIGHT) {
@@ -365,9 +367,18 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                             break;
                         }
                     }
+                    //##### testing incomplete implementation
+                    int block_x = box.x + speed;
+                    //ok, now add open to state, ok it works
+                    if (door->is_block()) {
+                        block_x = std::min(block_x, door->get_rect().x - box.w);
+                    }
                     
-                    if (state == STUCK )box.x  = (top_right % column - 1) * TILE_WIDTH;
-                    else box.x += speed;
+                    if (state == STUCK )box.x = (top_right % column - 1) * TILE_WIDTH;
+                    else {
+                        //box.x += speed; originial
+                        box.x = block_x;
+                    }
             }
         }else if(dir == SDLK_LEFT){
             int top_left = get_tile_pos(box.x - speed, box.y);
@@ -383,9 +394,15 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                             break;
                         }
                     }
+                    //##### testing
+                    int block_x = box.x - speed;
+                    if (door->is_block())  block_x = std::max(block_x, door->get_rect().x + box.w);
                     
                     if (state == STUCK) box.x =  (top_left % column + 1) * TILE_WIDTH;
-                    else box.x -= speed;
+                    else{
+                        //box.x -= speed;
+                        box.x = block_x;
+                    }
             }
         }else if(dir == SDLK_SPACE){
             
