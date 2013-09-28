@@ -44,6 +44,9 @@ void GlassDoor::set_anime(){
 void GlassDoor::animate(){
     if (interacting || !animation->is_anime_done()) {
         frame = animation->get_current_frame();
+    }else{
+        animation->reverse_frame();
+        frame = animation->get_current_frame();
     }
 }
 
@@ -56,15 +59,10 @@ void GlassDoor::interact(SDL_Rect rect){
     //need another index
     active = true;
     if (check_collision(box, rect)) {
-        //if not animating, animating
         interacting = true;
-        
     }else{
-        if (interacting) {
-            animation->reverse_frame();
-            interacting = false;
-            //need to reverse frame, but where
-        }
+        
+        interacting = false;
     }
 }
 
