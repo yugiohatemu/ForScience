@@ -10,7 +10,7 @@
 #define __ForScience__winScreen__
 
 #include "screen.h"
-
+#include "text.h"
 class EndScreen:public Screen{
     Screen * controller;
     Screen * level_select;
@@ -22,6 +22,7 @@ class EndScreen:public Screen{
     void set_clip();
     SDL_Rect clips[TOTAL_CLIP];
     bool win;
+    Text * instruction;
 public:
     EndScreen(bool win, Screen * level_select);
     ~EndScreen();

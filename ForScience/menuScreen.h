@@ -11,6 +11,7 @@
 
 
 #include "screen.h"
+#include "text.h"
 
 class MenuScreen:public Screen{
     //options?
@@ -32,6 +33,7 @@ class MenuScreen:public Screen{
     bool selected;
     int *frame;
     int state;
+    Text * instruction;
 public:
     MenuScreen();
     ~MenuScreen();

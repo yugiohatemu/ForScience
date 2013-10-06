@@ -9,6 +9,7 @@
 #ifndef ForScience_constant_h
 #define ForScience_constant_h
 
+#include "SDL_ttf/SDL_ttf.h"
 //Screen attributes
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 540;
@@ -57,17 +58,12 @@ enum ROBOT_STATE{
 
 extern bool LEVEL_PAUSE;
 
-//enum SCREEN_STATE{
-//    MENU_SCREEN,
-//    LEVEL_SCREEN,
-//    SELECT_LEVEL_SCREEN,
-//};
-//extern SCREEN_STATE current_screen;
 
 extern SDL_Surface *screen ;
 extern SDL_Surface *tileSheet ;
 extern SDL_Surface *robotSheet ;
 extern SDL_Surface *stickSheet ;
 extern SDL_Surface *menuSheet ;
-
+extern TTF_Font *font;
+extern bool QUIT;
 #endif

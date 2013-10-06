@@ -35,6 +35,7 @@ TTF_Font *font = NULL;
 
 //use dirty global variable to do it
 bool LEVEL_PAUSE = true;
+bool QUIT = false;
 
 bool init(){
     //Initialize all SDL subsystems
@@ -96,8 +97,6 @@ void clean_up(){
 
 
 int main( int argc, char* args[] ){
-    //Quit flag
-    bool quit = false;
    
     StopWatch fps(0.2);
     SDL_Event event;
@@ -120,14 +119,14 @@ int main( int argc, char* args[] ){
         
     MenuScreen * menu_screen = new MenuScreen();
     ScreenController * screen_controller = new ScreenController(menu_screen);
-    Text * text = new Text(0, 480, "For Science", font);
+   
     
     //While the user hasn't quit
     fps.start();
-    while( quit == false ){
+    while( QUIT == false ){
         
         while( SDL_PollEvent( &event )){
-            if( event.type == SDL_QUIT )quit = true;
+            if( event.type == SDL_QUIT )QUIT = true;
             
         }
         
@@ -137,27 +136,18 @@ int main( int argc, char* args[] ){
             fps.start();
         }
         
-        //While there's events to handle
-        //Move the dot //myDot.move( tiles );
-        //Set the camera//myDot.set_camera();
-        
         screen_controller->show(camera, menuSheet, screen);
 
         //Update the screen
         if( SDL_Flip( screen ) == -1 ){
             return 1;
         }
-        
-//        //Cap the frame rate, avoid overupdatting
-//        if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND ){
-//            SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
-//        }
+
     }
     
-    
     //Clean up
-    clean_up();
-    delete text;
     delete screen_controller;
+    clean_up();
+    
     return 0;
 }

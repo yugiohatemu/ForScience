@@ -18,11 +18,11 @@ EndScreen::EndScreen(bool win, Screen * level_select):Screen(){
     set_clip();
     //level complete
     //and press center to continue
-    
+    instruction = new Text(0, 500, "Press [Enter] to redo level, [ESC] to menu", font);
 }
 
 EndScreen::~EndScreen(){
-    
+    delete instruction;
 }
 
 void EndScreen::set_clip(){
@@ -61,6 +61,8 @@ void EndScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *scre
     
     if (win) apply_surface(100, 100, menuSheet, screen, &clips[YOU_WIN]);
     else apply_surface(100, 100, menuSheet, screen, &clips[YOU_LOSE]);
+    
+    instruction->show(screen);
 }
 
 void EndScreen::animate(){

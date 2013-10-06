@@ -19,10 +19,13 @@ MenuScreen::MenuScreen():Screen(){
     //dirty now
     set_clip();
     state = START;
+    instruction = new Text(0, 500, "Arrow key to switch option, press [Enter] to choose", font);
+    //aound 40 per font height
 }
 
 MenuScreen::~MenuScreen(){
     delete [] frame;
+    delete instruction;
 }
 
 void MenuScreen::set_clip(){
@@ -63,7 +66,7 @@ void MenuScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *scr
         apply_surface(250, 200, menuSheet, screen, &clips[U_START]);
         apply_surface(250, 300, menuSheet, screen, &clips[S_EXIT]);
     }
-    
+    instruction->show(screen);
 }
 
 
@@ -88,13 +91,14 @@ void MenuScreen::handle_input(SDL_Event event){
                 frame[0] = 0;
             }
         }else if(dir == SDLK_RETURN){
-            //change screeen?
+           
             if (state == START) {
-//                current_screen = SELECT_LEVEL_SCREEN;
-                //LEVEL_PAUSE = false;
                 LevelSelectScreen * next = new LevelSelectScreen();
                 ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
                 root_controller->push_controller(next);
+            }else if(state == EXIT){
+                //ask the program to pause
+                QUIT = true;
             }
            
         }

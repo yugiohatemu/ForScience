@@ -22,10 +22,14 @@ LevelSelectScreen::LevelSelectScreen():Screen(){
     levels = new bool [total_level]; //1 for exit
     set_selected_level();
     set_clip();
+    
+    instruction = new Text(10, 500, "Press [Enter] to choose, [ESC] to go back", font);
+    
 }
 
 LevelSelectScreen::~LevelSelectScreen(){
     delete [] levels;
+    delete instruction;
 }
 
 void LevelSelectScreen::set_clip(){
@@ -79,7 +83,7 @@ void LevelSelectScreen::handle_input(SDL_Event event){
 //            current_screen = LEVEL_SCREEN;
             LEVEL_PAUSE = false;
 //            std::cout<<selected_level<<std::endl;
-            LevelScreen * next = new LevelScreen(selected_level % 2 + 1); //later be selected_level + 1, since start from 0,
+            LevelScreen * next = new LevelScreen( selected_level % 2 + 1); //later be selected_level + 1, since start from 0,
             ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
             root_controller->push_controller(next);
             
@@ -97,6 +101,7 @@ void LevelSelectScreen::show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surfa
         if(levels[i]) apply_surface((i %5) * 50 + 20,(i / 5)*50, menuSheet, screen, &clips[SELECT]);
         else apply_surface((i % 5) * 50+ 20,(i / 5) * 50, menuSheet, screen, &clips[UNSELECT]);
     }
+    instruction->show(screen);
     //add exit
 //    if (selected_level == total_level) apply_surface(100, 200, tileSheet, screen, & clips[S_EXIT]);
 //    else apply_surface(100, 200, tileSheet, screen, & clips[U_EXIT]);

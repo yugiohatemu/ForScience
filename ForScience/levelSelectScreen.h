@@ -11,6 +11,7 @@
 
 
 #include "screen.h"
+#include "text.h"
 
 class LevelSelectScreen:public Screen{
 private:
@@ -26,6 +27,8 @@ private:
     int selected_level;
     bool *levels;
     void set_selected_level();
+    Text * instruction;
+   
 public:
     LevelSelectScreen();
     ~LevelSelectScreen();
