@@ -83,7 +83,7 @@ void LevelSelectScreen::handle_input(SDL_Event event){
 //            current_screen = LEVEL_SCREEN;
             LEVEL_PAUSE = false;
 //            std::cout<<selected_level<<std::endl;
-            LevelScreen * next = new LevelScreen( selected_level % 2 + 1); //later be selected_level + 1, since start from 0,
+            LevelScreen * next = new LevelScreen( selected_level % 3 + 1); //later be selected_level + 1, since start from 0,
             ScreenController * root_controller = dynamic_cast<ScreenController *>(root);
             root_controller->push_controller(next);
             

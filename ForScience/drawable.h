@@ -16,7 +16,7 @@ public:
     virtual void handle_input(SDL_Event event) = 0;
     virtual void show(SDL_Rect camera,  SDL_Surface *tileSheet, SDL_Surface *screen) = 0;
     virtual ~Drawable(){}
-    
+    virtual void animate() = 0;
 protected:
     Drawable(){}
     

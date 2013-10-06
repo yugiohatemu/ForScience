@@ -59,6 +59,8 @@ Level::Level(std::string file_name){
     this->file_name = file_name;
     set_clip();
     tiles = NULL;
+    stick_master = NULL;
+    robot_master = NULL;
     
     std::ifstream map( file_name.c_str() );
     
@@ -91,7 +93,7 @@ Level::Level(std::string file_name){
         }
     }
     
-    //1, 80 120, //1 280, 160
+    //1, 80 120,
     int stick_count = get_int_from_file(map);
     
     if (stick_count > 0) {
@@ -137,11 +139,28 @@ Level::Level(std::string file_name){
     
     state = PLAYING;
     
-    total_sprites = 2;
-    //should also be loaded dynamically
+    //now load sprite list
+    
+    total_sprites = get_int_from_file(map);
     sprite_list = new Sprite*[total_sprites];
-    sprite_list[0] = new Exit(10 * TILE_WIDTH, 2 * TILE_HEIGHT);
-    sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
+    
+    for (int i = 0; i < total_sprites; i++) {
+        std::string type;
+        map>>type;
+        int x = get_int_from_file(map);
+        int y = get_int_from_file(map);
+        if (x >= 0 && y >= 0) {
+            if (type == "EXIT") {
+                sprite_list[i] = new Exit(x,y);
+            }
+        }else{
+            load_file_fail(map, "sprite fail");
+            return ;
+        }
+    }
+    
+    
+    //sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
     //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
 
     
@@ -152,11 +171,21 @@ Level::Level(std::string file_name){
 
 
 Level::~Level(){
-    delete stick_master;
-    delete robot_master;
-    delete [] tiles;
+    if (stick_master) {
+        delete stick_master;
+    }
+    if (robot_master) {
+        delete robot_master;
+    }
+    if (tiles) {
+        delete [] tiles;
+    }
+    
+    
     for (int i = 0; i < total_sprites; i+=1) {
-        delete sprite_list[i]; //???
+        if (sprite_list[i]) {
+            delete sprite_list[i]; //???
+        }
     }
     delete [] sprite_list;
     stickSheet = NULL;
@@ -220,20 +249,31 @@ void Level::show(SDL_Rect camera, SDL_Surface *tile, SDL_Surface *screen){
     for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->show(camera, tileSheet, screen);
     }
-    
-    stick_master->show(camera, stickSheet,screen);
-    robot_master->show(camera, robotSheet, screen);
+    if (stick_master) {
+        stick_master->show(camera, stickSheet,screen);
+    }
+    if (robot_master) {
+        robot_master->show(camera, robotSheet, screen);
+
+    }
 }
 
 void Level::animate(){
     for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->animate();
     }
-    RobotMaster * robot = dynamic_cast<RobotMaster *>(robot_master);
-    StickMaster * stick = dynamic_cast<StickMaster *>(stick_master);
-    robot->react_to(stick);
-    robot->animate();
-    stick->animate();
+    if (robot_master  && stick_master) {
+        RobotMaster * robot = dynamic_cast<RobotMaster *>(robot_master);
+        StickMaster * stick = dynamic_cast<StickMaster *>(stick_master);
+        robot->react_to(stick);
+    }
+    if (stick_master) {
+        stick_master->animate();
+    }
+    if (robot_master) {
+        robot_master->animate();
+
+    }
 }
 
 void Level::handle_input(SDL_Event event){
@@ -264,7 +304,7 @@ int Level::get_tile_pos(int x, int y){
 
 
 ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE state){
-    GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
+    //GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
     if (dir == SDLK_RIGHT) {
         int bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
         int top_right = get_tile_pos(box.x + box.w + speed, box.y);
@@ -285,13 +325,13 @@ ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE
             
             //add a stop interacting here?
             int block_x = box.x + speed;
-            if (door->is_block() && box.x <= door->get_rect().x) {
-                block_x = std::min(block_x, door->get_rect().x - box.w);
-                //ask the door to interact
-                //set something to active
-            }else{
-                
-            }
+//            if (door->is_block() && box.x <= door->get_rect().x) {
+//                block_x = std::min(block_x, door->get_rect().x - box.w);
+//                //ask the door to interact
+//                //set something to active
+//            }else{
+//                
+//            }
             
             
             if (state == TURN )box.x  = (top_right % column - 1) * TILE_WIDTH;
@@ -312,8 +352,8 @@ ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE
             
             //
             int block_x = box.x - speed;
-            if (door->is_block() &&  box.x >= door->get_rect().x)  block_x = std::max(block_x, door->get_rect().x + box.w);
-            
+//            if (door->is_block() &&  box.x >= door->get_rect().x)  block_x = std::max(block_x, door->get_rect().x + box.w);
+//            
             
             if (state == TURN) box.x =  (top_left % column + 1) * TILE_WIDTH;
             else box.x = block_x;
@@ -346,7 +386,7 @@ void Level::interact_with_level(SDL_Rect *box){
 
 HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE state){
     //do a dirty test first
-    GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
+    //GlassDoor * door = dynamic_cast<GlassDoor *>(sprite_list[1]);
     
     if (state == WALK) {
         if (dir == SDLK_RIGHT) {
@@ -366,9 +406,9 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                     //##### testing incomplete implementation
                     int block_x = box.x + speed;
                     //ok, now add open to state, ok it works
-                    if (door->is_block() && box.x <= door->get_rect().x) {
-                        block_x = std::min(block_x, door->get_rect().x - box.w);
-                    }
+//                    if (door->is_block() && box.x <= door->get_rect().x) {
+//                        block_x = std::min(block_x, door->get_rect().x - box.w);
+//                    }
                     
                     if (state == STUCK )box.x = (top_right % column - 1) * TILE_WIDTH;
                     else {
@@ -392,7 +432,7 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                     }
                     //##### testing
                     int block_x = box.x - speed;
-                    if (door->is_block() &&  box.x >= door->get_rect().x)  block_x = std::max(block_x, door->get_rect().x + box.w);
+//                    if (door->is_block() &&  box.x >= door->get_rect().x)  block_x = std::max(block_x, door->get_rect().x + box.w);
                     
                     if (state == STUCK) box.x =  (top_left % column + 1) * TILE_WIDTH;
                     else{

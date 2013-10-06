@@ -150,25 +150,31 @@ void Stick::clip_tile(){
     }
     
     //crawl
-    clips[I_CRAWL0].x = clips[I_CLIMB1].x + STICK_WIDTH;
-    clips[I_CRAWL0].y = 0;
-    clips[I_CRAWL0].w = STICK_HEIGHT;
-    clips[I_CRAWL0].h = STICK_WIDTH;
+    clips[I_CRAWL_R0].x = clips[I_CLIMB1].x + STICK_WIDTH;
+    clips[I_CRAWL_R0].y = 0;
+    clips[I_CRAWL_R0].w = STICK_HEIGHT;
+    clips[I_CRAWL_R0].h = STICK_WIDTH;
     
-    clips[I_CRAWL1] = clips[I_CRAWL0];
-    clips[I_CRAWL1].y = 40;
+    clips[I_CRAWL_R1] = clips[I_CRAWL_R0];
+    clips[I_CRAWL_R1].y = 40;
     
-    clips[I_CRAWL2].x = clips[I_CRAWL0].x + clips[I_CRAWL0].w;
-    clips[I_CRAWL2].y = 0;
-    clips[I_CRAWL2].w = 80;
-    clips[I_CRAWL2].h = 80;
+    clips[I_CRAWL_R2].x = clips[I_CRAWL_R0].x + clips[I_CRAWL_R0].w;
+    clips[I_CRAWL_R2].y = 0;
+    clips[I_CRAWL_R2].w = 80;
+    clips[I_CRAWL_R2].h = 80;
     
-    clips[I_CRAWL3].x = clips[I_CRAWL2].x + clips[I_CRAWL2].w;
-    clips[I_CRAWL3].y = 0;
-    clips[I_CRAWL3].w = 80;
-    clips[I_CRAWL3].h = 120;
+    clips[I_CRAWL_R3].x = clips[I_CRAWL_R2].x + clips[I_CRAWL_R2].w;
+    clips[I_CRAWL_R3].y = 0;
+    clips[I_CRAWL_R3].w = 80;
+    clips[I_CRAWL_R3].h = 120;
     
-    clips[I_FALL].x = clips[I_CRAWL3].x + clips[I_CRAWL3].w;
+    for (int i = I_CRAWL_L0; i < I_FALL; i++) {
+        clips[i] = clips[i - 4];
+        clips[i].x += 280;
+    }
+    
+    
+    clips[I_FALL].x = clips[I_CRAWL_L3].x + clips[I_CRAWL_L3].w;
     clips[I_FALL].y = 0;
     clips[I_FALL].w = STICK_WIDTH;
     clips[I_FALL].h = STICK_HEIGHT;
@@ -211,18 +217,28 @@ void Stick::handle_input(SDL_Event event){
                 if (active) frame = A_STAND;
                 else frame = I_STAND;
             }else if(state == CLIMB && next_state == CRAWL){
-                if(active) frame = A_CRAWL2;
-                else frame = I_CRAWL2;
+                
+                if (active) {
+                    if (dir == SDLK_RIGHT)frame = A_CRAWL_R2;
+                    else if (dir == SDLK_LEFT) frame = A_CRAWL_L2;
+                }else{
+                    if (dir == SDLK_RIGHT)frame = I_CRAWL_R2;
+                    else if (dir == SDLK_LEFT) frame = I_CRAWL_L2;
+                }
+                
                 //changin box
                 box.w = STICK_HEIGHT;
                 box.h = STICK_WIDTH;
             }else if(state == CRAWL && next_state == FALL){
-                if(active) frame = A_CRAWL3;
-                else frame = I_CRAWL3;
+                if(active) frame = A_CRAWL_R3;
+                else frame = I_CRAWL_R3;
                 
                 box.x += 120;
                 box.w = STICK_WIDTH;
                 box.h = STICK_HEIGHT;
+            }else if(state == JUMP){
+                if (active) frame = A_STAND;
+                else frame = I_STAND;
             }else if(next_state == EXIT){
                 debug("ESCAPE");
                 //need to inform this to the stickmaster
@@ -251,9 +267,17 @@ void Stick::handle_input(SDL_Event event){
                 }
             }else if(state == CRAWL){
                 if (active) {
-                    if (frame < A_CRAWL0 || frame > A_CRAWL1) frame = A_CRAWL0;
+                    if (dir == SDLK_RIGHT){
+                        if (frame < A_CRAWL_R0 || frame > A_CRAWL_R1) frame = A_CRAWL_R0;
+                    }else if(dir == SDLK_LEFT){
+                        if (frame < A_CRAWL_L0 || frame > A_CRAWL_L1) frame = A_CRAWL_L0;
+                    }
                 }else{
-                    if (frame < I_CRAWL0 || frame > I_CRAWL1) frame = I_CRAWL0;
+                    if (dir == SDLK_RIGHT){
+                        if (frame < I_CRAWL_R0 || frame > I_CRAWL_R1) frame = I_CRAWL_R0;
+                    }else if(dir == SDLK_LEFT){
+                        if (frame < I_CRAWL_L0 || frame > I_CRAWL_L1) frame = I_CRAWL_L0;
+                    }
                 }
             }
         }
@@ -263,14 +287,18 @@ void Stick::handle_input(SDL_Event event){
             
         }
     }else if(event.type == SDL_KEYUP){
-        if(state == WALK || state == JUMP){
-            if (state == JUMP) {
-                box.y += 20;
-                state = WALK;
-            }
+        
+        if(state == WALK ){
+            
             if (active) frame = A_STAND;
             else frame = I_STAND;
             
+        }else if (state == JUMP) {
+            box.y += 20;
+            state = WALK;
+            
+            if (active) frame = A_STAND;
+            else frame = I_STAND;
         }
     }
 
@@ -291,11 +319,11 @@ void Stick::animate(){
         }
     }
     if (state == FALL) {
-        if (frame == I_CRAWL3){
+        if (frame == I_CRAWL_R3){
             frame = I_FALL;
             box.x += 40;
             
-        }else if(frame == A_CRAWL3){
+        }else if(frame == A_CRAWL_R3){
             frame = A_FALL;
             box.x += 40;
             

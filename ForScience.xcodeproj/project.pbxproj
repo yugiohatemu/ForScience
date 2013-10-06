@@ -121,6 +121,7 @@
 		B63F59CD17820DE7000B09C9 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
 		B63F59CE17820E19000B09C9 /* switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = switch.cpp; sourceTree = "<group>"; };
 		B63F59CF17820E19000B09C9 /* switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = switch.h; sourceTree = "<group>"; };
+		B6E01E411801F54900972EFD /* level3.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level3.map; sourceTree = "<group>"; };
 		B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pauseScreen.cpp; sourceTree = "<group>"; };
 		B6F21C1D17EF5DFF00C562EA /* pauseScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pauseScreen.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,6 +203,7 @@
 				B63F59CB1780DE45000B09C9 /* level.h */,
 				B60029D1178B84A5007CD0FA /* level1.map */,
 				B62443E7177DFD07000041FE /* level2.map */,
+				B6E01E411801F54900972EFD /* level3.map */,
 			);
 			name = level;
 			sourceTree = "<group>";

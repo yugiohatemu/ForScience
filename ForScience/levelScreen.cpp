@@ -43,6 +43,8 @@ void LevelScreen::handle_input(SDL_Event event){
         }else{
             level->handle_input(event);
         }
+    }else if (event.type == SDL_KEYUP){
+        level->handle_input(event);
     }
 }
 
