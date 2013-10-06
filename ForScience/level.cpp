@@ -471,7 +471,7 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
     }else if(state == CRAWL){
         if (dir == SDLK_RIGHT) {
             int top_right = get_tile_pos(box.x + box.w+ speed, box.y)+column + 1;
-            
+            //std::cout<<"r->"<<top_right<<std::endl;
             if (tiles[top_right].type == TUNNEL) box.x += speed;
             else if (tiles[top_right].type  == BACK_WALL ) state = FALL;
             else if(tiles[top_right].type == LADDER) state = CLIMB;
@@ -480,7 +480,15 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
                     box.x = (top_right % column) * TILE_WIDTH;
             }
         }else if(dir == SDLK_LEFT){
-            
+            int top_left = get_tile_pos(box.x - speed, box.y) + column;
+            //std::cout<<"l->"<<top_left<<std::endl;
+            if (tiles[top_left].type == TUNNEL) box.x -= speed;
+            else if (tiles[top_left].type == BACK_WALL){
+                state = FALL;
+            }else {
+                state = STUCK;
+                box.x = (top_left % column ) * TILE_WIDTH;
+            }
         }
     }else if(state == FALL){
 
