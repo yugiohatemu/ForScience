@@ -16,10 +16,10 @@
 class Text{
     std::string text;
     int x, y;
-    SDL_Color color;
     TTF_Font * font;
     SDL_Surface * font_surface;
 public:
+    SDL_Color color;
     Text(int x, int y, std::string text, TTF_Font * font);
     void set_text(std::string t);
     void show(SDL_Surface * screen);

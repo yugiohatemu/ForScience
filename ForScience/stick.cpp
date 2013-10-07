@@ -236,6 +236,12 @@ void Stick::handle_input(SDL_Event event){
                 box.x += 120;
                 box.w = STICK_WIDTH;
                 box.h = STICK_HEIGHT;
+            }else if(state == WALK && next_state == FALL){
+                if(active) frame = A_FALL;
+                else frame = I_FALL;
+                
+                box.x += TILE_WIDTH;
+                
             }else if(state == JUMP){
                 if (active) frame = A_STAND;
                 else frame = I_STAND;

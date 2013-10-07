@@ -394,51 +394,55 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
             int top_right = get_tile_pos(box.x + box.w + speed, box.y);
             
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
-                ((tiles[bot_right + column].type >= WALL_C0 &&  tiles[bot_right + column].type <= WALL_H4)
-                 || tiles[bot_right + column].type == LADDER)) {
+                ((tiles[bot_right + column].type >= WALL_C0 &&  tiles[bot_right + column].type <= WALL_V4)
+                 || tiles[bot_right + column].type == LADDER
+                 || tiles[bot_right + column].type == BACK_WALL)) {
                     //2nd, no obstacle for body
+                    
                     for (int i = bot_right; i > top_right; i -=column) {
                         if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) { //dirty fix
                             state = STUCK;
                             break;
                         }
                     }
-                    //##### testing incomplete implementation
-                    int block_x = box.x + speed;
-                    //ok, now add open to state, ok it works
-//                    if (door->is_block() && box.x <= door->get_rect().x) {
-//                        block_x = std::min(block_x, door->get_rect().x - box.w);
-//                    }
-                    
-                    if (state == STUCK )box.x = (top_right % column - 1) * TILE_WIDTH;
+
+                    if (state == STUCK )box.x  = (top_right % column - 1) * TILE_WIDTH;
                     else {
-                        //box.x += speed; originial
-                        box.x = block_x;
+                        if (tiles[bot_right + column].type == BACK_WALL) {
+                            state = FALL;
+                            
+                        }else{
+                            box.x += speed;
+                        }
                     }
+                    
             }
+            
         }else if(dir == SDLK_LEFT){
             int top_left = get_tile_pos(box.x - speed, box.y);
             int bot_left = get_tile_pos(box.x - speed, box.y + box.h);
             
             
             if ((box.y + box.h)%TILE_HEIGHT == 0 &&
-                ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_H4) ||
-                 tiles[bot_left + column].type == LADDER)) {
+                ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_V4)
+                 ||tiles[bot_left + column].type == LADDER
+                 ||tiles[bot_left + column].type == BACK_WALL)) {
                     for (int i = bot_left; i > top_left; i -= column) {
                         if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) {
                             state = STUCK;
                             break;
                         }
                     }
-                    //##### testing
-                    int block_x = box.x - speed;
-//                    if (door->is_block() &&  box.x >= door->get_rect().x)  block_x = std::max(block_x, door->get_rect().x + box.w);
                     
                     if (state == STUCK) box.x =  (top_left % column + 1) * TILE_WIDTH;
-                    else{
-                        //box.x -= speed;
-                        box.x = block_x;
+                    else {
+                        if (tiles[bot_left + column].type == BACK_WALL) {
+                            state = FALL;
+                        }else{
+                            box.x -= speed;
+                        }
                     }
+                    
             }
         }else if(dir == SDLK_SPACE){
             
@@ -531,7 +535,7 @@ HUMAN_STATE Level::stick_on_level(SDL_Rect &box, int dir, int speed, HUMAN_STATE
             }
         }
     }else if(state == FALL){
-
+        
     }
     interact_with_level(&box); //a passive interact and an active interact?
     //dirty prototype for now

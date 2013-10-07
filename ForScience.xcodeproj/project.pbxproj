@@ -37,6 +37,7 @@
 		B63F59C81780C06C000B09C9 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59C61780C06C000B09C9 /* robot.cpp */; };
 		B63F59CC1780DE45000B09C9 /* level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59CA1780DE44000B09C9 /* level.cpp */; };
 		B63F59D017820E19000B09C9 /* switch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63F59CE17820E19000B09C9 /* switch.cpp */; };
+		B6E01E441802205F00972EFD /* backgroundText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E01E421802205F00972EFD /* backgroundText.cpp */; };
 		B6F21C1E17EF5E0000C562EA /* pauseScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,8 @@
 		B63F59CE17820E19000B09C9 /* switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = switch.cpp; sourceTree = "<group>"; };
 		B63F59CF17820E19000B09C9 /* switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = switch.h; sourceTree = "<group>"; };
 		B6E01E411801F54900972EFD /* level3.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level3.map; sourceTree = "<group>"; };
+		B6E01E421802205F00972EFD /* backgroundText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = backgroundText.cpp; sourceTree = "<group>"; };
+		B6E01E431802205F00972EFD /* backgroundText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backgroundText.h; sourceTree = "<group>"; };
 		B6F21C1C17EF5DFF00C562EA /* pauseScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pauseScreen.cpp; sourceTree = "<group>"; };
 		B6F21C1D17EF5DFF00C562EA /* pauseScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pauseScreen.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -264,13 +267,12 @@
 				B60029D3178B8988007CD0FA /* level */,
 				B60029B41789FC3F007CD0FA /* inteactable */,
 				B62443C7177DCE34000041FE /* main.cpp */,
-				B600299417860936007CD0FA /* text.cpp */,
 				B62443E4177DF69F000041FE /* timer.cpp */,
 				B61944D8179AEB1D0056F918 /* stopWatch.cpp */,
 				B61944D9179AEB1D0056F918 /* stopWatch.h */,
 				B62443EB177DFF81000041FE /* utility.cpp */,
 				B62443F1177E0CF0000041FE /* constant.h */,
-				B600299517860937007CD0FA /* text.h */,
+				B6E01E451802206500972EFD /* text */,
 				B62443E3177DF655000041FE /* timer.h */,
 				B62443EC177DFF81000041FE /* utility.h */,
 				B62443F4177E394C000041FE /* image */,
@@ -303,6 +305,17 @@
 				B62443F3177E3160000041FE /* stickman.png */,
 			);
 			name = image;
+			sourceTree = "<group>";
+		};
+		B6E01E451802206500972EFD /* text */ = {
+			isa = PBXGroup;
+			children = (
+				B600299417860936007CD0FA /* text.cpp */,
+				B6E01E421802205F00972EFD /* backgroundText.cpp */,
+				B6E01E431802205F00972EFD /* backgroundText.h */,
+				B600299517860937007CD0FA /* text.h */,
+			);
+			name = text;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,6 +395,7 @@
 				B615F7B717AEE76F00FDBF32 /* screenController.cpp in Sources */,
 				B601580B17B464F4003C8FCD /* endScreen.cpp in Sources */,
 				B6F21C1E17EF5E0000C562EA /* pauseScreen.cpp in Sources */,
+				B6E01E441802205F00972EFD /* backgroundText.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
