@@ -20,6 +20,9 @@ MenuScreen::MenuScreen():Screen(){
     set_clip();
     state = START;
     instruction = new Text(0, 500, "Arrow key to switch option, press [Enter] to choose", font);
+    instruction->backColor = COLOR_BLACK;
+    instruction->textColor = COLOR_WHITE;
+    instruction->render();
     //aound 40 per font height
 }
 

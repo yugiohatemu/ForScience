@@ -9,11 +9,15 @@
 #include "backgroundText.h"
 #include "constant.h"
 
+
 BackGroundText::BackGroundText(int x, int y, std::string *list, int text_count){
     textlist = new Text* [text_count];
     this->text_count = text_count;
     for (int i = 0; i < text_count; i++) {
         textlist[i] = new Text(x , y+ 40*i, list[i], font);
+        textlist[i]->backColor = COLOR_WHITE;
+        textlist[i]->textColor = COLOR_BLACK;
+        textlist[i]->render();
     }
 }
 

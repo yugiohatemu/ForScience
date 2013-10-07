@@ -162,7 +162,8 @@ Level::Level(std::string file_name){
     
     //sprite_list[1] = new GlassDoor(5 * TILE_WIDTH+ 10, 3 * TILE_HEIGHT);
     //sprite_list[2] = new Book(4 * TILE_WIDTH, 5 * TILE_HEIGHT);
-
+    std::string s[2] = {"Robot","likes you"};
+    backText = new BackGroundText(200,120,s,2);
     
     //Close the file
     map.close();
@@ -190,6 +191,8 @@ Level::~Level(){
     delete [] sprite_list;
     stickSheet = NULL;
     robotSheet = NULL;
+    
+    delete backText;
     
 }
 
@@ -246,6 +249,10 @@ void Level::show(SDL_Rect camera, SDL_Surface *tile, SDL_Surface *screen){
     for (int i = 0; i < total_tile; i ++) {
         apply_surface(tiles[i].box.x,tiles[i].box.y, tileSheet, screen, &clips[tiles[i].type]);
     }
+    if (backText) {
+        backText->show(screen);
+    }
+    
     for (int i = 0; i < total_sprites; i +=1) {
         sprite_list[i]->show(camera, tileSheet, screen);
     }
@@ -254,8 +261,9 @@ void Level::show(SDL_Rect camera, SDL_Surface *tile, SDL_Surface *screen){
     }
     if (robot_master) {
         robot_master->show(camera, robotSheet, screen);
-
     }
+    
+   
 }
 
 void Level::animate(){
@@ -309,7 +317,7 @@ ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE
         int bot_right= get_tile_pos(box.x + box.w + speed, box.y+ box.h);
         int top_right = get_tile_pos(box.x + box.w + speed, box.y);
         
-        if ((tiles[bot_right + column].type >= WALL_C0 && tiles[bot_right + column].type <= WALL_H4)
+        if ((tiles[bot_right + column].type >= WALL_C0 && tiles[bot_right + column].type <= WALL_V4)
             || tiles[bot_right + column].type == LADDER) {
             //2nd, no obstacle for body
             SDL_Rect box_copy = box;
@@ -325,13 +333,6 @@ ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE
             
             //add a stop interacting here?
             int block_x = box.x + speed;
-//            if (door->is_block() && box.x <= door->get_rect().x) {
-//                block_x = std::min(block_x, door->get_rect().x - box.w);
-//                //ask the door to interact
-//                //set something to active
-//            }else{
-//                
-//            }
             
             
             if (state == TURN )box.x  = (top_right % column - 1) * TILE_WIDTH;
@@ -341,7 +342,7 @@ ROBOT_STATE Level::robot_on_level(SDL_Rect &box, int dir, int speed, ROBOT_STATE
     }else if(dir == SDLK_LEFT){
         int top_left = get_tile_pos(box.x - speed, box.y);
         int bot_left = get_tile_pos(box.x - speed, box.y + box.h);
-        if ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_H4) ||
+        if ((tiles[bot_left + column].type >= WALL_C0 &&  tiles[bot_left + column].type <= WALL_V4) ||
             tiles[bot_left + column].type == LADDER) {
             for (int i = bot_left; i > top_left; i -= column) {
                 if (tiles[i].type >= WALL_C0 && tiles[i].type <= WALL_V4) {

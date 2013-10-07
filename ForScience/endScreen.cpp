@@ -19,6 +19,9 @@ EndScreen::EndScreen(bool win, Screen * level_select):Screen(){
     //level complete
     //and press center to continue
     instruction = new Text(0, 500, "Press [Enter] to redo level, [ESC] to menu", font);
+    instruction->backColor = COLOR_BLACK;
+    instruction->textColor = COLOR_WHITE;
+    instruction->render();
 }
 
 EndScreen::~EndScreen(){

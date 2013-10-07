@@ -8,8 +8,7 @@
 
 #include "text.h"
 #include "utility.h"
-//TODO: still buggy, the surface is not cleared...
-SDL_Color black = {0,0,0};
+
 
 Text::Text(int x, int y,std::string text, TTF_Font * font){
     this->x = x;
@@ -17,22 +16,22 @@ Text::Text(int x, int y,std::string text, TTF_Font * font){
     this->text = text;
     this->font = font;
     
-    color.r = 255;
-    color.g = 255;
-    color.b = 255;
     
-    font_surface = TTF_RenderText_Shaded(font, text.c_str(), color, black);
 }
 
 void Text::show(SDL_Surface *screen){
     apply_surface(x, y, font_surface, screen);
 }
 
+void Text::render(){
+    font_surface = TTF_RenderText_Shaded(font, text.c_str(),  textColor, backColor);
+}
+
 void Text::set_text(std::string text){
     if (this->text.compare(text) != 0) {
         this->text = text;
         SDL_FreeSurface(font_surface);
-        font_surface = TTF_RenderText_Shaded(font, text.c_str(), color, black);
+        font_surface = TTF_RenderText_Shaded(font, text.c_str(),  textColor, backColor);
     }
 }
 

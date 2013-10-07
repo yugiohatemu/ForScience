@@ -13,7 +13,12 @@
 
 PauseScreen::PauseScreen(Screen * level_select):Screen(){
     set_clip();
+    
     instruction = new Text(0, 500, "Press [Enter] to go to select level, [ESC] to unpause", font);
+    instruction->backColor = COLOR_BLACK;
+    instruction->textColor = COLOR_WHITE;
+    instruction->render();
+    
     selectLevel = level_select;
 }
 

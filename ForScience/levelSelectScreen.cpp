@@ -24,7 +24,9 @@ LevelSelectScreen::LevelSelectScreen():Screen(){
     set_clip();
     
     instruction = new Text(10, 500, "Press [Enter] to choose, [ESC] to go back", font);
-    
+    instruction->backColor = COLOR_BLACK;
+    instruction->textColor = COLOR_WHITE;
+    instruction->render();
 }
 
 LevelSelectScreen::~LevelSelectScreen(){

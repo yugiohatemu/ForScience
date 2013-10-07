@@ -122,6 +122,7 @@
 		B63F59CD17820DE7000B09C9 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
 		B63F59CE17820E19000B09C9 /* switch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = switch.cpp; sourceTree = "<group>"; };
 		B63F59CF17820E19000B09C9 /* switch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = switch.h; sourceTree = "<group>"; };
+		B6666C7F18024A310002CBBF /* colorConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorConstant.h; sourceTree = "<group>"; };
 		B6E01E411801F54900972EFD /* level3.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level3.map; sourceTree = "<group>"; };
 		B6E01E421802205F00972EFD /* backgroundText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = backgroundText.cpp; sourceTree = "<group>"; };
 		B6E01E431802205F00972EFD /* backgroundText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = backgroundText.h; sourceTree = "<group>"; };
@@ -280,6 +281,7 @@
 				B60029AF1788A20D007CD0FA /* model */,
 				B600299E1787B8A4007CD0FA /* robot */,
 				B600299D1787B883007CD0FA /* stick */,
+				B6666C7F18024A310002CBBF /* colorConstant.h */,
 			);
 			path = ForScience;
 			sourceTree = "<group>";

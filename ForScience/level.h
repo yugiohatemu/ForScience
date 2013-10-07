@@ -14,7 +14,7 @@
 #include "constant.h"
 #include "sprite.h"
 #include "drawable.h"
-
+#include "backgroundText.h"
 class Level{
     struct Tile{
         SDL_Rect box;
@@ -45,6 +45,7 @@ class Level{
     Drawable * stick_master;
     SDL_Surface *robotSheet;
     SDL_Surface *stickSheet;
+    BackGroundText * backText;
 public:
     Level(std::string file_name, int row, int column);
     Level(std::string file_name);

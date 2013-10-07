@@ -12,6 +12,7 @@
 #include "SDL/SDL.h"
 #include <string>
 #include "SDL_ttf/SDL_ttf.h"
+#include "colorConstant.h"
 
 class Text{
     std::string text;
@@ -19,10 +20,12 @@ class Text{
     TTF_Font * font;
     SDL_Surface * font_surface;
 public:
-    SDL_Color color;
+    SDL_Color backColor;
+    SDL_Color textColor;
     Text(int x, int y, std::string text, TTF_Font * font);
     void set_text(std::string t);
     void show(SDL_Surface * screen);
+    void render();
     ~Text();
 };
 

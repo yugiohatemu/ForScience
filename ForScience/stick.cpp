@@ -206,6 +206,10 @@ void Stick::handle_input(SDL_Event event){
                 //god I want an animation class...., but after fixing this
                 if (active) frame = A_CLIMB0;
                 else frame = I_CLIMB0;
+                
+                if (dir == SDLK_DOWN) {
+                    box.y += 80;
+                }
             }else if(state == WALK && next_state == JUMP){
                 if (active) frame = A_JUMP;
                 else frame = I_JUMP;
@@ -285,6 +289,9 @@ void Stick::handle_input(SDL_Event event){
                         if (frame < I_CRAWL_L0 || frame > I_CRAWL_L1) frame = I_CRAWL_L0;
                     }
                 }
+            }else if(state == FALL){
+                if(active) frame = A_FALL;
+                else frame = I_FALL;
             }
         }
         
